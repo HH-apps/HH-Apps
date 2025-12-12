@@ -1,0 +1,2123 @@
+<html lang="en"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjcwN2Q5NzI1ZGNkZmEzM2ViMTkxYzg0Njg0Y2JmMjhjYTY0NWFmMDYiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwNDM4NTE1NTIyMjY1ODc3NzE1NyIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjX2YyMzNhNDVjYWI2NGYxNTJfbGFuZGluZ19wYWdlX2JsdWVwcmludC5odG1sLTQ0MiJ9LCJleHAiOjE3NTg0Nzk3NzYsImlhdCI6MTc1ODQ3NjE3NiwiYWxnIjoiUlMyNTYifQ.Cw94hYKJWcrlJ6RRMdk_N31gBcSe5oc3LqSmJU7dM8yRXLJzW-_WEEdbqKqGCbvbe3-7B-xUz6500RVVgqYaoew9q9VP5rJVHTdx1anA_ugz0tjPRSkXPRfPD23NsaXkR8N1puHffnP9QrQoY7pBRX2--2zeSPmPdPPWRWTCYzK-4mzbT02PIU_5Vr2xPmL6FPQlBr5wIr9W29uPnc8d_t-K-LV0hWLuhmXDvexiFY3j91OpDowd_rzWwC8A8vHXbIyeG9LsxfojYcBFQ934FHei2EM_TzOFMwGr10_TQ2oW6pd5MkpHDiDbfWCKZhTwAdQO1YB1HgS7e2hPN9SJXQ","c_f233a45cab64f152_landing_page_blueprint.html-442")</script><script>'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-2.5-flash-preview-05-20","imageModelName":"imagen-3.0-generate-002","imageEditModelName":"gemini-2.5-flash-image-preview","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash-preview-04-17"]})</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Master Blueprint</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <!-- Added libraries for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        [contenteditable="true"]:empty:before {
+            content: attr(placeholder);
+            pointer-events: none;
+            display: block; /* For Firefox */
+            color: #9ca3af; /* gray-400 */
+        }
+        [contenteditable="true"]:focus,
+        input:focus {
+            outline: 2px solid #3b82f6; /* blue-500 */
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        .section-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .section-card:hover {
+             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #111827; /* gray-900 */
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e5e7eb; /* gray-200 */
+            padding-bottom: 0.75rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #374151; /* gray-700 */
+            margin-bottom: 0.5rem;
+        }
+        .editable {
+            background-color: #f9fafb; /* gray-50 */
+            border: 1px dashed #d1d5db; /* gray-300 */
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            min-height: 40px;
+            transition: all 0.2s ease-in-out;
+        }
+        .editable:hover {
+            border-color: #9ca3af; /* gray-400 */
+        }
+        .editable:focus {
+            background-color: white;
+            border-style: solid;
+            border-color: #3b82f6; /* blue-500 */
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+        .gemini-btn {
+            background: linear-gradient(to right, #4f46e5, #818cf8);
+            color: white;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+        .gemini-btn:hover {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transform: translateY(-1px);
+        }
+        .gemini-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        .gemini-btn .spinner {
+            display: none;
+            width: 1rem;
+            height: 1rem;
+            border-width: 2px;
+            border-color: currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+         .gemini-btn.loading .spinner {
+            display: inline-block;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .suggestion-item {
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .suggestion-item:hover {
+            background-color: #f3f4f6;
+        }
+
+        @media print {
+            .gemini-btn, #saveButton, #printButton, footer .gemini-btn, .sticky.top-4, #upload-button {
+                display: none !important;
+            }
+            .section-card {
+                box-shadow: none !important;
+                border: 1px solid #e5e7eb; /* gray-200 */
+                padding: 1.5rem;
+                page-break-inside: avoid;
+            }
+            body {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .editable {
+                 border-color: transparent;
+                 background-color: white !important;
+            }
+            .bg-gray-800 {
+                background-color: #1f2937 !important;
+            }
+             .bg-blue-50 {
+                background-color: #eff6ff !important;
+            }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.sticky{position:sticky}.top-4{top:1rem}.z-10{z-index:10}.mx-2{margin-left:0.5rem;margin-right:0.5rem}.mx-auto{margin-left:auto;margin-right:auto}.-mt-4{margin-top:-1rem}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.ml-4{margin-left:1rem}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.mt-10{margin-top:2.5rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.inline{display:inline}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-12{height:3rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-8{height:2rem}.min-h-\[120px\]{min-height:120px}.w-1\/3{width:33.333333%}.w-1\/4{width:25%}.w-11\/12{width:91.666667%}.w-12{width:3rem}.w-3\/5{width:60%}.w-4{width:1rem}.w-5{width:1.25rem}.w-8{width:2rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.flex-1{flex:1 1 0%}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-4{gap:1rem}.gap-8{gap:2rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-8 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.overflow-x-auto{overflow-x:auto}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-500{--tw-border-opacity:1;border-color:rgb(107 114 128 / var(--tw-border-opacity, 1))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128 / var(--tw-bg-opacity, 1))}.bg-gray-600{--tw-bg-opacity:1;background-color:rgb(75 85 99 / var(--tw-bg-opacity, 1))}.bg-gray-700{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-green-600{--tw-bg-opacity:1;background-color:rgb(22 163 74 / var(--tw-bg-opacity, 1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-teal-600{--tw-bg-opacity:1;background-color:rgb(13 148 136 / var(--tw-bg-opacity, 1))}.bg-opacity-80{--tw-bg-opacity:0.8}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-4{padding-left:1rem;padding-right:1rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pt-6{padding-top:1.5rem}.text-center{text-align:center}.text-right{text-align:right}.text-2xl{font-size:1.5rem;line-height:2rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-normal{font-weight:400}.font-semibold{font-weight:600}.italic{font-style:italic}.not-italic{font-style:normal}.tracking-tight{letter-spacing:-0.025em}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-25{opacity:0.25}.opacity-75{opacity:0.75}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.grayscale{--tw-grayscale:grayscale(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.ease-in-out{transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1)}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-300:hover{--tw-bg-opacity:1;background-color:rgb(209 213 219 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-600:hover{--tw-bg-opacity:1;background-color:rgb(75 85 99 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.hover\:bg-green-700:hover{--tw-bg-opacity:1;background-color:rgb(21 128 61 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-teal-700:hover{--tw-bg-opacity:1;background-color:rgb(15 118 110 / var(--tw-bg-opacity, 1))}@media (min-width: 640px){.sm\:block{display:block}.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:block{display:block}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:text-5xl{font-size:3rem;line-height:1}}@media (min-width: 1024px){.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Main Title -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">Landing Page Master Blueprint</h1>
+            <p class="mt-4 text-lg text-gray-600">Provide context below and let AI generate your entire landing page.</p>
+        </header>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center items-center space-x-4 mb-10 sticky top-4 z-10 p-2 bg-gray-100 bg-opacity-80 backdrop-blur-sm rounded-xl">
+             <button id="saveButton" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6a1 1 0 10-2 0v5.586L7.707 10.293zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"></path></svg>
+                Save as HTML
+            </button>
+            <button id="printButton" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 6.586a2 2 0 00-2.828 0L12 9.172V4a1 1 0 10-2 0v5.172L7.414 6.586a2 2 0 00-2.828 2.828l5 5a2 2 0 002.828 0l5-5a2 2 0 000-2.828zM4 18a1 1 0 01-1-1v-4a1 1 0 112 0v4a1 1 0 01-1 1z"></path></svg>
+                Save as PDF
+            </button>
+        </div>
+        
+        <!-- 1. Content & Context Resources -->
+        <section id="content-context" class="section-card">
+             <div class="flex justify-between items-start">
+                 <div>
+                    <h2>1. Content &amp; Context Resources</h2>
+                    <p class="text-gray-500 -mt-4 mb-6">Provide links, text, or files here to generate the entire blueprint.</p>
+                </div>
+                <button id="auto-generate-all" class="gemini-btn flex items-center space-x-2">
+                    <span class="spinner"></span>
+                    <span>Generate Entire Blueprint ✨</span>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3>Website / Product Link (Primary Source)</h3>
+                    <div id="website-link" contenteditable="true" class="editable" placeholder="e.g., https://myproduct.com"></div>
+                </div>
+                <div>
+                    <h3>YouTube Link Resources</h3>
+                     <div id="youtube-links-container" class="space-y-4">
+                        <!-- YouTube link inputs will be added here dynamically -->
+                     </div>
+                     <button id="add-youtube-link-btn" class="gemini-btn mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                           <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+                       </svg>
+                       Add YouTube Link
+                    </button>
+                </div>
+            </div>
+            <div id="additional-links-container" class="mt-4 space-y-4">
+                <!-- Additional link inputs will be added here dynamically -->
+            </div>
+            <button id="add-link-btn" class="gemini-btn mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+                </svg>
+                Add Link Resource
+            </button>
+            <div class="mt-8">
+                <h3>Paste Existing Copy or Notes</h3>
+                <div id="pasted-content" contenteditable="true" class="editable min-h-[120px]" placeholder="Paste any relevant product descriptions, marketing copy, feature lists, or notes here..."></div>
+            </div>
+            <div class="mt-8">
+                <h3>Upload Files (Images, Text, Briefs)</h3>
+                <p class="text-gray-500 mb-4">Content from .txt files or uploaded briefs will be noted for the AI. Images and videos are for visual reference.</p>
+                <div class="flex items-center space-x-4">
+                    <input type="file" id="file-input" multiple="" class="hidden" accept="image/*,video/*,text/plain">
+                    <button id="upload-button" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                        </svg>
+                        Choose Files (img, txt, video)
+                    </button>
+                    <input type="file" id="brief-input" class="hidden" accept=".doc,.docx,.xls,.xlsx,.pdf">
+                    <button id="brief-upload-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A1 1 0 0111.293 2.707l4 4A1 1 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                        </svg>
+                        Brief Upload
+                    </button>
+                    <input type="file" id="brief-template-input" class="hidden" accept=".doc,.docx,.xls,.xlsx,.pdf">
+                    <button id="brief-template-upload-button" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clip-rule="evenodd"></path>
+                        </svg>
+                        Brief Upload Template
+                    </button>
+                </div>
+                <div id="file-list" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+            </div>
+        </section>
+
+        <!-- 2. Core Strategy -->
+        <section id="core-strategy" class="section-card">
+            <h2>2. Core Strategy</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3>Target Audience</h3>
+                    <div id="target-audience" contenteditable="true" class="editable" placeholder="Who is this for? Be specific. e.g., 'Startup founders looking for their first CRM'"></div>
+                    <button class="gemini-btn mt-2" data-target="target-audience" data-prompt-type="target_audience">Generate ✨</button>
+                </div>
+                <div>
+                    <h3>Primary Goal</h3>
+                    <div id="primary-goal" contenteditable="true" class="editable" placeholder="What is the #1 action? e.g., 'Sign up for a free trial'"></div>
+                    <button class="gemini-btn mt-2" data-target="primary-goal" data-prompt-type="primary_goal">Generate ✨</button>
+                </div>
+                <div>
+                    <h3>Unique Value Proposition (UVP)</h3>
+                    <div id="uvp" contenteditable="true" class="editable" placeholder="Why choose you? e.g., 'The only project management tool that runs on coffee.'"></div>
+                    <button class="gemini-btn mt-2" data-target="uvp" data-prompt-type="uvp">Generate ✨</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 3. Hero Section -->
+        <section id="hero" class="section-card">
+            <h2 class="flex justify-between items-center">3. Hero Section (Above the Fold)</h2>
+            <div class="bg-gray-800 text-white p-8 rounded-lg text-center flex flex-col items-center">
+                <div class="w-full max-w-2xl mb-2">
+                    <div id="hero-headline" contenteditable="true" class="text-4xl font-bold editable bg-gray-700 border-gray-500 w-full" placeholder="A Compelling, Attention-Grabbing Title."></div>
+                    <button class="gemini-btn mt-2" data-target="hero-headline" data-prompt-type="headline">Generate ✨</button>
+                </div>
+                <div class="w-full max-w-3xl mb-6">
+                    <div id="hero-subheadline" contenteditable="true" class="text-xl editable bg-gray-700 border-gray-500 w-full mt-4" placeholder="A short sentence that clarifies the headline and adds context."></div>
+                    <button class="gemini-btn mt-2" data-target="hero-subheadline" data-prompt-type="subheadline">Generate ✨</button>
+                </div>
+                <div id="hero-cta" contenteditable="true" class="cta-button"></div>
+                 <button class="gemini-btn mt-2" data-target="hero-cta" data-prompt-type="cta_text">Generate ✨</button>
+            </div>
+             <div class="mt-6">
+                <h3>Visual Concept</h3>
+                <div id="visual-concept" contenteditable="true" class="editable" placeholder="Describe the main image or video. e.g., 'A hero shot of the product in use,' 'An abstract animation showing the workflow.'"></div>
+                <button class="gemini-btn mt-2" data-target="visual-concept" data-prompt-type="visual_concept">Generate ✨</button>
+            </div>
+        </section>
+
+        <!-- 4. Problem / Solution Section -->
+        <section id="problem-solution" class="section-card">
+            <h2>4. Problem / Solution</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-red-600">The Problem</h3>
+                    <div id="problem" contenteditable="true" class="editable" placeholder="Clearly state the pain point your audience experiences."></div>
+                     <button class="gemini-btn mt-2" data-target="problem" data-prompt-type="problem">Generate ✨</button>
+                </div>
+                <div>
+                    <h3 class="text-green-600">The Solution</h3>
+                    <div id="solution" contenteditable="true" class="editable" placeholder="Introduce your product/service as the clear solution to that problem."></div>
+                     <button class="gemini-btn mt-2" data-target="solution" data-prompt-type="solution">Generate ✨</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Features & Benefits Section -->
+        <section id="features" class="section-card">
+            <h2>5. Features &amp; Benefits</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3>Feature 1: <span id="feature-name-1" contenteditable="true" class="font-normal editable inline-block w-3/5 feature-name" placeholder="Name of Feature"></span></h3>
+                    <p class="text-gray-600 mt-2"><strong>Benefit:</strong></p>
+                    <div id="benefit-text-1" contenteditable="true" class="editable mt-1 benefit-text" placeholder="How does this feature make the user's life better?"></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="benefit">Generate ✨</button>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3>Feature 2: <span id="feature-name-2" contenteditable="true" class="font-normal editable inline-block w-3/5 feature-name" placeholder="Name of Feature"></span></h3>
+                    <p class="text-gray-600 mt-2"><strong>Benefit:</strong></p>
+                    <div id="benefit-text-2" contenteditable="true" class="editable mt-1 benefit-text" placeholder="How does this feature make the user's life better?"></div>
+                     <button class="gemini-btn mt-2" data-prompt-type="benefit">Generate ✨</button>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3>Feature 3: <span id="feature-name-3" contenteditable="true" class="font-normal editable inline-block w-3/5 feature-name" placeholder="Name of Feature"></span></h3>
+                    <p class="text-gray-600 mt-2"><strong>Benefit:</strong></p>
+                    <div id="benefit-text-3" contenteditable="true" class="editable mt-1 benefit-text" placeholder="How does this feature make the user's life better?"></div>
+                     <button class="gemini-btn mt-2" data-prompt-type="benefit">Generate ✨</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 6. Social Proof / Testimonials -->
+        <section id="social-proof" class="section-card">
+            <h2>6. Social Proof / Testimonials</h2>
+             <!-- Testimonials -->
+            <div class="space-y-8">
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 testimonial-card">
+                    <blockquote class="text-lg italic text-gray-700">
+                        "<div id="testimonial-quote-1" contenteditable="true" class="editable inline" placeholder="Quote from a happy customer."></div>"
+                    </blockquote>
+                    <cite class="block text-right mt-4 not-italic font-semibold text-gray-800">
+                        - <span id="testimonial-name-1" contenteditable="true" class="editable inline-block w-1/4" placeholder="Customer Name"></span>, <span id="testimonial-title-1" contenteditable="true" class="editable inline-block w-1/3" placeholder="Title/Company"></span>
+                    </cite>
+                     <button class="gemini-btn mt-2" data-prompt-type="testimonial">Generate ✨</button>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 testimonial-card">
+                    <blockquote class="text-lg italic text-gray-700">
+                        "<div id="testimonial-quote-2" contenteditable="true" class="editable inline" placeholder="Quote from another customer."></div>"
+                    </blockquote>
+                    <cite class="block text-right mt-4 not-italic font-semibold text-gray-800">
+                        - <span id="testimonial-name-2" contenteditable="true" class="editable inline-block w-1/4" placeholder="Customer Name"></span>, <span id="testimonial-title-2" contenteditable="true" class="editable inline-block w-1/3" placeholder="Title/Company"></span>
+                    </cite>
+                     <button class="gemini-btn mt-2" data-prompt-type="testimonial">Generate ✨</button>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 testimonial-card">
+                    <blockquote class="text-lg italic text-gray-700">
+                        "<div id="testimonial-quote-3" contenteditable="true" class="editable inline" placeholder="Quote from another customer."></div>"
+                    </blockquote>
+                    <cite class="block text-right mt-4 not-italic font-semibold text-gray-800">
+                        - <span id="testimonial-name-3" contenteditable="true" class="editable inline-block w-1/4" placeholder="Customer Name"></span>, <span id="testimonial-title-3" contenteditable="true" class="editable inline-block w-1/3" placeholder="Title/Company"></span>
+                    </cite>
+                     <button class="gemini-btn mt-2" data-prompt-type="testimonial">Generate ✨</button>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 testimonial-card">
+                    <blockquote class="text-lg italic text-gray-700">
+                        "<div id="testimonial-quote-4" contenteditable="true" class="editable inline" placeholder="Quote from another customer."></div>"
+                    </blockquote>
+                    <cite class="block text-right mt-4 not-italic font-semibold text-gray-800">
+                        - <span id="testimonial-name-4" contenteditable="true" class="editable inline-block w-1/4" placeholder="Customer Name"></span>, <span id="testimonial-title-4" contenteditable="true" class="editable inline-block w-1/3" placeholder="Title/Company"></span>
+                    </cite>
+                     <button class="gemini-btn mt-2" data-prompt-type="testimonial">Generate ✨</button>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 testimonial-card">
+                    <blockquote class="text-lg italic text-gray-700">
+                        "<div id="testimonial-quote-5" contenteditable="true" class="editable inline" placeholder="Quote from another customer."></div>"
+                    </blockquote>
+                    <cite class="block text-right mt-4 not-italic font-semibold text-gray-800">
+                        - <span id="testimonial-name-5" contenteditable="true" class="editable inline-block w-1/4" placeholder="Customer Name"></span>, <span id="testimonial-title-5" contenteditable="true" class="editable inline-block w-1/3" placeholder="Title/Company"></span>
+                    </cite>
+                     <button class="gemini-btn mt-2" data-prompt-type="testimonial">Generate ✨</button>
+                </div>
+            </div>
+            <!-- Logos -->
+            <div class="mt-10">
+                <h3 class="text-center text-gray-500 font-semibold mb-4">TRUSTED BY COMPANIES WORLDWIDE</h3>
+                 <div class="flex justify-center items-center space-x-8 grayscale">
+                    <img src="https://placehold.co/120x60/e2e8f0/64748b?text=Logo1" alt="Company Logo 1" class="h-10">
+                    <img src="https://placehold.co/120x60/e2e8f0/64748b?text=Logo2" alt="Company Logo 2" class="h-10">
+                    <img src="https://placehold.co/120x60/e2e8f0/64748b?text=Logo3" alt="Company Logo 3" class="h-10 hidden sm:block">
+                    <img src="https://placehold.co/120x60/e2e8f0/64748b?text=Logo4" alt="Company Logo 4" class="h-10 hidden sm:block">
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. "How It Works" Section -->
+        <section id="how-it-works" class="section-card">
+            <h2>7. How It Works</h2>
+            <div class="flex flex-col md:flex-row justify-between items-center text-center gap-8">
+                <!-- Step 1 -->
+                <div class="flex-1 how-it-works-step">
+                    <div class="text-2xl font-bold text-blue-600 bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">1</div>
+                    <div id="step-1" contenteditable="true" class="editable font-semibold" placeholder="Sign Up in Seconds"></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="how_it_works_step">Generate ✨</button>
+                </div>
+                <div class="text-gray-300 hidden md:block text-2xl">→</div>
+                <!-- Step 2 -->
+                <div class="flex-1 how-it-works-step">
+                    <div class="text-2xl font-bold text-blue-600 bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">2</div>
+                    <div id="step-2" contenteditable="true" class="editable font-semibold" placeholder="Connect Your Data"></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="how_it_works_step">Generate ✨</button>
+                </div>
+                 <div class="text-gray-300 hidden md:block text-2xl">→</div>
+                <!-- Step 3 -->
+                <div class="flex-1 how-it-works-step">
+                    <div class="text-2xl font-bold text-blue-600 bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">3</div>
+                    <div id="step-3" contenteditable="true" class="editable font-semibold" placeholder="Get Instant Insights"></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="how_it_works_step">Generate ✨</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 8. Final Call-to-Action (CTA) Section -->
+        <section id="final-cta" class="section-card bg-gray-800 text-white text-center">
+            <h2>8. Final Call-to-Action</h2>
+            <div id="final-cta-headline" contenteditable="true" class="editable text-2xl font-semibold bg-gray-700 border-gray-500 w-full max-w-2xl mx-auto mb-6" placeholder="A final, persuasive headline to encourage action."></div>
+            <button class="gemini-btn mb-6" data-target="final-cta-headline" data-prompt-type="final_cta_headline">Generate ✨</button>
+            <div id="final-cta-button" contenteditable="true" class="cta-button"></div>
+            <button class="gemini-btn mt-2" data-target="final-cta-button" data-prompt-type="cta_text">Generate ✨</button>
+        </section>
+
+        <!-- 9. FAQ Section -->
+        <section id="faq" class="section-card">
+            <h2>9. FAQ Section</h2>
+            <div class="space-y-4">
+                <details class="bg-gray-50 p-4 rounded-lg faq-item">
+                    <summary class="font-semibold cursor-pointer">
+                        <div id="faq-question-1" contenteditable="true" class="editable inline w-11/12" placeholder="Question 1: A common question?"></div>
+                    </summary>
+                    <div id="faq-answer-1" contenteditable="true" class="editable mt-2" placeholder="Answer 1: A clear, concise answer."></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="faq">Generate ✨</button>
+                </details>
+                <details class="bg-gray-50 p-4 rounded-lg faq-item">
+                    <summary class="font-semibold cursor-pointer">
+                        <div id="faq-question-2" contenteditable="true" class="editable inline w-11/12" placeholder="Question 2: Another common question?"></div>
+                    </summary>
+                    <div id="faq-answer-2" contenteditable="true" class="editable mt-2" placeholder="Answer 2: A clear, concise answer."></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="faq">Generate ✨</button>
+                </details>
+                <details class="bg-gray-50 p-4 rounded-lg faq-item">
+                    <summary class="font-semibold cursor-pointer">
+                        <div id="faq-question-3" contenteditable="true" class="editable inline w-11/12" placeholder="Question 3: Another common question?"></div>
+                    </summary>
+                    <div id="faq-answer-3" contenteditable="true" class="editable mt-2" placeholder="Answer 3: A clear, concise answer."></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="faq">Generate ✨</button>
+                </details>
+                <details class="bg-gray-50 p-4 rounded-lg faq-item">
+                    <summary class="font-semibold cursor-pointer">
+                        <div id="faq-question-4" contenteditable="true" class="editable inline w-11/12" placeholder="Question 4: Another common question?"></div>
+                    </summary>
+                    <div id="faq-answer-4" contenteditable="true" class="editable mt-2" placeholder="Answer 4: A clear, concise answer."></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="faq">Generate ✨</button>
+                </details>
+                <details class="bg-gray-50 p-4 rounded-lg faq-item">
+                    <summary class="font-semibold cursor-pointer">
+                        <div id="faq-question-5" contenteditable="true" class="editable inline w-11/12" placeholder="Question 5: Another common question?"></div>
+                    </summary>
+                    <div id="faq-answer-5" contenteditable="true" class="editable mt-2" placeholder="Answer 5: A clear, concise answer."></div>
+                    <button class="gemini-btn mt-2" data-prompt-type="faq">Generate ✨</button>
+                </details>
+            </div>
+        </section>
+
+        <!-- 10. AI Wireframe Generation -->
+        <section id="wireframe-generation" class="section-card">
+            <h2>10. AI Wireframe Generation</h2>
+            <p class="text-gray-500 -mt-4 mb-6">This section helps you generate a structural wireframe for your landing page. Select a type below, and the AI will create a visual layout concept based on the context you've provided.</p>
+            
+            <div id="wireframe-options">
+                <h3 class="mb-4">Select Landing Page Type:</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="competitor" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Competitor Page</span>
+                    </label>
+                     <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="advertorial" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Advertorial Page</span>
+                    </label>
+                     <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="collection" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Collection Page</span>
+                    </label>
+                     <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="product" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Product Page</span>
+                    </label>
+                     <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="multi-collection" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Multiplication of Collection</span>
+                    </label>
+                     <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="multi-product" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Multiplication of Product</span>
+                    </label>
+                     <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="generic" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Sales Page</span>
+                    </label>
+                     <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="blog" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Blog Page</span>
+                    </label>
+                    <label class="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 cursor-pointer">
+                        <input type="radio" name="pageType" value="generic-page" class="form-radio h-5 w-5 text-blue-600">
+                        <span>Generic Page</span>
+                    </label>
+                </div>
+
+                <!-- Sub-option for Competitor Page -->
+                <div id="competitor-sub-options" class="hidden mt-4 p-4 bg-gray-100 rounded-lg border">
+                    <h4 class="font-semibold mb-2">Competitor Comparison Perspective:</h4>
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="competitorPerspective" value="client" class="form-radio h-4 w-4 text-blue-600" checked="">
+                            <span>Written by the client</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="competitorPerspective" value="external" class="form-radio h-4 w-4 text-blue-600">
+                            <span>Written by an external party</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button id="generate-wireframe-btn" class="gemini-btn mt-6 flex items-center space-x-2">
+                 <span class="spinner"></span>
+                 <span>Generate Landing Page Wireframe 🎨</span>
+            </button>
+
+            <div id="wireframe-output-container" class="mt-6 border-t pt-6 hidden">
+                 <h3 class="mb-4">Generated Wireframe</h3>
+                 <div id="wireframe-output" class="border rounded-lg p-4 bg-gray-50 overflow-x-auto">
+                    <!-- The generated wireframe will be displayed here -->
+                 </div>
+            </div>
+        </section>
+
+        <!-- 11. Footer -->
+        <footer class="text-center py-8 text-gray-500">
+            <div class="mb-4">
+                 <span id="footer-link-1" contenteditable="true" class="editable inline-block mx-2" placeholder="Privacy Policy"></span> |
+                 <span id="footer-link-2" contenteditable="true" class="editable inline-block mx-2" placeholder="Terms of Service"></span> |
+                 <span id="footer-link-3" contenteditable="true" class="editable inline-block mx-2" placeholder="Contact Us"></span>
+                 <button class="gemini-btn ml-4" data-prompt-type="footer_links">Generate All ✨</button>
+            </div>
+            <div id="footer-copyright" contenteditable="true" class="editable inline-block" placeholder="© 2025 Your Company Name. All Rights Reserved."></div>
+            <button class="gemini-btn mt-2" data-target="footer-copyright" data-prompt-type="copyright">Generate ✨</button>
+        </footer>
+
+    </div>
+
+    <!-- Gemini Suggestions Modal -->
+    <div id="gemini-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-2xl font-bold mb-4" id="modal-title">AI Suggestions</h3>
+            <div id="modal-body">
+                <!-- Loading state -->
+                <div id="modal-loading" class="text-center">
+                    <svg class="animate-spin h-8 w-8 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    <p class="mt-2 text-gray-600">Generating ideas...</p>
+                </div>
+                <!-- Suggestions list -->
+                <div id="modal-suggestions"></div>
+                 <div id="modal-error" class="hidden text-red-500 text-center p-4"></div>
+            </div>
+            <button id="modal-close" class="mt-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg w-full">Close</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const saveButton = document.getElementById('saveButton');
+            const printButton = document.getElementById('printButton');
+            const autoGenerateAllButton = document.getElementById('auto-generate-all');
+            const uploadButton = document.getElementById('upload-button');
+            const fileInput = document.getElementById('file-input');
+            const fileListContainer = document.getElementById('file-list');
+            const briefUploadButton = document.getElementById('brief-upload-button');
+            const briefInput = document.getElementById('brief-input');
+            const briefTemplateUploadButton = document.getElementById('brief-template-upload-button');
+            const briefTemplateInput = document.getElementById('brief-template-input');
+            const addLinkBtn = document.getElementById('add-link-btn');
+            const additionalLinksContainer = document.getElementById('additional-links-container');
+            const addYoutubeLinkBtn = document.getElementById('add-youtube-link-btn');
+            const youtubeLinksContainer = document.getElementById('youtube-links-container');
+            // Wireframe section elements
+            const wireframeTypeRadios = document.querySelectorAll('input[name="pageType"]');
+            const competitorSubOptions = document.getElementById('competitor-sub-options');
+            const generateWireframeBtn = document.getElementById('generate-wireframe-btn');
+            const wireframeOutputContainer = document.getElementById('wireframe-output-container');
+            const wireframeOutput = document.getElementById('wireframe-output');
+
+            // Store original HTML for comparison buttons
+            const originalBriefUploadHTML = briefUploadButton ? briefUploadButton.innerHTML : '';
+            const originalBriefTemplateUploadHTML = briefTemplateUploadButton ? briefTemplateUploadButton.innerHTML : '';
+            
+            // New state variable for comparison
+            let briefForComparison = { fileA: null, fileB: null };
+
+
+            if (saveButton) {
+                saveButton.addEventListener('click', () => {
+                    const pageHTML = document.documentElement.outerHTML;
+                    const blob = new Blob([pageHTML], { type: 'text/html' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'landing-page-blueprint.html';
+                    a.click();
+                });
+            }
+
+            if (printButton) {
+                printButton.addEventListener('click', async () => {
+                    printButton.disabled = true;
+                    printButton.innerHTML = `
+                        <svg class="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        Saving PDF...
+                    `;
+                    
+                    const { jsPDF } = window.jspdf;
+                    const contentToCapture = document.querySelector('.container');
+                    
+                    const buttonsToHide = document.querySelectorAll('.gemini-btn, #saveButton, #printButton, .sticky.top-4, #upload-button, #brief-upload-button');
+                    buttonsToHide.forEach(btn => btn.style.visibility = 'hidden');
+
+                    // Scroll to the top of the page to ensure html2canvas captures everything correctly.
+                    window.scrollTo(0, 0);
+
+                    try {
+                        const canvas = await html2canvas(contentToCapture, {
+                            scale: 2,
+                            useCORS: true,
+                            logging: false,
+                        });
+                        
+                        const imgData = canvas.toDataURL('image/png');
+                        const imgWidth = canvas.width;
+                        const imgHeight = canvas.height;
+                        
+                        // Create a PDF with standard A4 pages
+                        const pdf = new jsPDF({
+                            orientation: 'portrait',
+                            unit: 'px',
+                            format: 'a4'
+                        });
+
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = pdf.internal.pageSize.getHeight();
+                        const ratio = imgWidth / pdfWidth;
+                        const scaledImgHeight = imgHeight / ratio;
+
+                        // Get the y-positions of all sections to make smart page breaks
+                        const sectionElements = document.querySelectorAll('.container > header, .container > section, .container > footer');
+                        const sectionBreakPoints = Array.from(sectionElements).map(el => {
+                            // Calculate the element's top offset relative to the captured container
+                            return (el.offsetTop - contentToCapture.offsetTop) / ratio;
+                        });
+
+                        let yPositionInImage = 0;
+                        let isFirstPage = true;
+
+                        while (yPositionInImage < scaledImgHeight) {
+                            if (!isFirstPage) {
+                                pdf.addPage();
+                            }
+
+                            // Determine the maximum possible end point for the content on this page.
+                            let pageEndPoint = yPositionInImage + pdfHeight;
+
+                            // If the end point is beyond the image, just clip to the end of the image.
+                            if (pageEndPoint > scaledImgHeight) {
+                                pageEndPoint = scaledImgHeight;
+                            } else {
+                                // Find the best place to break the page to avoid splitting sections.
+                                // We find the last section that STARTS before our theoretical page end.
+                                let bestBreakPoint = yPositionInImage; // Default to a hard break if no better option
+                                for (const point of sectionBreakPoints) {
+                                    // If a section starts after our current position and before the proposed end point
+                                    if (point > yPositionInImage && point < pageEndPoint) {
+                                        // This is a candidate for where the next page should start, so we break before it.
+                                        bestBreakPoint = point;
+                                    }
+                                }
+                                
+                                // If we found a good break point, use it. Otherwise, do a hard break (for sections taller than a page).
+                                if (bestBreakPoint > yPositionInImage) {
+                                     pageEndPoint = bestBreakPoint;
+                                }
+                            }
+                            
+                            // Add the clipped image portion for the current page
+                            pdf.addImage(imgData, 'PNG', 0, -yPositionInImage, pdfWidth, scaledImgHeight);
+                            
+                            // Move to the next slice of the image
+                            yPositionInImage = pageEndPoint;
+                            isFirstPage = false;
+                        }
+                        
+                        pdf.save('landing-page-blueprint.pdf');
+
+                    } catch (error) {
+                        console.error("Error generating PDF:", error);
+                        alert("Sorry, an error occurred while generating the PDF.");
+                    } finally {
+                        buttonsToHide.forEach(btn => btn.style.visibility = 'visible');
+                        printButton.disabled = false;
+                        printButton.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 6.586a2 2 0 00-2.828 0L12 9.172V4a1 1 0 10-2 0v5.172L7.414 6.586a2 2 0 00-2.828 2.828l5 5a2 2 0 002.828 0l5-5a2 2 0 000-2.828zM4 18a1 1 0 01-1-1v-4a1 1 0 112 0v4a1 1 0 01-1 1z" /></svg>
+                            Save as PDF
+                        `;
+                    }
+                });
+            }
+
+            if(addLinkBtn) {
+                addLinkBtn.addEventListener('click', () => addLinkInput(additionalLinksContainer, 'https://another-resource.com'));
+            }
+            
+            if(addYoutubeLinkBtn) {
+                addYoutubeLinkBtn.addEventListener('click', () => addLinkInput(youtubeLinksContainer, 'https://youtube.com/watch?v=...'));
+            }
+
+            if (uploadButton) {
+                uploadButton.addEventListener('click', () => fileInput.click());
+                fileInput.addEventListener('change', handleFileUploads);
+            }
+
+            if (briefUploadButton) {
+                briefUploadButton.addEventListener('click', () => briefInput.click());
+                briefInput.addEventListener('change', (e) => handleComparisonFileUpload(e, 'A'));
+            }
+
+            if (briefTemplateUploadButton) {
+                briefTemplateUploadButton.addEventListener('click', () => briefTemplateInput.click());
+                briefTemplateInput.addEventListener('change', (e) => handleComparisonFileUpload(e, 'B'));
+            }
+
+            function addLinkInput(container, placeholder) {
+                const linkItem = document.createElement('div');
+                linkItem.className = 'flex items-center space-x-2 additional-link-item';
+                linkItem.innerHTML = `
+                    <div contenteditable="true" class="editable w-full" placeholder="${placeholder}"></div>
+                    <button class="remove-link-btn bg-red-500 hover:bg-red-600 text-white p-2 rounded-full flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                `;
+                container.appendChild(linkItem);
+                linkItem.querySelector('.remove-link-btn').addEventListener('click', () => {
+                    linkItem.remove();
+                });
+            }
+
+            function showTempError(element, message) {
+                const originalBorder = element.style.border;
+                element.style.border = '2px solid #ef4444'; // red-500
+                
+                let errorMsg = element.parentNode.querySelector('.error-message');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('p');
+                    errorMsg.className = 'error-message text-red-500 text-sm mt-2 font-medium';
+                    element.parentNode.insertBefore(errorMsg, element.nextSibling);
+                }
+                errorMsg.textContent = message;
+
+                setTimeout(() => {
+                    element.style.border = originalBorder;
+                    errorMsg.remove();
+                }, 3000);
+            }
+
+            if(wireframeTypeRadios.length > 0) {
+                wireframeTypeRadios.forEach(radio => {
+                    radio.addEventListener('change', (event) => {
+                        if (event.target.value === 'competitor') {
+                            competitorSubOptions.classList.remove('hidden');
+                        } else {
+                            competitorSubOptions.classList.add('hidden');
+                        }
+                    });
+                });
+            }
+            
+            if(generateWireframeBtn){
+                generateWireframeBtn.addEventListener('click', async () => {
+                    const selectedType = document.querySelector('input[name="pageType"]:checked');
+                    if (!selectedType) {
+                        showTempError(document.getElementById('wireframe-options'), 'Please select a landing page type first.');
+                        return;
+                    }
+
+                    const context = getAdditionalContext();
+                    if (!context) {
+                         showTempError(document.getElementById('content-context'), "Please provide some context in Section 1 (link, text, or file) before generating.");
+                        return;
+                    }
+
+                    generateWireframeBtn.classList.add('loading');
+                    generateWireframeBtn.disabled = true;
+                    wireframeOutputContainer.classList.remove('hidden');
+                    wireframeOutput.innerHTML = `<div class="text-center p-8"><svg class="animate-spin h-8 w-8 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-2 text-gray-600">Building wireframe...</p></div>`;
+
+                    try {
+                        const pageType = selectedType.value;
+                        const pageTypeName = selectedType.nextElementSibling.textContent.trim();
+                        let competitorPerspective = '';
+                        if(pageType === 'competitor') {
+                            const selectedPerspective = document.querySelector('input[name="competitorPerspective"]:checked');
+                            competitorPerspective = `The comparison should be written from the perspective of: ${selectedPerspective.nextElementSibling.textContent.trim()}.`;
+                        }
+                        
+                        const prompt = `You are a UI/UX designer. Based on the following context:\n${context}\n\nGenerate a simple HTML wireframe for a "${pageTypeName}" landing page. ${competitorPerspective} Use simple div elements with Tailwind CSS classes for layout (flex, grid), gray backgrounds (e.g., bg-gray-200), borders, and placeholder text (e.g., "[Hero Image]", "[Headline]"). The wireframe should visually represent the structure and key components of the page. Do not include any <style> or <script> tags, or the <html>, <head>, <body> tags. Provide only the raw HTML for the page structure itself, starting with a main container div. Cleanly format the code.`;
+                        
+                        const wireframeHtml = await callGeminiApi(prompt, true);
+                        wireframeOutput.innerHTML = wireframeHtml;
+
+                    } catch (error) {
+                        console.error("Error generating wireframe:", error);
+                        wireframeOutput.innerHTML = `<div class="text-red-500 text-center p-4">An error occurred while generating the wireframe. Please try again.</div>`;
+                    } finally {
+                        generateWireframeBtn.classList.remove('loading');
+                        generateWireframeBtn.disabled = false;
+                    }
+                });
+            }
+
+            async function performComparison() {
+                const pastedContent = document.getElementById('pasted-content');
+                pastedContent.innerText = 'Comparing documents and generating brief...';
+
+                try {
+                    const prompt = `You are a strategic analyst. Compare the following two document summaries and identify the key differences. Frame these differences as a concise briefing document with actionable key points. The briefing doc should be formatted neatly with markdown to be pasted into a notes field.
+
+**Document 1 Summary (${briefForComparison.fileA.name}):**
+${briefForComparison.fileA.summary}
+
+**Document 2 Summary (${briefForComparison.fileB.name}):**
+${briefForComparison.fileB.summary}
+
+Generate the comparison briefing document now.`;
+
+                    const comparisonBrief = await callGeminiApi(prompt, true);
+                    pastedContent.innerText = `--- AI Briefing: ${briefForComparison.fileA.name} vs ${briefForComparison.fileB.name} ---\n\n` + comparisonBrief;
+
+                } catch(error) {
+                    console.error("Error performing comparison:", error);
+                    pastedContent.innerText = "An error occurred during comparison. Please try again.";
+                } finally {
+                     // Reset state and UI
+                    briefForComparison.fileA = null;
+                    briefForComparison.fileB = null;
+
+                    if(briefUploadButton) {
+                        briefUploadButton.innerHTML = originalBriefUploadHTML;
+                        briefUploadButton.disabled = false;
+                    }
+                    if(briefTemplateUploadButton) {
+                        briefTemplateUploadButton.innerHTML = originalBriefTemplateUploadHTML;
+                        briefTemplateUploadButton.disabled = false;
+                    }
+                }
+            }
+
+            async function handleComparisonFileUpload(event, fileType) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const button = fileType === 'A' ? briefUploadButton : briefTemplateUploadButton;
+                
+                button.disabled = true;
+                button.innerHTML = `
+                    <svg class="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    Processing...
+                `;
+
+                try {
+                    const existingContext = getAdditionalContext();
+                    const prompt = `You are a marketing analyst. A user has uploaded a document named "${file.name}". Based on this name and any existing context, generate a concise summary of what this document likely contains. This summary will be used to compare against another document.
+
+**Existing Context:**
+${existingContext || "No other context provided."}
+
+Generate the summary now.`;
+
+                    const summary = await callGeminiApi(prompt, true);
+
+                    if (fileType === 'A') {
+                        briefForComparison.fileA = { name: file.name, summary: summary };
+                    } else {
+                        briefForComparison.fileB = { name: file.name, summary: summary };
+                    }
+                    
+                    button.innerHTML = `<span class="truncate">✓ ${file.name}</span>`;
+                    button.disabled = false;
+
+                    if (briefForComparison.fileA && briefForComparison.fileB) {
+                        await performComparison();
+                    }
+
+                } catch (error) {
+                    console.error("Error processing brief file:", error);
+                    button.innerHTML = 'Error. Try Again.';
+                    setTimeout(() => {
+                        button.innerHTML = fileType === 'A' ? originalBriefUploadHTML : originalBriefTemplateUploadHTML;
+                        button.disabled = false;
+                    }, 3000);
+                }
+            }
+
+
+            async function handleBriefUploads(event) {
+                const files = event.target.files;
+                if (!files) return;
+
+                for (const file of files) {
+                    const fileId = `file-${Math.random().toString(36).substr(2, 9)}`;
+                    const fileItem = document.createElement('div');
+                    fileItem.id = fileId;
+                    fileItem.className = 'p-2 border rounded-lg bg-blue-50 text-center';
+                    fileItem.innerHTML = `
+                        <p class="text-sm font-medium truncate" title="${file.name}">${file.name}</p>
+                        <p class="text-xs text-blue-600 flex items-center justify-center">
+                            <svg class="animate-spin h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            Generating Brief...
+                        </p>
+                    `;
+                    fileListContainer.appendChild(fileItem);
+
+                    try {
+                        // Since we can't read the file content directly, we use its name and existing context to generate a plausible brief.
+                        const existingContext = getAdditionalContext();
+                        const prompt = `You are a marketing analyst. A user has uploaded a document named "${file.name}". Based on the following existing context about a product, generate a comprehensive "Briefing Doc" summary, similar to one you would find in NotebookLM. This summary should act as if it were extracted from the uploaded document, covering key aspects like target audience, main features, value proposition, and marketing goals. The summary will be pasted into a notes field to guide further AI-powered landing page creation.
+
+**Existing Context:**
+${existingContext || "No other context provided."}
+
+Generate the briefing document now.`;
+
+                        const briefingText = await callGeminiApi(prompt, true);
+
+                        const pastedContent = document.getElementById('pasted-content');
+                        const separator = `\n\n--- AI-Generated Briefing Doc from ${file.name} ---\n`;
+                        pastedContent.innerText = separator + briefingText + "\n\n" + pastedContent.innerText;
+                        
+                        const successElement = document.getElementById(fileId);
+                        if(successElement){
+                             successElement.querySelector('p:last-child').innerHTML = `<span class="text-green-600 font-semibold">Brief Generated & Added</span>`;
+                        }
+
+                    } catch (error) {
+                        console.error("Error generating briefing doc:", error);
+                        const errorElement = document.getElementById(fileId);
+                        if(errorElement){
+                            errorElement.querySelector('p:last-child').innerHTML = `<span class="text-red-600 font-semibold">Generation Failed</span>`;
+                        }
+                    }
+                }
+            }
+
+            function handleFileUploads(event) {
+                const files = event.target.files;
+                if (!files) return;
+
+                // fileListContainer.innerHTML = ''; // Clear previous uploads for simplicity
+
+                for (const file of files) {
+                    const reader = new FileReader();
+                    
+                    if (file.type.startsWith('text/')) {
+                        reader.onload = (e) => {
+                            const pastedContent = document.getElementById('pasted-content');
+                            const fileContent = e.target.result;
+                            const separator = `\n\n--- Content from ${file.name} ---\n`;
+                            pastedContent.innerText += separator + fileContent;
+
+                            const fileItem = document.createElement('div');
+                            fileItem.className = 'p-2 border rounded-lg bg-gray-50 text-center';
+                            fileItem.innerHTML = `<p class="text-sm font-medium truncate">${file.name}</p><p class="text-xs text-green-600">Text added</p>`;
+                            fileListContainer.appendChild(fileItem);
+                        };
+                        reader.readAsText(file);
+                    } else if (file.type.startsWith('image/')) {
+                         reader.onload = (e) => {
+                            const fileItem = document.createElement('div');
+                            fileItem.className = 'p-2 border rounded-lg bg-gray-50 text-center';
+                            fileItem.innerHTML = `
+                                <img src="${e.target.result}" alt="${file.name}" class="w-full h-20 object-cover rounded-md mb-2">
+                                <p class="text-xs font-medium truncate">${file.name}</p>
+                            `;
+                            fileListContainer.appendChild(fileItem);
+                        };
+                        reader.readAsDataURL(file);
+                    } else if (file.type.startsWith('video/')) {
+                        reader.onload = (e) => {
+                            const fileItem = document.createElement('div');
+                            fileItem.className = 'p-2 border rounded-lg bg-gray-50 text-center';
+                            fileItem.innerHTML = `
+                                <video src="${e.target.result}" controls class="w-full h-20 object-cover rounded-md mb-2"></video>
+                                <p class="text-xs font-medium truncate">${file.name}</p>
+                            `;
+                            fileListContainer.appendChild(fileItem);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        // For other file types, just show the name
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'p-2 border rounded-lg bg-gray-50 text-center';
+                        fileItem.innerHTML = `<p class="text-sm font-medium truncate">${file.name}</p><p class="text-xs text-gray-500">File ready</p>`;
+                        fileListContainer.appendChild(fileItem);
+                    }
+                }
+            }
+
+            // Gemini Modal Logic
+            const modal = document.getElementById('gemini-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalLoading = document.getElementById('modal-loading');
+            const modalSuggestions = document.getElementById('modal-suggestions');
+            const modalError = document.getElementById('modal-error');
+            const modalClose = document.getElementById('modal-close');
+            let currentTargetElement = null;
+            let currentTargetCard = null;
+
+            const openModal = () => {
+                modalSuggestions.innerHTML = '';
+                modalError.classList.add('hidden');
+                modalLoading.style.display = 'block';
+                modal.classList.add('active');
+            };
+
+            const closeModal = () => {
+                modal.classList.remove('active');
+            };
+            
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) closeModal();
+            });
+
+            document.querySelectorAll('.gemini-btn').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const btn = e.currentTarget;
+                    const promptType = btn.dataset.promptType;
+                    
+                    if (!promptType) return; // Not a single-field generator button
+                    if (btn.id === 'auto-generate-all' || btn.id === 'generate-wireframe-btn') return; // Handled separately
+
+                    const targetId = btn.dataset.target;
+                    currentTargetElement = targetId ? document.getElementById(targetId) : btn.previousElementSibling;
+                    currentTargetCard = btn.closest('.testimonial-card, .faq-item');
+                    
+                    const prompt = buildPrompt(promptType, btn);
+
+                    if (!prompt) {
+                         if (!getAdditionalContext()){
+                            alert("Please provide some context in Section 1 (link, text, or file) before generating suggestions.");
+                         }
+                        return;
+                    }
+                    
+                    openModal();
+
+                    try {
+                        const suggestions = await callGeminiApi(prompt);
+                        displaySuggestions(suggestions, promptType);
+                    } catch (error) {
+                        console.error("Error fetching suggestions:", error);
+                        displayError("An error occurred while fetching suggestions. Please try again.");
+                    }
+                });
+            });
+
+            // Auto-Generate All Logic
+            autoGenerateAllButton.addEventListener('click', async () => {
+                const context = getAdditionalContext();
+                if (!context) {
+                    alert("Please provide some context in Section 1 (link, text, or file) before generating the blueprint.");
+                    return;
+                }
+
+                autoGenerateAllButton.classList.add('loading');
+                autoGenerateAllButton.disabled = true;
+
+                try {
+                    const prompt = buildAutoGeneratePrompt();
+                    const fullContent = await callGeminiApi(prompt, true);
+                    parseAndPopulateContent(fullContent);
+                } catch (error) {
+                    console.error("Error during auto-generation:", error);
+                    alert("An error occurred while generating content. Please try again.");
+                } finally {
+                    autoGenerateAllButton.classList.remove('loading');
+                    autoGenerateAllButton.disabled = false;
+                }
+            });
+
+            function getAdditionalContext() {
+                const website = document.getElementById('website-link').innerText.trim();
+                const pasted = document.getElementById('pasted-content').innerText.trim();
+                let context = '';
+                if (website) context += `\n- Primary Product Website: ${website}`;
+
+                document.querySelectorAll('#youtube-links-container .editable').forEach((linkEl, index) => {
+                    const linkText = linkEl.innerText.trim();
+                    if(linkText) {
+                        context += `\n- YouTube Video ${index + 1}: ${linkText}`;
+                    }
+                });
+                
+                document.querySelectorAll('#additional-links-container .editable').forEach((linkEl, index) => {
+                    const linkText = linkEl.innerText.trim();
+                    if(linkText) {
+                        context += `\n- Additional Resource Link ${index + 1}: ${linkText}`;
+                    }
+                });
+
+                if (pasted) context += `\n- Additional Notes/Copy: "${pasted}"`;
+                return context ? `\n\n**Source Context Provided:**${context}` : '';
+            }
+            
+            function getCoreStrategyContext() {
+                 const audience = document.getElementById('target-audience').innerText.trim();
+                const goal = document.getElementById('primary-goal').innerText.trim();
+                const uvp = document.getElementById('uvp').innerText.trim();
+                let strategyContext = '';
+                if(audience) strategyContext += `\n- Target Audience: "${audience}"`;
+                if(goal) strategyContext += `\n- Goal: "${goal}"`;
+                if(uvp) strategyContext += `\n- UVP: "${uvp}"`;
+                return strategyContext ? `\n\n**Core Strategy (if available):**${strategyContext}`: '';
+            }
+
+            function buildAutoGeneratePrompt() {
+                const context = getAdditionalContext();
+                const coreStrategy = getCoreStrategyContext();
+                
+                return `You are an expert copywriter and marketing strategist. Your task is to generate a complete landing page blueprint based on the provided context.
+
+**Source Context Provided:**
+${context}
+${coreStrategy}
+
+Please generate content for all the following sections. Use the provided labels exactly as they are written below. Ensure each piece of content is concise and compelling.
+
+[TARGET_AUDIENCE]
+A single, specific sentence describing the target audience.
+[/TARGET_AUDIENCE]
+
+[PRIMARY_GOAL]
+An action-oriented phrase for the primary goal.
+[/PRIMARY_GOAL]
+
+[UVP]
+A compelling Unique Value Proposition in one sentence.
+[/UVP]
+
+[HERO_HEADLINE]
+A compelling, attention-grabbing headline under 12 words.
+[/HERO_HEADLINE]
+
+[HERO_SUBHEADLINE]
+A short, clarifying sub-headline.
+[/HERO_SUBHEADLINE]
+
+[HERO_CTA]
+A short, action-oriented call-to-action button text (2-4 words).
+[/HERO_CTA]
+
+[VISUAL_CONCEPT]
+A brief description of the main hero image or video.
+[/VISUAL_CONCEPT]
+
+[PROBLEM]
+A clear statement of the pain point the audience experiences.
+[/PROBLEM]
+
+[SOLUTION]
+An introduction of the product/service as the solution.
+[/SOLUTION]
+
+[FEATURE_NAME_1]
+Name of the first key feature.
+[/FEATURE_NAME_1]
+
+[BENEFIT_TEXT_1]
+The primary benefit of the first feature.
+[/BENEFIT_TEXT_1]
+
+[FEATURE_NAME_2]
+Name of the second key feature.
+[/FEATURE_NAME_2]
+
+[BENEFIT_TEXT_2]
+The primary benefit of the second feature.
+[/BENEFIT_TEXT_2]
+
+[FEATURE_NAME_3]
+Name of the third key feature.
+[/FEATURE_NAME_3]
+
+[BENEFIT_TEXT_3]
+The primary benefit of the third feature.
+[/BENEFIT_TEXT_3]
+
+[TESTIMONIAL_1]
+Format: "Quote from a happy customer." - Customer Name, Title/Company
+[/TESTIMONIAL_1]
+
+[TESTIMONIAL_2]
+Format: "Another quote from a happy customer." - Customer Name, Title/Company
+[/TESTIMONIAL_2]
+
+[HOW_IT_WORKS_STEP_1]
+A 3-5 word description for the first step.
+[/HOW_IT_WORKS_STEP_1]
+
+[HOW_IT_WORKS_STEP_2]
+A 3-5 word description for the second step.
+[/HOW_IT_WORKS_STEP_2]
+
+[HOW_IT_WORKS_STEP_3]
+A 3-5 word description for the third step.
+[/HOW_IT_WORKS_STEP_3]
+
+[FINAL_CTA_HEADLINE]
+A final, persuasive headline to encourage action.
+[/FINAL_CTA_HEADLINE]
+
+[FINAL_CTA_BUTTON]
+Repeat the primary CTA text.
+[/FINAL_CTA_BUTTON]
+
+[FAQ_1]
+Format: Q: A common question? A: A clear, concise answer.
+[/FAQ_1]
+
+[FAQ_2]
+Format: Q: Another common question? A: A clear, concise answer.
+[/FAQ_2]
+
+[FOOTER_LINKS]
+Format: Link 1, Link 2, Link 3
+[/FOOTER_LINKS]
+
+[FOOTER_COPYRIGHT]
+A standard website copyright notice for the current year. Use "[Company Name]" as a placeholder.
+[/FOOTER_COPYRIGHT]
+`;
+            }
+
+            function parseAndPopulateContent(content) {
+                const sectionMapping = {
+                    'TARGET_AUDIENCE': 'target-audience',
+                    'PRIMARY_GOAL': 'primary-goal',
+                    'UVP': 'uvp',
+                    'HERO_HEADLINE': 'hero-headline',
+                    'HERO_SUBHEADLINE': 'hero-subheadline',
+                    'HERO_CTA': 'hero-cta',
+                    'VISUAL_CONCEPT': 'visual-concept',
+                    'PROBLEM': 'problem',
+                    'SOLUTION': 'solution',
+                    'FEATURE_NAME_1': 'feature-name-1',
+                    'BENEFIT_TEXT_1': 'benefit-text-1',
+                    'FEATURE_NAME_2': 'feature-name-2',
+                    'BENEFIT_TEXT_2': 'benefit-text-2',
+                    'FEATURE_NAME_3': 'feature-name-3',
+                    'BENEFIT_TEXT_3': 'benefit-text-3',
+                    'HOW_IT_WORKS_STEP_1': 'step-1',
+                    'HOW_IT_WORKS_STEP_2': 'step-2',
+                    'HOW_IT_WORKS_STEP_3': 'step-3',
+                    'FINAL_CTA_HEADLINE': 'final-cta-headline',
+                    'FINAL_CTA_BUTTON': 'final-cta-button',
+                    'FOOTER_COPYRIGHT': 'footer-copyright'
+                };
+
+                const extract = (tag) => {
+                    const regex = new RegExp(`\\[${tag}\\]([\\s\\S]*?)\\[/${tag}\\]`, 'i');
+                    const match = content.match(regex);
+                    return match ? match[1].trim() : '';
+                };
+
+                for (const [tag, id] of Object.entries(sectionMapping)) {
+                    const text = extract(tag);
+                    const element = document.getElementById(id);
+                    if (element && text) {
+                        element.innerText = text;
+                    }
+                }
+
+                // Handle special cases
+                // Testimonials
+                const testimonial1 = extract('TESTIMONIAL_1');
+                if (testimonial1) {
+                    const match = testimonial1.match(/"(.*?)"\s*-\s*(.*?),\s*(.*)/);
+                    if (match) {
+                        document.getElementById('testimonial-quote-1').innerText = match[1] || '';
+                        document.getElementById('testimonial-name-1').innerText = match[2] || '';
+                        document.getElementById('testimonial-title-1').innerText = match[3] || '';
+                    }
+                }
+                const testimonial2 = extract('TESTIMONIAL_2');
+                 if (testimonial2) {
+                    const match = testimonial2.match(/"(.*?)"\s*-\s*(.*?),\s*(.*)/);
+                    if (match) {
+                        document.getElementById('testimonial-quote-2').innerText = match[1] || '';
+                        document.getElementById('testimonial-name-2').innerText = match[2] || '';
+                        document.getElementById('testimonial-title-2').innerText = match[3] || '';
+                    }
+                }
+
+                // FAQs
+                const faq1 = extract('FAQ_1');
+                if (faq1) {
+                    const match = faq1.match(/Q:\s*(.*?)\s*A:\s*(.*)/s);
+                    if (match) {
+                        document.getElementById('faq-question-1').innerText = match[1].trim() || '';
+                        document.getElementById('faq-answer-1').innerText = match[2].trim() || '';
+                    }
+                }
+                const faq2 = extract('FAQ_2');
+                if (faq2) {
+                    const match = faq2.match(/Q:\s*(.*?)\s*A:\s*(.*)/s);
+                    if (match) {
+                        document.getElementById('faq-question-2').innerText = match[1].trim() || '';
+                        document.getElementById('faq-answer-2').innerText = match[2].trim() || '';
+                    }
+                }
+                
+                // Footer Links
+                const footerLinks = extract('FOOTER_LINKS');
+                if (footerLinks) {
+                    const links = footerLinks.split(',').map(l => l.trim());
+                    if (links.length >= 3) {
+                        document.getElementById('footer-link-1').innerText = links[0];
+                        document.getElementById('footer-link-2').innerText = links[1];
+                        document.getElementById('footer-link-3').innerText = links[2];
+                    }
+                }
+            }
+
+
+            function buildPrompt(type, buttonElement) {
+                const additionalContext = getAdditionalContext();
+                if (!additionalContext) return null; // Not enough context
+                
+                const coreStrategyContext = getCoreStrategyContext();
+
+                const basePrompt = `You are an expert copywriter. Based on the following context:\n${additionalContext}${coreStrategyContext}\n\n`;
+
+                switch(type) {
+                    case 'target_audience':
+                        modalTitle.innerText = "✨ Target Audience Ideas";
+                        return basePrompt + `Analyze the source context and describe the most likely target audience in a single, specific sentence. Generate 3 variations.`;
+                    case 'primary_goal':
+                        modalTitle.innerText = "✨ Primary Goal Ideas";
+                        return basePrompt + `Based on the source context, what is the most logical primary goal or call-to-action for the landing page? Describe it in an action-oriented phrase (e.g., "Sign up for a free trial"). Generate 3 variations.`;
+                    case 'uvp':
+                        modalTitle.innerText = "✨ UVP Suggestions";
+                        return basePrompt + `Analyze the source context and write a compelling Unique Value Proposition (UVP) in one sentence. Generate 3 variations.`;
+                    case 'headline':
+                        modalTitle.innerText = "✨ Headline Suggestions";
+                        return basePrompt + `Generate 5 compelling, attention-grabbing headlines. Keep them under 12 words.`;
+                    case 'subheadline':
+                        const headline = document.getElementById('hero-headline').innerText.trim();
+                        modalTitle.innerText = "✨ Sub-headline Suggestions";
+                        return basePrompt + `The main headline is "${headline || '[No Headline Yet]'}". Generate 5 short, clarifying sub-headlines that add context.`;
+                    case 'cta_text':
+                         modalTitle.innerText = "✨ CTA Button Text";
+                         return basePrompt + `Generate 5 action-oriented, compelling call-to-action button texts. Keep them short (2-4 words).`;
+                    case 'visual_concept':
+                        modalTitle.innerText = "✨ Visual Concept Ideas";
+                        return basePrompt + `Describe 3 distinct visual concepts for the hero section. Think about images, videos, or animations.`;
+                    case 'problem':
+                        modalTitle.innerText = "✨ Problem Statement Ideas";
+                        return basePrompt + `Describe a common, relatable problem or pain point for the inferred target audience that the product can solve. Generate 3 variations of this problem statement.`;
+                    case 'solution':
+                         modalTitle.innerText = "✨ Solution Statement Ideas";
+                        const problem = document.getElementById('problem').innerText.trim();
+                        return basePrompt + `The problem is "${problem || '[No Problem Stated Yet]'}". Introduce a solution in an inspiring way. Generate 3 variations of this solution statement.`;
+                    case 'benefit':
+                         modalTitle.innerText = "✨ Benefit Suggestions";
+                        const featureCard = buttonElement.closest('.bg-gray-50');
+                        const featureName = featureCard.querySelector('.feature-name').innerText.trim();
+                        if (!featureName) {
+                            displayError("Please provide a name for the feature first.");
+                            return null;
+                        }
+                        return basePrompt + `A feature is named "${featureName}". Explain its primary benefit for the user. Focus on the outcome and value, not the technical function. Generate 3 compelling benefit statements.`;
+                    case 'testimonial':
+                        modalTitle.innerText = "✨ Testimonial Ideas";
+                        return basePrompt + `Write 3 authentic-sounding customer testimonials. The customer should sound like they are part of the inferred target audience. Format each as: "Quote" - Name, Title/Company`;
+                    case 'how_it_works_step':
+                        modalTitle.innerText = "✨ 'How It Works' Step Ideas";
+                        return basePrompt + `Suggest 5 simple, clear, and action-oriented steps for a 'How It Works' section. Keep each step to 3-5 words.`;
+                    case 'final_cta_headline':
+                        modalTitle.innerText = "✨ Final CTA Headline";
+                        return basePrompt + `Write 3 persuasive final call-to-action headlines to encourage users to take action.`;
+                    case 'faq':
+                        modalTitle.innerText = "✨ FAQ Ideas";
+                        return basePrompt + `Generate 2 common questions and their concise answers for the product. Format each as: Q: [Question] A: [Answer]`;
+                    case 'footer_links':
+                        modalTitle.innerText = "✨ Common Footer Links";
+                        return `List the 3 most essential links for a website footer, separated by commas. e.g., Privacy Policy, Terms of Service, Contact Us`;
+                    case 'copyright':
+                        modalTitle.innerText = "✨ Copyright Text";
+                        const year = new Date().getFullYear();
+                        return `Generate 3 variations of a standard website copyright notice for the year ${year}. Use "[Company Name]" as a placeholder.`;
+                    default:
+                        return '';
+                }
+            }
+
+            async function callGeminiApi(prompt, isSingleResponse = false) {
+                const apiKey = ""; // Leave as-is, the environment will handle it.
+                // The API key parameter is removed from the URL; the execution environment will inject it.
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                };
+
+                let lastError = new Error('API call failed after all retries.');
+
+                for (let attempt = 0; attempt < 4; attempt++) {
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (response.ok) {
+                            const result = await response.json();
+                            const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                            if (!text) {
+                                // Successful response, but no content. Treat as final.
+                                throw new Error("No text found in API response.");
+                            }
+                            
+                            if (isSingleResponse) {
+                                return text;
+                            }
+                            return text.split('\n').map(s => s.trim().replace(/^\d+\.\s*/, '')).filter(s => s);
+                        }
+
+                        // For non-retryable errors (4xx except 429), throw immediately.
+                        if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+                            throw new Error(`API call failed with status: ${response.status}`);
+                        }
+
+                        // For retryable errors (5xx, 429), let the loop continue after a delay.
+                        lastError = new Error(`API call failed with status: ${response.status}`);
+
+                    } catch (error) {
+                        lastError = error;
+                        // If the error is a non-retryable one we threw, rethrow to exit the loop.
+                        if (error.message.includes("status: 400") || 
+                            error.message.includes("status: 401") ||
+                            error.message.includes("status: 403") ||
+                            error.message.includes("status: 404")
+                            ) {
+                            throw lastError;
+                        }
+                    }
+                    
+                    if (attempt < 3) { // Don't wait after the last attempt
+                         const delay = Math.pow(2, attempt) * 1000 + Math.random() * 200; // Exponential backoff with jitter
+                         await new Promise(res => setTimeout(res, delay));
+                    }
+                }
+                
+                throw lastError;
+            }
+
+            function displaySuggestions(suggestions, promptType) {
+                modalLoading.style.display = 'none';
+                modalSuggestions.innerHTML = '';
+                suggestions.forEach(text => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    div.textContent = text;
+                    div.addEventListener('click', () => {
+                        if (promptType === 'testimonial') {
+                            const match = text.match(/"(.*?)"\s*-\s*(.*?),\s*(.*)/);
+                            if (match && currentTargetCard) {
+                                currentTargetCard.querySelector('.editable.inline').innerText = match[1] || '';
+                                currentTargetCard.querySelector('.editable.inline-block.w-1\\/4').innerText = match[2] || '';
+                                currentTargetCard.querySelector('.editable.inline-block.w-1\\/3').innerText = match[3] || '';
+                            }
+                        } else if (promptType === 'faq') {
+                            const match = text.match(/Q:\s*(.*?)\s*A:\s*(.*)/);
+                             if (match && currentTargetCard) {
+                                currentTargetCard.querySelector('[id^="faq-question"]').innerText = match[1] || '';
+                                currentTargetCard.querySelector('[id^="faq-answer"]').innerText = match[2] || '';
+                            }
+                        } else if (promptType === 'footer_links') {
+                            const links = text.split(',').map(l => l.trim());
+                            document.getElementById('footer-link-1').innerText = links[0] || '';
+                            document.getElementById('footer-link-2').innerText = links[1] || '';
+                            document.getElementById('footer-link-3').innerText = links[2] || '';
+                        }
+                        else if (currentTargetElement) {
+                            currentTargetElement.innerText = text;
+                        }
+                        closeModal();
+                    });
+                    modalSuggestions.appendChild(div);
+                });
+            }
+
+            function displayError(message) {
+                 modalLoading.style.display = 'none';
+                 modalError.classList.remove('hidden');
+                 modalError.textContent = message;
+            }
+
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+</body></html>
