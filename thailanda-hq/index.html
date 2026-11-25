@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thailanda HQ</title>
+<meta name="theme-color" content="#e4572e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+:root{
+  --bg:#fbf7f1; --ink:#1f2328; --muted:#5d6470; --card:#fff; --line:#ece4d8;
+  --gold:#d99a2b; --teal:#0f8b8d; --coral:#e4572e; --navy:#163a5f; --soft:#fff4e0; --plum:#7b2d5b;
+  --r:16px; --tabh:64px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;padding-bottom:calc(var(--tabh) + env(safe-area-inset-bottom) + 12px)}
+a{color:var(--teal);font-weight:600;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+/* header */
+header{background:linear-gradient(160deg,#f6b26b 0%,#e4572e 55%,#7b2d5b 100%);color:#fff;padding:calc(env(safe-area-inset-top) + 14px) 0 18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-weight:800;font-size:18px;letter-spacing:.02em}
+.sync{font-size:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.sync.off{background:rgba(0,0,0,.25)}
+.me{display:flex;gap:4px;background:rgba(255,255,255,.16);border-radius:999px;padding:3px}
+.me button{border:0;background:transparent;color:#fff;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700;opacity:.75}
+.me button.on{background:#fff;color:var(--coral);opacity:1}
+
+/* tabs */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs .in{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);height:var(--tabh)}
+nav.tabs button{border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:700;color:var(--muted)}
+nav.tabs button span{font-size:22px;line-height:1}
+nav.tabs button.on{color:var(--coral)}
+
+section.view{display:none;padding-top:18px}
+section.view.on{display:block}
+h2{font-size:22px;margin:4px 0 4px}
+.lead{color:var(--muted);margin:0 0 14px;font-size:15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:0 0 12px;box-shadow:0 4px 14px rgba(60,40,10,.05)}
+.tag{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--coral)}
+.sub{color:var(--muted);font-size:13px}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:#eef2f7;color:var(--navy)}
+
+/* home */
+.hero{background:linear-gradient(135deg,#fff 0%,var(--soft) 100%)}
+.big{font-size:40px;font-weight:800;color:var(--navy);line-height:1}
+.bigsub{font-size:15px;color:var(--muted);margin-top:4px}
+.clocks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.clock{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.clock b{font-size:22px;color:var(--navy)}
+.visa{margin-top:14px}
+.bar{height:10px;border-radius:999px;background:#efe6d8;overflow:hidden;margin:6px 0 4px}
+.bar div{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold),var(--coral));border-radius:999px}
+.dl{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}
+.dl:last-child{border-bottom:0}
+.dl .d{min-width:56px;text-align:center;background:var(--soft);border-radius:10px;padding:4px 6px;font-weight:800;color:var(--navy);font-size:13px;line-height:1.2}
+.dl .d small{display:block;font-weight:600;color:var(--muted);font-size:11px}
+.dl.past{opacity:.45}
+.dl.soon .d{background:var(--coral);color:#fff}.dl.soon .d small{color:#fff}
+.dl .t{font-weight:700}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.quick a{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--ink);font-size:14px}
+
+/* reservations */
+.res .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.res h3{margin:2px 0 6px;font-size:17px}
+.st{border:0;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:800;white-space:nowrap}
+.st.todo{background:#fde8e1;color:#9a2d10}
+.st.req{background:#fff4e0;color:#8a5a00}
+.st.ok{background:#e3f4ee;color:#1d6b4f}
+.st.cancel{background:#eceaea;color:#6b6b6b;text-decoration:line-through}
+.res ul{margin:4px 0 8px;padding-left:18px}.res li{margin:3px 0;font-size:14.5px}
+.res .links{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.res .links a{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:#fff}
+.res .warn{background:#fff1ec;border-left:4px solid var(--coral);padding:8px 10px;border-radius:0 8px 8px 0;font-size:13.5px;margin:6px 0}
+textarea.note{width:100%;min-height:44px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:14px;resize:vertical;background:#fffdf9}
+.by{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* lists */
+.lchips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;scrollbar-width:none}
+.lchips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-size:14px;font-weight:700;white-space:nowrap}
+.lchips button.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.prog{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.item{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:0}
+.item input{width:22px;height:22px;margin-top:1px;accent-color:var(--teal);flex:none}
+.item .tx{flex:1}
+.item.done .tx>span{text-decoration:line-through;color:var(--muted)}
+.item .who{display:block;font-size:12px;color:var(--teal);font-weight:600}
+.item .del{border:0;background:none;color:#b9b3a8;font-size:18px;padding:0 4px}
+.add{display:flex;gap:8px;margin-top:10px}
+.add input{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:15px}
+.add button{border:0;background:var(--coral);color:#fff;border-radius:10px;padding:0 16px;font-weight:800}
+
+/* guides */
+.guide{display:flex;gap:14px;align-items:center;cursor:pointer}
+.guide .ic{font-size:34px;width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex:none}
+.guide h3{margin:0 0 2px;font-size:17px}
+.guide.now{border:2px solid var(--teal)}
+#viewer{position:fixed;inset:0;z-index:100;background:#fff;display:none;flex-direction:column}
+#viewer.on{display:flex}
+#viewer .vbar{display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px;border-bottom:1px solid var(--line);background:var(--bg)}
+#viewer .vbar button{border:0;background:var(--coral);color:#fff;border-radius:999px;padding:7px 14px;font-weight:800}
+#viewer iframe{flex:1;border:0;width:100%}
+
+footer.author{margin:26px 0 10px;text-align:center;font-size:12px;color:var(--muted)}
+footer.author a{color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(var(--tabh) + 18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--navy);color:#fff;padding:8px 14px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:60}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <div class="top">
+    <div class="brand">🇹🇭 Thailanda HQ</div>
+    <span class="sync" id="sync">…</span>
+  </div>
+  <div class="top" style="margin-top:10px">
+    <span class="sub" style="color:#fff;opacity:.9" id="hello">Horațiu & Cristina · ian.–mar. 2027</span>
+    <div class="me" id="me"><button data-n="Horațiu">Horațiu</button><button data-n="Cristina">Cristina</button></div>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+<!-- ACASĂ -->
+<section class="view on" id="v-home">
+  <div class="card hero">
+    <div class="tag" id="phaseTag"></div>
+    <div class="big" id="phaseBig"></div>
+    <div class="bigsub" id="phaseSub"></div>
+    <div class="clocks">
+      <div class="clock"><div class="sub">🇷🇴 Acasă</div><b id="clkRO"></b></div>
+      <div class="clock"><div class="sub">🇹🇭 Thailanda</div><b id="clkTH"></b></div>
+    </div>
+    <div class="visa" id="visaBox"></div>
+  </div>
+
+  <div class="card">
+    <div class="tag">Următoarele termene</div>
+    <div id="deadlines"></div>
+    <button id="showPast" style="border:0;background:none;color:var(--teal);font-weight:700;padding:6px 0 0">Arată și ce a trecut</button>
+  </div>
+
+  <div class="card">
+    <div class="tag" style="margin-bottom:8px">Rapid</div>
+    <div class="quick">
+      <a href="https://tdac.immigration.go.th" target="_blank" rel="noopener">📝 TDAC (card sosire)</a>
+      <a href="https://www.iqair.com/thailand/bangkok" target="_blank" rel="noopener">🌫️ Aer Bangkok</a>
+      <a href="https://www.flydubai.com/en/" target="_blank" rel="noopener">✈️ flydubai</a>
+      <a href="https://www.airbnb.com/trips" target="_blank" rel="noopener">🏠 Airbnb Trips</a>
+      <a href="https://www.meetup.com/bangkok-digital-nomads/" target="_blank" rel="noopener">👥 Meetup nomazi</a>
+      <a href="tel:1155">🚓 Poliția turistică 1155</a>
+    </div>
+  </div>
+</section>
+
+<!-- REZERVĂRI -->
+<section class="view" id="v-res">
+  <h2>Rezervări</h2>
+  <p class="lead">Apasă pe stare ca s-o schimbi (de făcut → cerut → confirmat → anulat). Notițele se salvează pentru amândoi.</p>
+  <div id="resList"></div>
+</section>
+
+<!-- LISTE -->
+<section class="view" id="v-lists">
+  <h2>Liste comune</h2>
+  <p class="lead">Ce bifează unul, vede și celălalt.</p>
+  <div class="lchips" id="lchips"></div>
+  <div class="card">
+    <div class="prog"><span id="lprog"></span><span id="lhint"></span></div>
+    <div class="bar"><div id="lbar" style="width:0"></div></div>
+    <div id="litems"></div>
+    <form class="add" id="addForm"><input id="addInput" placeholder="Adaugă ceva pe listă…" maxlength="140"><button>+</button></form>
+  </div>
+</section>
+
+<!-- GHIDURI -->
+<section class="view" id="v-guides">
+  <h2>Ghiduri</h2>
+  <p class="lead">Ghidurile Cristinei pentru Bangkok și Phuket, cu harta și locurile, plus ghidul de pregătire. Se deschid aici în aplicație.</p>
+  <div class="card guide" data-src="ghid/bangkok.html" id="g-bkk"><div class="ic" style="background:#fde8e1">🏙️</div><div><h3>Bangkok pentru noi</h3><div class="sub">Zone, hartă, transport, costuri, săptămâna tipică · de Cristina</div><span class="pill" style="margin-top:6px">21 ian. – 18 feb.</span></div></div>
+  <div class="card guide" data-src="ghid/phuket.html" id="g-hkt"><div class="ic" style="background:#e3f4f4">🏝️</div><div><h3>Phuket pentru noi</h3><div class="sub">Plaje, Bang Tao, transport fără scuter, costuri · de Cristina</div><span class="pill" style="margin-top:6px">18 feb. – 18 mar.</span></div></div>
+  <div class="card guide" data-src="ghid/pregatire.html" id="g-prep"><div class="ic" style="background:var(--soft)">🧳</div><div><h3>Ghidul de pregătire</h3><div class="sub">Viză, TDAC, bani, siguranță, contacte, buget</div></div></div>
+  <div class="card">
+    <div class="tag">Urgențe</div>
+    <p style="margin:6px 0 0;font-size:15px"><b>191</b> poliție · <b>1669</b> ambulanță · <b>1155</b> poliția turistică<br>Ambasada României: <a href="tel:+6622402522">+66 2 240 2522</a> · <a href="mailto:bangkok@mae.ro">bangkok@mae.ro</a></p>
+  </div>
+</section>
+
+<footer class="author">Făcut de Horațiu Hot · <a href="https://horatiuhot.com" target="_blank" rel="noopener">horatiuhot.com</a></footer>
+</main>
+
+<nav class="tabs"><div class="in">
+  <button data-v="home" class="on"><span>🏠</span>Acasă</button>
+  <button data-v="res"><span>🎫</span>Rezervări</button>
+  <button data-v="lists"><span>✅</span>Liste</button>
+  <button data-v="guides"><span>🗺️</span>Ghiduri</button>
+</div></nav>
+
+<div id="viewer"><div class="vbar"><button id="vclose">← Înapoi</button><b id="vtitle"></b></div><iframe id="vframe" title="Ghid"></iframe></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================== DATE FIXE (planul) ================== */
+const T = s => new Date(s).getTime();
+const TRIP = {
+  depart: T("2027-01-20T13:15:00+01:00"),
+  arrive: T("2027-01-21T10:05:00+07:00"),
+  phuket: T("2027-02-18T12:00:00+07:00"),
+  end:    T("2027-03-19T12:15:00+01:00"),
+  visaDay1: T("2027-01-21T00:00:00+07:00"),
+};
+
+const DEADLINES = [
+  {at:"2026-12-22T10:00:00+02:00", t:"Ultimul moment de anulare gratuită: Airbnb Bangkok", s:"10:00 ora RO (15:00 Bangkok). După aceea nu se mai rambursează."},
+  {at:"2027-01-18T00:00:00+07:00", t:"Completăm TDAC (cardul digital de sosire)", s:"Se poate între 18 și 21 ian., câte unul pentru fiecare, gratuit, pe tdac.immigration.go.th", allDay:true},
+  {at:"2027-01-19T10:00:00+02:00", t:"Decizia pentru Phuket: anulare gratuită până acum", s:"10:00 ora RO (15:00 Phuket). Păstrăm casa sau o anulăm din Airbnb → Trips."},
+  {at:"2027-01-20T13:15:00+01:00", t:"✈️ Plecăm: Belgrad 13:15 (T2) → Dubai → Bangkok", s:"flydubai 9FQB6I. Prietenii din Novi Sad ne duc la aeroport."},
+  {at:"2027-01-21T10:05:00+07:00", t:"🛬 Aterizăm la Bangkok DMK, 10:05", s:"Check-in la apartament de la 15:00. Imigrare, SIM, Grab."},
+  {at:"2027-02-06T00:00:00+07:00", t:"🧧 Anul Nou Chinezesc", s:"Chinatown (Yaowarat), cu MRT până la Wat Mangkon", allDay:true},
+  {at:"2027-02-10T00:00:00+07:00", t:"🛂 Prelungirea vizei (10–15 feb.)", s:"TM.7, poză 4×6, 1.900 THB, TM.30 de la gazdă. Imediat după: mutăm zborul.", allDay:true},
+  {at:"2027-02-17T11:10:00+07:00", t:"⚠️ Ultimul moment pentru mutarea zborului de întoarcere", s:"Value nu se mai poate schimba cu mai puțin de 24h înainte (06:10 ora RO)."},
+  {at:"2027-02-18T11:10:00+07:00", t:"Mutare în Phuket (sau zborul spre casă, dacă nu prelungim)", s:"Check-out Bangkok la 12:00. Zbor intern spre Phuket, de cumpărat."},
+  {at:"2027-02-19T23:59:00+07:00", t:"Se termină cele 30 de zile fără viză", s:"Până atunci trebuie să avem prelungirea în pașaport."},
+  {at:"2027-03-18T12:00:00+07:00", t:"🏡 Check-out Phuket, drumul spre casă", s:"Zbor intern spre Bangkok DMK, apoi flydubai (după mutare)."},
+];
+
+const RES = [
+  {id:"fly", icon:"✈️", title:"Zbor flydubai Belgrad ↔ Bangkok", def:"ok",
+   lines:["<b>Rezervare 9FQB6I</b> · 1.482,70 € plătit · Value (7 kg + 20 kg)",
+          "<b>Dus:</b> Mi 20 ian., Belgrad 13:15 (T2) → Dubai → Bangkok DMK 10:05 (Jo 21 ian.)",
+          "<b>Întors:</b> Jo 18 feb., Bangkok DMK 11:10 → Dubai → Belgrad 21:25 (T2)",
+          "Pasageri: Horatiu Hot, Cristina Hot"],
+   warn:"Mutarea întoarcerii: AED 150 (~35 €)/pers. + diferența de preț, cel târziu pe 17 feb. la 11:10 ora Bangkokului.",
+   links:[["flydubai → Manage booking","https://www.flydubai.com/en/"]]},
+  {id:"bkk", icon:"🏙️", title:"Apartament Bangkok (Punnawithi)", def:"req",
+   lines:["<b>Cod HMDCBQ4TZJ</b> · 560,11 € · gazdă Wipada („Mill”)",
+          "21 ian. (check-in 15:00) → 18 feb. (check-out 12:00), 28 de nopți",
+          "4 min de BTS Punnawithi, lângă True Digital Park"],
+   warn:"Anulare gratuită până pe 22 dec., 10:00 ora RO.",
+   links:[["Rezervarea în Airbnb","https://www.airbnb.com/trips/v1/1826997995986131250"],["Anunțul","https://www.airbnb.com/rooms/7963242"]]},
+  {id:"hkt", icon:"🏝️", title:"Casă Phuket (Bang Tao)", def:"req",
+   lines:["„Bangtao one-room house” · 998,78 € · gazdă Maria",
+          "18 feb. → 18 mar. 2027, 28 de nopți",
+          "Garanție 500–5.000 THB la sosire, se returnează la plecare"],
+   warn:"Anulare gratuită până pe 19 ian., 10:00 ora RO.",
+   links:[["Rezervarea în Airbnb","https://www.airbnb.com/trips/v1/1827041355766258865"],["Anunțul","https://www.airbnb.com/rooms/36436309"]]},
+  {id:"dom1", icon:"🛫", title:"Zbor intern Bangkok → Phuket, 18 feb.", def:"todo",
+   lines:["De cumpărat după decizia din 19 ian.","~33–35 €/pers. fără bagaj (Thai AirAsia, Vietjet, Lion)"],
+   links:[["Caută pe Momondo","https://www.momondo.ro/flight-search/DMK-HKT/2027-02-18/2adults?sort=price_a"]]},
+  {id:"dom2", icon:"🛬", title:"Zbor intern Phuket → Bangkok DMK, ~18 mar.", def:"todo",
+   lines:["În aceeași zi cu zborul spre casă, după ce mutăm întoarcerea flydubai","Trebuie să ajungă la DMK, nu la BKK"],
+   links:[["Caută pe Momondo","https://www.momondo.ro/flight-search/HKT-DMK/2027-03-18/2adults?sort=price_a"]]},
+  {id:"ins", icon:"🩺", title:"Asigurare medicală de călătorie", def:"todo",
+   lines:["Pentru amândoi, ~2 luni (20 ian. – 19 mar.)","Cu repatriere și acoperire pentru anularea călătoriei, dacă se poate"], links:[]},
+  {id:"cw", icon:"💻", title:"Coworking Bangkok", def:"todo",
+   lines:["Prima săptămână: abonament pe zi la True Digital Park și The Hive Prakanong, apoi alegem","TDPK ~6.000 THB/lună/pers. · The Hive ~4.500 THB"],
+   links:[["Meetup Bangkok Digital Nomads","https://www.meetup.com/bangkok-digital-nomads/"]]},
+];
+const STATUS = {todo:"De făcut", req:"Cerut", ok:"Confirmat", cancel:"Anulat"};
+const NEXT = {todo:"req", req:"ok", ok:"cancel", cancel:"todo"};
+
+const LISTS = [
+  {id:"acte", n:"🧾 Acte & înainte", items:[
+    "Pașapoarte valabile 6 luni de la sosire, cu pagini libere",
+    "Asigurare medicală de călătorie pentru 2 luni",
+    "Cerem gazdelor Airbnb înregistrarea TM.30",
+    "TDAC completat pentru amândoi (18–21 ian.)",
+    "Copii după acte: pe telefon, în cloud și pe hârtie",
+    "Numărul Skywards adăugat la rezervarea flydubai",
+    "2 poze 4×6 cm fiecare (pentru prelungirea vizei)",
+    "Revolut/Wise încărcat + ceva numerar în euro",
+    "eSIM sau plan de SIM la aeroport",
+    "Ora și locul de întâlnire cu prietenii din Novi Sad"]},
+  {id:"bagaj", n:"🎒 Bagaj", items:[
+    "Adaptor de priză + prelungitor","Laptopuri, încărcătoare, căști","Haine subțiri","Haină lungă pentru temple (umeri și genunchi acoperiți)",
+    "Încălțăminte comodă de mers + sandale","Încălțăminte de apă","Cremă cu SPF mare","Trusa de medicamente","Măști FFP2 (aerul din Bangkok)","Prosop de plajă ușor"]},
+  {id:"apps", n:"📱 Aplicații", items:[
+    "Grab","Bolt","Google Maps: hărți offline Bangkok + Phuket","Google Translate: thailandeza offline","LINE","IQAir (calitatea aerului)","Meetup + Luma","Airbnb","Aplicația flydubai"]},
+  {id:"acolo", n:"🇹🇭 Acolo", items:[
+    "SIM local cumpărat (AIS / True / dtac)","Card Rabbit pentru BTS","Am trecut pe la True Digital Park","Am încercat The Hive Prakanong",
+    "Prima seară CO Working Monday","Vizită la imigrare pentru prelungire","Am mutat zborul de întoarcere","Zbor intern spre Phuket cumpărat"]},
+];
+
+/* ================== STARE COMUNĂ + SINCRONIZARE ================== */
+const LS = {get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let state = LS.get("thq-state", {v:0,data:{}});
+let queue = LS.get("thq-queue", []);
+let me = LS.get("thq-me", "");
+let online = false, accessEmail = "";
+
+const get = (path, d) => { let n = state.data; for (const p of path) { if (!n || typeof n !== "object") return d; n = n[p]; } return n === undefined ? d : n; };
+function localSet(path, value){ let n = state.data; for (let i=0;i<path.length-1;i++){ if(typeof n[path[i]]!=="object"||n[path[i]]===null) n[path[i]]={}; n=n[path[i]]; } const l=path[path.length-1]; if(value===null) delete n[l]; else n[l]=value; }
+function set(path, value){ localSet(path, value); queue.push({op:"set", path, value}); LS.set("thq-state", state); LS.set("thq-queue", queue); renderAll(); flush(); }
+
+let flushing = false;
+async function flush(){
+  if (flushing || !queue.length) return;
+  flushing = true;
+  const ops = queue.slice();
+  try {
+    const r = await fetch("api/state", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({ops})});
+    if (!r.ok) throw new Error(r.status);
+    const st = await r.json();
+    queue = queue.slice(ops.length);
+    state = {v:st.v, data:st.data};
+    for (const op of queue) localSet(op.path, op.value);
+    accessEmail = st.me || accessEmail;
+    LS.set("thq-state", state); LS.set("thq-queue", queue);
+    setOnline(true); renderAll();
+  } catch(e){ setOnline(false); }
+  flushing = false;
+  if (queue.length && online) flush();
+}
+async function pull(){
+  if (queue.length) return flush();
+  try {
+    const r = await fetch("api/state", {cache:"no-store"});
+    if (!r.ok) throw new Error(r.status);
+    const st = await r.json();
+    accessEmail = st.me || "";
+    if (st.v !== state.v) { state = {v:st.v, data:st.data}; LS.set("thq-state", state); renderAll(); }
+    setOnline(true);
+    if (!me && accessEmail) { me = /horat/i.test(accessEmail) ? "Horațiu" : "Cristina"; LS.set("thq-me", me); renderMe(); }
+  } catch(e){ setOnline(false); }
+}
+function setOnline(v){ online = v; const s = $("#sync"); s.textContent = v ? (queue.length ? "⏳ se salvează" : "● sincronizat") : "○ offline" + (queue.length ? ` · ${queue.length} în așteptare` : ""); s.classList.toggle("off", !v); }
+window.addEventListener("online", pull);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) pull(); });
+setInterval(() => { if (!document.hidden) pull(); }, 20000);
+
+/* ================== UI ================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("on"); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove("on"),1800); }
+const fmtD = (ms, tz) => new Date(ms).toLocaleDateString("ro-RO",{day:"numeric",month:"short",timeZone:tz||"Europe/Bucharest"});
+const ago = iso => { if(!iso) return ""; const d=new Date(iso); return d.toLocaleDateString("ro-RO",{day:"numeric",month:"short"}) + ", " + d.toLocaleTimeString("ro-RO",{hour:"2-digit",minute:"2-digit"}); };
+const stamp = () => ({by: me || "?", at: new Date().toISOString()});
+
+function renderMe(){ document.querySelectorAll("#me button").forEach(b => b.classList.toggle("on", b.dataset.n === me)); }
+document.querySelectorAll("#me button").forEach(b => b.onclick = () => { me = b.dataset.n; LS.set("thq-me", me); renderMe(); toast("Salut, " + me + "!"); });
+
+document.querySelectorAll("nav.tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("nav.tabs button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll("section.view").forEach(s => s.classList.toggle("on", s.id === "v-" + b.dataset.v));
+  window.scrollTo(0,0);
+});
+
+/* ---- Acasă ---- */
+let showPast = false;
+$("#showPast").onclick = () => { showPast = !showPast; $("#showPast").textContent = showPast ? "Ascunde ce a trecut" : "Arată și ce a trecut"; renderHome(); };
+function renderHome(){
+  const now = Date.now(), day = 864e5;
+  const tag=$("#phaseTag"), big=$("#phaseBig"), sub=$("#phaseSub");
+  if (now < TRIP.depart) {
+    const d = Math.ceil((TRIP.depart - now) / day);
+    tag.textContent = "Până la plecare"; big.textContent = d + (d === 1 ? " zi" : " zile");
+    sub.textContent = "Miercuri, 20 ianuarie, Belgrad 13:15 → Bangkok";
+  } else if (now < TRIP.end) {
+    const d = Math.floor((now - TRIP.depart) / day) + 1, tot = Math.round((TRIP.end - TRIP.depart) / day);
+    const where = now < TRIP.arrive ? "În drum spre Bangkok ✈️" : now < TRIP.phuket ? "Suntem în Bangkok 🏙️" : "Suntem în Phuket 🏝️";
+    tag.textContent = where; big.textContent = "Ziua " + d; sub.textContent = "din ~" + tot + " · Phuket de pe 18 feb.";
+  } else { tag.textContent = "Am ajuns acasă"; big.textContent = "🏡"; sub.textContent = "Ce călătorie!"; }
+  // viza
+  const vb = $("#visaBox");
+  if (now >= TRIP.arrive && now < TRIP.end) {
+    const vd = Math.floor((now - TRIP.visaDay1) / day) + 1;
+    const ext = get(["flags","visaExtended"], null);
+    const lim = ext ? 60 : 30;
+    vb.innerHTML = `<div class="prog"><span>🛂 Ziua <b>${vd}</b> din ${lim} ${ext ? "(cu prelungire)" : "fără viză"}</span><span>${Math.max(0, lim - vd)} rămase</span></div><div class="bar"><div style="width:${Math.min(100, vd / lim * 100)}%"></div></div>
+      <label class="sub"><input type="checkbox" ${ext ? "checked" : ""} id="extChk"> Avem prelungirea în pașaport</label>`;
+    $("#extChk").onchange = e => set(["flags","visaExtended"], e.target.checked ? stamp() : null);
+  } else vb.innerHTML = "";
+  // termene
+  const items = DEADLINES.map(x => ({...x, ms:T(x.at)})).sort((a,b) => a.ms - b.ms);
+  const list = items.filter(x => showPast || x.ms + (x.allDay ? day : 0) >= now);
+  $("#deadlines").innerHTML = list.map(x => {
+    const past = x.ms + (x.allDay ? day : 0) < now, soon = !past && x.ms - now < 7 * day;
+    const tz = x.at.endsWith("+07:00") ? "Asia/Bangkok" : "Europe/Bucharest";
+    const hr = x.allDay ? "toată ziua" : new Date(x.ms).toLocaleTimeString("ro-RO",{hour:"2-digit",minute:"2-digit",timeZone:tz}) + (tz === "Asia/Bangkok" ? " TH" : " RO");
+    const left = past ? "a trecut" : Math.ceil((x.ms - now) / day) + " zile";
+    return `<div class="dl ${past ? "past" : ""} ${soon ? "soon" : ""}"><div class="d">${fmtD(x.ms, tz)}<small>${left}</small></div><div><div class="t">${esc(x.t)}</div><div class="sub">${esc(x.s)} · ${hr}</div></div></div>`;
+  }).join("") || `<p class="sub">Nimic de făcut. 🎉</p>`;
+}
+function tick(){
+  const o = {hour:"2-digit", minute:"2-digit"};
+  $("#clkRO").textContent = new Date().toLocaleTimeString("ro-RO", {...o, timeZone:"Europe/Bucharest"});
+  $("#clkTH").textContent = new Date().toLocaleTimeString("ro-RO", {...o, timeZone:"Asia/Bangkok"});
+}
+setInterval(tick, 15000);
+
+/* ---- Rezervări ---- */
+function renderRes(){
+  $("#resList").innerHTML = RES.map(r => {
+    const s = get(["res", r.id, "status"], null), st = s ? s.v : r.def;
+    const note = get(["res", r.id, "note"], null);
+    return `<div class="card res"><div class="head"><div><div class="tag">${r.icon} ${STATUS[st]}</div><h3>${esc(r.title)}</h3></div><button class="st ${st}" data-id="${r.id}" data-st="${st}">${STATUS[st]}</button></div>
+      <ul>${r.lines.map(l => `<li>${l}</li>`).join("")}</ul>
+      ${r.warn ? `<div class="warn">⚠️ ${r.warn}</div>` : ""}
+      ${r.links.length ? `<div class="links">${r.links.map(([t,u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("")}</div>` : ""}
+      <textarea class="note" data-id="${r.id}" placeholder="Notițe (ex. „Wipada a confirmat TM.30”)…">${esc(note ? note.v : "")}</textarea>
+      ${s || note ? `<div class="by">Ultima modificare: ${esc((note && (!s || note.at > s.at) ? note : s).by)}, ${ago((note && (!s || note.at > s.at) ? note : s).at)}</div>` : ""}</div>`;
+  }).join("");
+  document.querySelectorAll(".st[data-id]").forEach(b => b.onclick = () => { const n = NEXT[b.dataset.st]; set(["res", b.dataset.id, "status"], {v:n, ...stamp()}); toast(STATUS[n]); });
+  document.querySelectorAll("textarea.note").forEach(t => t.onchange = () => { set(["res", t.dataset.id, "note"], t.value.trim() ? {v:t.value.trim().slice(0,1000), ...stamp()} : null); toast("Notiță salvată"); });
+}
+
+/* ---- Liste ---- */
+let curList = "acte";
+const slug = s => { let h = 5381; for (const c of s) h = ((h << 5) + h + c.codePointAt(0)) >>> 0; return "s" + h.toString(36); };
+function listItems(L){
+  const fixed = L.items.map(t => ({id:slug(t), text:t, fixed:true}));
+  const custom = Object.entries(get(["items", L.id], {})).map(([id,x]) => ({id, text:x.text, by:x.by, at:x.at})).sort((a,b) => (a.at||"").localeCompare(b.at||""));
+  const hidden = get(["hidden", L.id], {});
+  return [...fixed, ...custom].filter(x => !hidden[x.id]);
+}
+function renderLists(){
+  $("#lchips").innerHTML = LISTS.map(L => { const it = listItems(L), done = it.filter(x => get(["checks", L.id, x.id], null)).length; return `<button data-l="${L.id}" class="${L.id === curList ? "on" : ""}">${L.n} <span style="opacity:.7">${done}/${it.length}</span></button>`; }).join("");
+  document.querySelectorAll("#lchips button").forEach(b => b.onclick = () => { curList = b.dataset.l; renderLists(); });
+  const L = LISTS.find(x => x.id === curList), it = listItems(L);
+  const done = it.filter(x => get(["checks", L.id, x.id], null)).length;
+  $("#lprog").textContent = `${done} din ${it.length} gata`; $("#lhint").textContent = done === it.length && it.length ? "🎉 Tot!" : "";
+  $("#lbar").style.width = (it.length ? done / it.length * 100 : 0) + "%";
+  $("#litems").innerHTML = it.map(x => { const c = get(["checks", L.id, x.id], null);
+    return `<div class="item ${c ? "done" : ""}"><input type="checkbox" data-id="${x.id}" ${c ? "checked" : ""}><div class="tx"><span>${esc(x.text)}</span>${c ? `<span class="who">✓ ${esc(c.by)}, ${ago(c.at)}</span>` : x.by ? `<span class="who" style="color:var(--muted)">adăugat de ${esc(x.by)}</span>` : ""}</div><button class="del" data-id="${x.id}" data-fixed="${x.fixed ? 1 : ""}" title="Scoate de pe listă">×</button></div>`; }).join("");
+  document.querySelectorAll("#litems input").forEach(cb => cb.onchange = () => set(["checks", curList, cb.dataset.id], cb.checked ? stamp() : null));
+  document.querySelectorAll("#litems .del").forEach(b => b.onclick = () => {
+    if (!confirm("Scot de pe listă?")) return;
+    if (b.dataset.fixed) set(["hidden", curList, b.dataset.id], stamp()); else set(["items", curList, b.dataset.id], null);
+    set(["checks", curList, b.dataset.id], null);
+  });
+}
+$("#addForm").onsubmit = e => { e.preventDefault(); const v = $("#addInput").value.trim(); if (!v) return;
+  const id = "c" + Date.now().toString(36) + Math.random().toString(36).slice(2,5);
+  set(["items", curList, id], {text:v.slice(0,140), ...stamp()}); $("#addInput").value = ""; };
+
+/* ---- Ghiduri ---- */
+document.querySelectorAll(".guide").forEach(g => g.onclick = () => { $("#vframe").src = g.dataset.src; $("#vtitle").textContent = g.querySelector("h3").textContent; $("#viewer").classList.add("on"); history.pushState({v:1}, ""); });
+function closeViewer(){ $("#viewer").classList.remove("on"); $("#vframe").src = "about:blank"; }
+$("#vclose").onclick = () => history.back();
+window.addEventListener("popstate", () => { if ($("#viewer").classList.contains("on")) closeViewer(); });
+function renderGuides(){ const now = Date.now(); $("#g-bkk").classList.toggle("now", now < TRIP.phuket && now >= TRIP.depart - 7*864e5); $("#g-hkt").classList.toggle("now", now >= TRIP.phuket && now < TRIP.end); }
+
+let resDirty = false;
+function editingNote(){ const a = document.activeElement; return a && a.matches && a.matches("textarea.note"); }
+document.addEventListener("focusout", e => { if (e.target.matches && e.target.matches("textarea.note") && resDirty) setTimeout(() => { if (!editingNote()) { resDirty = false; renderRes(); } }, 0); });
+function renderAll(){ renderHome(); if (editingNote()) resDirty = true; else renderRes(); renderLists(); renderGuides(); setOnline(online); }
+
+renderMe(); tick(); renderAll(); pull();
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+</script>
+</body>
+</html>

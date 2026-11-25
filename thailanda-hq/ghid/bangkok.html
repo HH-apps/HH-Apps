@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bangkok pentru noi – zone, transport, ce facem</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{
+  --bg:#fbf7f1; --ink:#1f2328; --muted:#5d6470; --card:#fff; --line:#ece4d8;
+  --gold:#d99a2b; --teal:#0f8b8d; --coral:#e4572e; --navy:#163a5f; --soft:#fff4e0; --gray:#8a8780;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:var(--teal);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(15,139,141,.25)}
+a:hover{border-bottom-color:var(--teal)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+.hero{color:#fff;background:linear-gradient(180deg,#f6b26b 0%,#e4572e 50%,#7b2d5b 100%)}
+.hero .wrap{padding-top:48px;padding-bottom:48px}
+.kicker{letter-spacing:.18em;text-transform:uppercase;font-size:13px;opacity:.9}
+.hero h1{font-size:clamp(32px,5.5vw,54px);line-height:1.05;margin:10px 0 14px;font-weight:800}
+.hero p{max-width:700px;font-size:18px;margin:0;opacity:.95}
+.feedback{margin-top:18px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:14px;padding:12px 16px;max-width:700px;font-size:15px}
+
+nav{position:sticky;top:0;z-index:1000;background:rgba(251,247,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav a{white-space:nowrap;border:none;color:var(--ink);font-weight:600;font-size:14px;padding:7px 12px;border-radius:999px;background:#fff;box-shadow:0 1px 0 var(--line)}
+nav a:hover{background:var(--soft)}
+
+section{padding:44px 0 8px}
+h2{font-size:28px;margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:780px}
+h3{margin:0 0 8px;font-size:18px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:0 6px 20px rgba(60,40,10,.05)}
+.card.accent{background:linear-gradient(135deg,#fff 0%,var(--soft) 100%)}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
+.card ul{margin:6px 0 0;padding-left:18px}.card li{margin:4px 0}
+.note{background:#eef8f8;border-left:4px solid var(--teal);padding:12px 16px;border-radius:0;margin:14px 0;color:#174a4b}
+.warn{background:#fff1ec;border-left:4px solid var(--coral);padding:12px 16px;border-radius:0;margin:14px 0;color:#6b2a16}
+.sub{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;background:#eef2f7;color:var(--navy);font-weight:700}
+
+/* Sukhumvit line */
+.line-card{padding:22px 22px 18px}
+#lineSvg{width:100%;height:auto;display:block}
+.st{cursor:pointer}.st:hover .dot{stroke-width:4}
+.zones{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 16px;align-items:center}
+.zbtn{font:inherit;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.zbtn.on{border-color:var(--teal);color:var(--teal)}
+.detail{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;border-top:1px dashed var(--line);padding-top:16px}
+@media(max-width:700px){.detail{grid-template-columns:1fr}}
+.meter{margin:8px 0 12px}
+.meter .lbl{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:4px}
+.meter .bar{height:9px;border-radius:999px;background:#efe6d8;overflow:hidden}
+.meter .bar div{height:100%;border-radius:999px;transition:width .3s}
+.big{font-size:30px;font-weight:800;color:var(--navy);line-height:1}
+
+/* map */
+#map{height:560px;border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;background:#f3efe6}
+.maplab{font:700 12px system-ui,Arial,sans-serif;color:#5d6470;white-space:nowrap;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff;pointer-events:none;transform:translate(-50%,-50%)}
+.maplab.water{color:#2a7f99;font-style:italic}
+.maplab.green{color:#2f8a4a}
+.maplab.home{color:#e4572e;font-size:14px}
+.maplegend{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:12px system-ui,Arial,sans-serif;color:#1f2328}
+.maplegend div{display:flex;align-items:center;gap:6px;margin:2px 0}
+.maplegend span{width:18px;height:5px;border-radius:3px;display:inline-block}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.fbtn{font:inherit;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;gap:6px}
+.fbtn .sw{width:10px;height:10px;border-radius:50%}
+.fbtn.off{opacity:.45}
+.places{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;margin-top:18px}
+.place{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;transition:border-color .2s}
+.place:hover,.place.sel{border-color:var(--teal)}
+.place .cat{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.place h4{margin:4px 0 6px;font-size:17px}
+.place p{margin:0 0 8px;font-size:14.5px}
+.how{background:var(--soft);border-radius:10px;padding:8px 10px;font-size:14px;margin:8px 0}
+.how b{color:var(--navy)}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.mapfail{display:none;padding:40px;text-align:center;color:var(--muted)}
+
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+th{background:var(--soft);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+td.num{white-space:nowrap;font-weight:700;color:var(--navy)}
+.tablewrap{overflow-x:auto;border-radius:var(--radius)}
+
+.avoid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.avoid .card{border-left:5px solid var(--coral)}
+.avoid .lvl{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;display:inline-block;margin-bottom:6px}
+.lvl.trap{background:#fff4e0;color:#8a5a00}
+.lvl.night{background:#fde8e1;color:#9a2d10}
+.lvl.no{background:#f7d9d9;color:#7b1414}
+
+footer{padding:40px 0 60px;color:var(--muted);font-size:13px}
+.leaflet-popup-content{font-family:system-ui,Arial,sans-serif;font-size:14px}
+.leaflet-popup-content b{color:var(--navy)}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">Horațiu & Cristina · Bangkok · 21 ian. – 18 feb. 2027</div>
+  <h1>Bangkok pentru noi</h1>
+  <p>Cum e împărțit orașul, cum ne mișcăm, cât costă și ce facem într-o lună. Toate locurile sunt pe hartă, fiecare cu drumul de la apartamentul din Punnawithi.</p>
+  <div class="feedback">✍️ <b>Ciornă pentru feedback.</b> Scrie-mi în chat ce să schimb, să adaug sau să scot, și refac pagina.</div>
+</div></header>
+
+<nav><div class="wrap">
+  <a href="#zone">🧭 Zonele orașului</a>
+  <a href="#harta">🗺️ Harta</a>
+  <a href="#transport">🚆 Transport & prețuri</a>
+  <a href="#costuri">💸 Cât costă viața</a>
+  <a href="#idei">📅 O săptămână tipică</a>
+  <a href="#evitat">⚠️ Zone de evitat</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ZONE -->
+<section id="zone">
+  <h2>🧭 Cum e împărțit Bangkokul</h2>
+  <p class="lead">Bangkokul nu are un singur centru. Pentru noi contează mai ales linia de BTS Sukhumvit (verde deschis), care traversează orașul de la vest la est. Cu cât mergi mai spre est, cu atât e mai liniștit, mai local și mai ieftin. Apartamentul e aproape de capătul liniștit, la Punnawithi. <b>Apasă pe o stație</b> ca să vezi cum e zona și cât faci până acolo.</p>
+
+  <div class="card line-card">
+    <svg id="lineSvg" viewBox="0 0 1000 190" aria-label="Linia BTS Sukhumvit de la Siam la Punnawithi">
+      <line x1="60" y1="90" x2="245" y2="90" stroke="#8a8780" stroke-width="7" stroke-linecap="round"/>
+      <line x1="245" y1="90" x2="555" y2="90" stroke="#e4572e" stroke-width="7"/>
+      <line x1="555" y1="90" x2="940" y2="90" stroke="#0f8b8d" stroke-width="7" stroke-linecap="round"/>
+      <g id="stations"></g>
+      <g font-size="13" fill="#5d6470" font-weight="600">
+        <circle cx="70" cy="170" r="6" fill="#8a8780"/><text x="82" y="175">Centru: business, mall-uri, evenimente</text>
+        <circle cx="380" cy="170" r="6" fill="#e4572e"/><text x="392" y="175">Viața socială: cafenele, baruri, expați</text>
+        <circle cx="690" cy="170" r="6" fill="#0f8b8d"/><text x="702" y="175">Rezidențial: local, liniștit, ieftin</text>
+      </g>
+    </svg>
+    <div class="zones">
+      <span class="sub">Zone în afara liniei:</span>
+      <button class="zbtn" data-k="ari">Ari (nord)</button>
+      <button class="zbtn" data-k="silom">Silom / Sathorn (sud)</button>
+      <button class="zbtn" data-k="old">Orașul vechi (vest)</button>
+      <button class="zbtn" data-k="river">Malul râului</button>
+    </div>
+    <div class="detail">
+      <div>
+        <div class="tag" id="zTag"></div>
+        <h3 id="zName" style="font-size:22px"></h3>
+        <p id="zDesc" style="margin:0 0 10px"></p>
+        <p style="margin:0"><b>Bun pentru noi la:</b> <span id="zFor"></span></p>
+        <div id="zExtra" style="margin-top:12px"></div>
+      </div>
+      <div>
+        <div class="sub">De la apartament</div>
+        <div class="big" id="zTime"></div>
+        <div class="sub" id="zHow" style="margin-bottom:10px"></div>
+        <div class="meter"><div class="lbl"><span>🌿 Liniște</span><span id="zQ"></span></div><div class="bar"><div id="bQ" style="background:#0f8b8d"></div></div></div>
+        <div class="meter"><div class="lbl"><span>👥 Viață socială</span><span id="zS"></span></div><div class="bar"><div id="bS" style="background:#e4572e"></div></div></div>
+      </div>
+    </div>
+    <p class="sub" style="margin:14px 0 0">Timpii sunt aproximativi (pe BTS, ~2–3 min de la o stație la alta). Notele de la 1 la 5 sunt impresia mea din ce am citit, nu o măsurătoare.</p>
+  </div>
+
+  <div class="card accent" style="margin-top:18px" id="verdict">
+    <div class="tag">Pentru Horațiu · e zona bună pentru noi?</div>
+    <h3 style="font-size:22px">Punnawithi: bun pentru muncă și liniște. Viața socială e la câteva stații.</h3>
+    <p style="margin:0 0 14px">Ce ne-am propus: să construim business-ul de acolo, să avem oameni în jur, să mergem la evenimente și să ducem o viață normală, „chill”, dar nu într-o zonă moartă. Așa se potrivește zona aleasă cu planul ăsta:</p>
+    <div class="grid g2">
+      <div>
+        <h3 style="color:#0f8b8d">✅ Ce e bun</h3>
+        <ul>
+          <li><b>True Digital Park la 4 minute.</b> E cel mai mare hub de startupuri din regiune: peste 250 de companii, coworking, supermarket, sală de sport. Pentru un business de AI și conversie e un avantaj real: oamenii din tech sunt literalmente vecinii noștri ziua.</li>
+          <li><b>Cloud 11 la 5–8 minute</b>, deschis în vara lui 2026: concerte, cinema de film independent, padel, parc pe acoperiș, peste 40 de localuri. Zona a devenit mult mai vie decât acum doi ani.</li>
+          <li><b>Cartier de locuit, nu turistic.</b> Mai ales thailandezi, cu destui expați. Chiria e mai mică decât în Thong Lo, iar în jur sunt tarabe, 7-Eleven și piețe.</li>
+          <li><b>BTS la 4 minute.</b> Ajungem în 10–20 de minute în zonele cu viață de noapte și evenimente, fără trafic.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:#e4572e">⚠️ La ce să ne așteptăm</h3>
+        <ul>
+          <li><b>Seara e liniște.</b> Oamenii pleacă dimineața în oraș și se întorc seara. Un ghid local spune că scena de expați din zonă e mică.</li>
+          <li><b>Cele mai multe evenimente sunt în centru:</b> Asok, Nana (Sukhumvit Soi 8), Ekkamai, Thong Lo. Deci 2–3 seri pe săptămână facem 10–25 de minute cu BTS-ul.</li>
+          <li><b>Pentru o ieșire spontană pe jos</b>, zona e prea liniștită. Acolo câștigă Phra Khanong (W District, The Hive), care e la doar 3 stații.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note" style="margin-bottom:0">🎯 <b>Concluzia:</b> păstrăm apartamentul. E un compromis bun: lucrăm concentrați ziua, avem liniște seara, iar viața socială e la 10–20 de minute. Dacă după prima săptămână simțim că pierdem prea mult din serile în oraș, alternativa e un apartament lângă <b>BTS Phra Khanong sau Ekkamai</b>, cu 3–5 stații mai aproape de centru. Ar fi la fel de liniștit, mai aproape de evenimente și un pic mai scump.</div>
+  </div>
+
+  <div class="note">💡 <b>Pe scurt:</b> ziua lucrăm lângă casă (True Digital Park, la 4 minute). Seara mergem 10–20 de minute cu BTS-ul spre Phra Khanong, Ekkamai, Thong Lo sau Asok, unde sunt cele mai multe evenimente și ieșiri. Ne întoarcem cu BTS-ul (merge până pe la miezul nopții) sau cu Grab.</div>
+</section>
+
+<!-- HARTA -->
+<section id="harta">
+  <h2>🗺️ Harta: tot ce putem face</h2>
+  <p class="lead">Cercul mare portocaliu e apartamentul. Filtrează după tip, apasă pe un punct sau pe un card ca să vezi detaliile. Fiecare card spune cum ajungem de la Punnawithi și are link spre traseul din Google Maps.</p>
+  <div class="filters" id="filters"></div>
+  <div id="map"><div class="mapfail" id="mapfail">Harta nu s-a putut încărca aici (are nevoie de internet). Lista de mai jos are toate locurile, cu linkuri spre Google Maps.</div></div>
+  <div class="places" id="places"></div>
+  <p class="sub" style="margin-top:14px">Prețurile la intrare sunt aproximative și trebuie verificate înainte. Cursul folosit e 1 € ≈ 37 THB.</p>
+</section>
+
+<!-- TRANSPORT -->
+<section id="transport">
+  <h2>🚆 Transport & prețuri</h2>
+  <p class="lead">Traficul din Bangkok e greu, mai ales între 7–10 dimineața și 16:30–19:30. Pe distanțe lungi, trenul (BTS sau MRT) e aproape mereu mai rapid decât mașina.</p>
+
+  <div class="grid g2">
+    <div class="card accent">
+      <div class="tag">BTS Skytrain · trenul suspendat</div>
+      <h3>Principalul nostru mijloc de transport</h3>
+      <ul>
+        <li>Bilet: <b>17–47 THB</b> (~0,50–1,30 €) în funcție de distanță, până la ~65 THB pe extensiile liniei. Prețurile pot fi diferite după 1 ian. 2027 (detalii mai jos).</li>
+        <li>Merge cam între 6:00 și miezul nopții.</li>
+        <li>Pe BTS ai nevoie de bilet de la automat sau de un card <b>Rabbit</b>. Cardul costă ~200–220 THB la emitere, cu o parte din bani deja încărcați.</li>
+        <li>Cu cardul Rabbit poți cumpăra pachetele „Xtreme Savings”, valabile până pe 31 mar. 2027: ~34 THB pe călătorie cu pachetul de 10 călătorii pe săptămână, sau de la 25 THB pentru distanțe scurte (până la 4 stații).</li>
+      </ul>
+      <div class="warn" style="margin-bottom:0">Guvernul a aprobat un tarif unic de <b>17–45 THB</b> pe toate liniile BTS, cu începere estimată pe 1 ian. 2027. Verificăm la sosire ce prețuri se aplică.</div>
+    </div>
+    <div class="card">
+      <div class="tag">MRT · metroul (linia albastră)</div>
+      <h3>Pentru orașul vechi, Chinatown, Lumpini</h3>
+      <ul>
+        <li>Bilet: ~17–44 THB.</li>
+        <li><b>Plătești direct cu cardul bancar contactless</b> la intrare. Revolut și Wise merg.</li>
+        <li>Schimbi din BTS în MRT la Asok (BTS) ↔ Sukhumvit (MRT). Sunt legate pe sub pământ, ~3 minute de mers.</li>
+      </ul>
+      <div class="tag" style="margin-top:12px">Bărci</div>
+      <ul>
+        <li><b>Chao Phraya Express</b>: bărcile pe râu, spre temple și Chinatown. Te urci la debarcaderul Sathorn (BTS Saphan Taksin). Costă puțin, câteva zeci de baht.</li>
+        <li><b>Barca de pe canalul Saen Saep</b>: rapidă și ieftină, foarte locală. E o experiență în sine.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin:26px 0 10px">🚗 Grab, Bolt și taxi: cât costă</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Drum</th><th>GrabCar</th><th>GrabBike (scuter)</th><th>Observații</th></tr></thead>
+    <tbody>
+      <tr><td>~5 km în oraș (de ex. Sukhumvit → Silom)</td><td class="num">120–160 THB<br><span class="sub">~3–4 €</span></td><td class="num">50–70 THB</td><td>Depinde mult de trafic</td></tr>
+      <tr><td>~8 km (de ex. Chatuchak → Thong Lo)</td><td class="num">150–200 THB<br><span class="sub">~4–5,5 €</span></td><td class="num">70–100 THB</td><td>La orele de vârf e cu 20–40% mai scump</td></tr>
+      <tr><td>Apartament → Ekkamai / Thong Lo (estimare)</td><td class="num">~100–180 THB</td><td class="num">~50–80 THB</td><td>Seara, la întoarcere, dacă nu mai luăm BTS-ul</td></tr>
+      <tr><td>Aeroport DMK → apartament (estimare)</td><td class="num">~400–600 THB</td><td class="num">–</td><td>Plus taxele de autostradă</td></tr>
+      <tr><td>Taxi cu aparat</td><td colspan="2">Pornire 35–40 THB, apoi ~6,5 THB/km</td><td>Cerem mereu să pornească aparatul, altfel coborâm</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="tag">Uber</div><p style="margin:0"><b>Uber nu funcționează în Thailanda.</b> Și-a vândut afacerea din regiune către Grab în 2018. Folosim <b>Grab</b> și <b>Bolt</b> (Bolt e adesea puțin mai ieftin).</p></div>
+    <div class="card"><div class="tag">GrabBike</div><p style="margin:0">Scuterul cu șofer e cel mai rapid prin trafic și cel mai ieftin. E însă și cel mai riscant: cerem cască și îl evităm noaptea târziu sau pe ploaie.</p></div>
+    <div class="card"><div class="tag">Tuk-tuk</div><p style="margin:0">Merită o dată, pentru experiență. Negociem prețul înainte de a urca și refuzăm orice ofertă „super ieftină” care ne duce la magazine de bijuterii.</p></div>
+  </div>
+</section>
+
+<!-- COSTURI -->
+<section id="costuri">
+  <h2>💸 Cât costă viața noastră acolo</h2>
+  <p class="lead">Prețuri reale din Bangkok, în baht și în lei, plus un buget lunar pentru noi doi, în trei variante. Cursul se poate schimba mai jos, și atunci se recalculează tot.</p>
+  <div class="card" style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:14px 18px;margin-bottom:16px">
+    <label class="sub">1 € = <input id="rTHB" type="number" step="0.1" value="37.4" style="width:80px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:inherit;font-weight:700"> THB</label>
+    <label class="sub">1 € = <input id="rRON" type="number" step="0.01" value="5.23" style="width:80px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:inherit;font-weight:700"> lei</label>
+    <span class="sub">→ <b id="oneTHB"></b>. Curs EUR/THB de la mijlocul lui noiembrie 2026. Cursul în lei e cel din ghidul lui Horațiu.</span>
+  </div>
+
+  <h3 style="margin:10px 0 10px">🧾 Prețuri de zi cu zi</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Ce</th><th>Baht (THB)</th><th>Lei</th><th>Observații</th></tr></thead>
+    <tbody id="priceRows"></tbody>
+  </table></div>
+
+  <h3 style="margin:26px 0 6px">📊 Bugetul lunar pentru 2 persoane în Bangkok</h3>
+  <p class="sub" style="margin:0 0 12px">Fără zboruri, fără chirie (apartamentul e plătit separat, 561 €) și fără viză. Cuprinde tot ce cheltuim pe loc într-o lună.</p>
+  <div class="grid g3" id="tiers"></div>
+  <div class="tablewrap" style="margin-top:16px"><table>
+    <thead><tr><th>Categorie (2 persoane, o lună)</th><th>🌱 Econom</th><th>⚖️ Mediu</th><th>✨ Comod</th></tr></thead>
+    <tbody id="budgetRows"></tbody>
+  </table></div>
+  <div class="note">💡 <b>Ce înseamnă fiecare variantă.</b> <b>Econom:</b> mâncăm mai mult de la tarabe și food courturi, gătim uneori și ieșim rar. <b>Mediu</b> (cel mai probabil pentru noi): prânz local, cină de 2–3 ori pe săptămână în restaurante bune, cafea la cafenea în fiecare zi, 2–3 ieșiri pe săptămână. <b>Comod:</b> mâncare occidentală des, baruri și rooftop-uri, Grab peste tot, sală și activități plătite.</div>
+  <div class="warn">⚠️ Sunt estimări făcute din prețurile medii din 2026, nu prețuri garantate. Mâncarea s-a scumpit în ultimii ani, iar unele tarabe își schimbă prețurile des.</div>
+</section>
+
+<!-- O SĂPTĂMÂNĂ TIPICĂ -->
+<section id="idei">
+  <h2>📅 O săptămână tipică (idee)</h2>
+  <p class="lead">Ritmul care se potrivește cu ce ne-am propus: lucru ziua, oameni noi seara și câte ceva de văzut în weekend.</p>
+  <div class="grid g3">
+    <div class="card"><div class="tag">Luni</div><h3>CO Working Monday</h3><p style="margin:0">Coworking cu nomazi și expați. De obicei e la True Digital Park, deci lângă casă, dar locul se schimbă uneori, așa că verificăm pe Meetup.</p></div>
+    <div class="card"><div class="tag">Marți – miercuri</div><h3>Meetupuri tech și AI</h3><p style="margin:0">Bangkok AI & Tech Builders se vede miercurea. ProductTank (produs și design) e lângă Ekkamai. Ne uităm pe Luma și Meetup.</p></div>
+    <div class="card"><div class="tag">Joi</div><h3>Seara nomazilor</h3><p style="margin:0">Bangkok Digital Nomads face networking în fiecare joi seara. „Jumătate din sală e nouă în fiecare săptămână.”</p></div>
+    <div class="card"><div class="tag">Vineri</div><h3>Bangkok Tech Mixer</h3><p style="margin:0">Gratuit, în fiecare vineri de la 19:00, pe Sukhumvit Soi 8 (BTS Nana). După aceea, o seară de jazz sau muzică live.</p></div>
+    <div class="card"><div class="tag">Sâmbătă</div><h3>Oraș și cultură</h3><p style="margin:0">Chatuchak dimineața, un muzeu (BACC, Jim Thompson, Dib) sau templele și barca pe râu.</p></div>
+    <div class="card"><div class="tag">Duminică</div><h3>Parc și liniște</h3><p style="margin:0">Alergat sau plimbare în Benchakitti, bicicletă prin Bang Krachao, film la Doc Club (Cloud 11).</p></div>
+  </div>
+  <div class="note">🧧 <b>Anul Nou Chinezesc cade pe 6 februarie 2027</b>, cât suntem în Bangkok. Chinatown (Yaowarat) e plin de dragoni, felinare și mâncare. Mergem cu MRT-ul până la Wat Mangkon, nu cu mașina, pentru că străzile se închid.</div>
+</section>
+
+<!-- EVITAT -->
+<section id="evitat">
+  <h2>⚠️ Zone de evitat sau la care să fim atenți</h2>
+  <p class="lead">Bangkokul e în general sigur pentru turiști, iar infracțiunile violente sunt rare. Problemele reale sunt țepele, furturile mărunte și băuturile „aranjate” în unele zone de noapte. Am separat mai jos locurile cu țepe de cele care chiar trebuie ocolite.</p>
+  <div class="avoid">
+    <div class="card"><span class="lvl trap">Țepe turistice</span><h3>Împrejurimile Marelui Palat și Wat Pho</h3><p style="margin:0">Clasicul „palatul e închis azi”, urmat de o ofertă de tuk-tuk care ajunge la un magazin de bijuterii. <b>Palatul nu e niciodată „închis”</b> pentru cineva care te oprește pe stradă. Mergem direct la intrarea oficială.</p></div>
+    <div class="card"><span class="lvl night">Atenție seara</span><h3>Khao San Road, noaptea târziu</h3><p style="margin:0">Zona backpackerilor: băuturi la găleată, oameni beți, buzunare golite. Ziua e ok și amuzant. Seara ținem băutura mereu în mână și nu acceptăm băuturi de la străini.</p></div>
+    <div class="card"><span class="lvl night">Atenție seara</span><h3>Patpong, Soi Cowboy, Nana Plaza</h3><p style="margin:0">Zonele de „red-light”. Riscul principal e nota de plată umflată, cu taxe pe care nu le-ai cerut (mai ales la „ping-pong shows”). Unele baruri pun substanțe în băuturi. Noi nu avem ce căuta acolo. Atenție: Bangkok Tech Mixerul de vineri e pe Sukhumvit Soi 8, la câteva străzi de Nana Plaza, deci acolo stăm doar la eveniment.</p></div>
+    <div class="card"><span class="lvl night">Evitat noaptea</span><h3>Khlong Toei (zona mahalalei, lângă port)</h3><p style="margin:0">Una dintre cele mai sărace zone ale orașului, cu mai multă infracționalitate decât restul. Piața Khlong Toei e ok dimineața, dar seara nu ne plimbăm pe străduțele din jur.</p></div>
+    <div class="card"><span class="lvl trap">Buzunare</span><h3>MBK, Pratunam, Chatuchak, BTS la ore de vârf</h3><p style="margin:0">Aglomerație mare, deci furturi de telefoane și portofele. Rucsacul în față, telefonul în buzunarul din față și fără telefonul pe masă la terasă.</p></div>
+    <div class="card"><span class="lvl trap">Peste tot</span><h3>Bancomatele de pe stradă</h3><p style="margin:0">Folosim bancomatele din bănci sau din mall-uri, mai ales seara. Refuzăm conversia propusă de bancomat și alegem plata în baht.</p></div>
+    <div class="card"><span class="lvl no">De evitat complet</span><h3>Granița cu Cambodgia</h3><p style="margin:0">După luptele din 2025 și armistițiul fragil, guvernele recomandă să nu mergem la mai puțin de 50 km de granița cu Cambodgia: Surin, Si Sa Ket, Buri Ram, Ubon Ratchathani, Sa Kaeo, Chanthaburi, Trat (inclusiv Koh Chang și Koh Kood, după unele avertismente). Nu ne afectează în Bangkok sau Phuket.</p></div>
+    <div class="card"><span class="lvl no">De evitat complet</span><h3>Provinciile din extremul sud</h3><p style="margin:0">Yala, Pattani, Narathiwat și o parte din Songkhla, lângă granița cu Malaezia, din cauza tensiunilor locale. Phuket e departe de ele și sigur.</p></div>
+  </div>
+  <div class="note">🛡️ <b>Reguli simple:</b> Grab în loc de taxiuri prinse de pe stradă, băutura nu rămâne nesupravegheată, iar dacă cineva vine la noi cu o ofertă „specială”, mulțumim și plecăm. Poliția turistică vorbește engleză: <b>1155</b>.</div>
+</section>
+
+</main>
+
+<footer><div class="wrap">Ciornă făcută pe 25 noiembrie 2026 pe baza ghidului lui Horațiu. Prețurile, programele și locațiile evenimentelor se schimbă, așa că le verificăm înainte de plecare. Coordonatele de pe hartă sunt aproximative. Folosim linkurile Google Maps pentru traseul exact.</div></footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ---------- Linia Sukhumvit ---------- */
+const Z={
+siam:{n:"Siam",z:"Centru",x:60,t:"~25 min",h:"BTS direct",q:1,s:3,d:"Centrul comercial al orașului (Siam Paragon, MBK, CentralWorld) și locul unde se întâlnesc cele două linii de BTS. Aglomerat toată ziua.",f:"cumpărături mari, cinema, schimbat trenul spre Silom, Ari sau BACC."},
+nana:{n:"Nana",z:"Centru",x:130,t:"~20 min",h:"BTS direct",q:1,s:4,d:"Foarte aglomerat, cu hoteluri, baruri și multă viață de noapte, nu toată de calitate (Nana Plaza e aici). Pe Soi 8 se ține Bangkok Tech Mixerul de vineri.",f:"Tech Mixerul de vineri, apoi plecăm."},
+asok:{n:"Asok",z:"Centru",x:200,t:"~18 min",h:"BTS direct",q:1,s:5,d:"Intersecția BTS cu metroul MRT, cu birouri, Terminal 21 și multe meetupuri de AI (de ex. la Bartels Asoke). Aproape de parcul Benchakitti.",f:"networking, meetupuri, schimbat spre MRT."},
+phrom:{n:"Phrom Phong",z:"Viața socială",x:270,t:"~15 min",h:"BTS direct",q:2,s:4,d:"Mall-urile EmQuartier și Emporium, restaurante bune, multă comunitate japoneză și expați. Aici e cinematograful Emprive Cineclub.",f:"cine în oraș, film, cafenele."},
+thong:{n:"Thong Lo",z:"Viața socială",x:340,t:"~12 min",h:"BTS direct",q:2,s:5,d:"Cel mai „cool” cartier: baruri, restaurante bune, cafenele de specialitate, muzică live (Studio Lam). Thailandezi tineri și expați. Cea mai scumpă zonă.",f:"seri în oraș, oameni noi, brunch în weekend."},
+ekka:{n:"Ekkamai",z:"Viața socială",x:410,t:"~10 min",h:"BTS direct",q:3,s:4,d:"Varianta creativă și mai relaxată a lui Thong Lo. Aici se țin întâlnirile ProductTank (produs, design, fondatori). Muzeul Dib Bangkok e aproape.",f:"meetupuri de produs și design, cafenele de lucru, artă."},
+phra:{n:"Phra Khanong",z:"Rezidențial, local",x:480,t:"~7 min",h:"BTS direct",q:3,s:3,d:"Granița dintre zona socială și cea locală: W District (mâncare și baruri în aer liber), coworkingul The Hive și mulți expați pe termen lung. Probabil cel mai bun echilibru.",f:"The Hive, ieșiri spontane, mâncare stradală."},
+onnut:{n:"On Nut",z:"Rezidențial, local",x:620,t:"~5 min",h:"BTS direct",q:4,s:2,d:"Cartier local și ieftin, cu piețe de seară și supermarketuri mari. Destui expați care locuiesc aici.",f:"cumpărături, piață de seară, masă ieftină."},
+bang:{n:"Bang Chak",z:"Rezidențial, local",x:760,t:"~2 min",h:"BTS direct",q:4,s:1,d:"Rezidențial și liniștit, cu blocuri, străduțe și tarabe.",f:"plimbări de seară, mâncare de la tarabe."},
+punn:{n:"Punnawithi · apartamentul nostru",z:"Rezidențial, local",x:900,t:"0 min",h:"pe jos",q:4,s:2,d:"Zona s-a dezvoltat în jurul True Digital Park, hubul de startupuri, cu coworking, peste 250 de companii, Tops și Virgin Active. Lângă el e Cloud 11, deschis în iulie 2026: sală de concerte, cinema Doc Club, padel, parc pe acoperiș, peste 40 de localuri. Ziua e plin de oameni din tech, seara e liniște.",f:"lucru zilnic, CO Working Monday, sport, concerte la Cloud 11."},
+ari:{n:"Ari",z:"Nord, în afara Sukhumvitului",t:"~40 min",h:"BTS, cu schimb la Siam",q:4,s:3,d:"Cartier verde și liniștit, cu cafenele și restaurante mici. Preferat de nomazii care vor să lucreze concentrați.",f:"o zi de lucru din cafenele, ca schimbare de decor."},
+silom:{n:"Silom / Sathorn",z:"Sud, în afara Sukhumvitului",t:"~35 min",h:"BTS + MRT",q:2,s:4,d:"Cartierele de birouri și bănci. Ziua sunt oameni la costum, seara baruri pe acoperiș. Aici sunt Parcul Lumpini, Alliance Française și Goethe-Institut.",f:"Lumpini, rooftop-uri, centre culturale."},
+old:{n:"Orașul vechi (Rattanakosin)",z:"Vest, lângă râu",t:"~50 min",h:"BTS + MRT până la Sanam Chai",q:1,s:3,d:"Marele Palat, Wat Pho, Wat Arun și Khao San. Foarte turistic, cu țepe, și departe de noi.",f:"o zi de temple, nu pentru stat."},
+river:{n:"Malul râului (Charoen Krung, ICONSIAM)",z:"Vest-sud",t:"~45 min",h:"BTS până la Saphan Taksin + barcă",q:2,s:3,d:"Cartierul creativ Charoen Krung, galerii mici, baruri de jazz și mall-ul ICONSIAM de pe celălalt mal. Frumos la apus, de pe barcă.",f:"o după-amiază cu barca, galerii, jazz."}
+};
+const order=["siam","nana","asok","phrom","thong","ekka","phra","onnut","bang","punn"];
+const zc=k=>["siam","nana","asok"].includes(k)?"#8a8780":["phrom","thong","ekka"].includes(k)?"#e4572e":"#0f8b8d";
+const sg=document.getElementById("stations");
+order.forEach((k,i)=>{const s=Z[k],up=i%2===0,lab=k==="punn"?"Punnawithi":s.n;
+ sg.insertAdjacentHTML("beforeend",`<g class="st" data-k="${k}"><circle cx="${s.x}" cy="90" r="22" fill="transparent"/><circle class="dot" cx="${s.x}" cy="90" r="${k==='punn'?13:10}" fill="#fff" stroke="${zc(k)}" stroke-width="3"/><text x="${s.x}" y="${up?60:128}" text-anchor="middle" font-size="${k==='punn'?16:14}" font-weight="${k==='punn'?800:600}" fill="#1f2328">${lab}</text>${k==='punn'?`<text x="${s.x}" y="38" text-anchor="middle" font-size="13" font-weight="800" fill="#e4572e">🏠 noi</text>`:''}</g>`)});
+function showZ(k){const s=Z[k];
+ zTag.textContent=s.z;zName.textContent=s.n;zDesc.textContent=s.d;zFor.textContent=s.f;zTime.textContent=s.t;zHow.textContent=s.h;
+ zExtra.innerHTML=k==="punn"?`<ul style="margin:0;padding-left:18px"><li>🏢 <b>Ziua:</b> lucru la True Digital Park, prânz la food court (50–80 THB pe fel), sală la Virgin Active.</li><li>🌙 <b>Seara:</b> liniște. Pentru ieșiri mergem 3–8 stații spre centru. La Cloud 11 e câte ceva aproape în fiecare săptămână.</li><li>👥 <b>Comunitate:</b> oameni din tech și startupuri ziua, puțini expați seara.</li><li>➡️ <a href="#verdict">Analiza completă: e zona bună pentru noi?</a></li></ul>`:"";
+ zQ.textContent=s.q+"/5";zS.textContent=s.s+"/5";bQ.style.width=s.q*20+"%";bS.style.width=s.s*20+"%";
+ document.querySelectorAll(".st").forEach(e=>e.querySelector(".dot").setAttribute("fill",e.dataset.k===k?zc(k):"#fff"));
+ document.querySelectorAll(".zbtn").forEach(b=>b.classList.toggle("on",b.dataset.k===k));}
+document.querySelectorAll(".st").forEach(e=>e.addEventListener("click",()=>showZ(e.dataset.k)));
+document.querySelectorAll(".zbtn").forEach(b=>b.addEventListener("click",()=>showZ(b.dataset.k)));
+showZ("punn");
+
+/* ---------- Costuri ---------- */
+const PRICES=[
+ ["🍜 Fel de mâncare la tarabă / food court",50,80,"Pad thai, orez cu pui, supă de tăiței"],
+ ["🍛 Masă la un restaurant local",100,180,"Pe fel"],
+ ["🍝 Masă la un restaurant occidental",250,500,"Pe fel, în zonele cu expați"],
+ ["🍽️ Cină pentru 2, restaurant mediu",700,1500,"3 feluri, fără vin scump"],
+ ["☕ Cappuccino la cafenea",70,120,"La 7-Eleven e mult mai ieftin"],
+ ["🍺 Bere locală (0,5 l)",60,100,"La magazin ~45–60, la bar 80–150"],
+ ["🍷 Sticlă de vin la magazin",350,800,"Vinul e importat și taxat mult"],
+ ["💧 Apă 1,5 l",15,30,""],
+ ["🚆 O călătorie cu BTS",17,47,"Până la ~65 pe extensii"],
+ ["🚗 Grab, ~5 km prin oraș",120,160,"GrabBike: 50–70"],
+ ["📱 SIM turistic, 30 de zile, date nelimitate",1199,1199,"AIS sau True, de persoană"],
+ ["💻 Coworking hot desk, o lună",4500,7500,"The Hive ~4.500, True Digital Park 6.000–7.500"],
+ ["💻 Coworking, o zi",300,350,""],
+ ["💆 Masaj thailandez, 1 oră",250,500,"În salon de cartier. În hoteluri e mult mai scump"],
+ ["🏦 Comision la bancomat",220,220,"La fiecare retragere"],
+ ["🖼️ Intrare la muzeu sau templu",50,700,"BACC gratuit, Dib 700"],
+ ["🎬 Bilet la cinema",150,500,""]
+];
+const BUD=[
+ ["🍜 Mâncare în oraș",16000,28000,45000,"Prânz și cină pentru 2"],
+ ["🛒 Cumpărături, apă, 7-Eleven",4000,6000,9000,"Mic dejun, gustări, produse de casă"],
+ ["☕ Cafele și băuturi",2500,6000,12000,"Cafenele, bere, cocktailuri"],
+ ["🚆 Transport (BTS + Grab)",2500,4500,8000,"Pentru 2 persoane"],
+ ["📱 2 SIM-uri turistice",2400,2400,2400,"2 × 1.199"],
+ ["💻 Coworking pentru 2",9000,12000,15000,"E deja în bugetul lui Horațiu"],
+ ["🎟️ Evenimente, muzee, cinema, concerte",2000,5000,10000,""],
+ ["🏋️ Sport (clase, padel, Muay Thai)",0,2500,7000,""],
+ ["💆 Masaj, spălătorie, diverse",1500,3500,6000,""],
+ ["🏦 Comisioane la bancomat",900,1100,1300,"4–6 retrageri"]
+];
+const COWORK_IDX=5;
+function fmtN(n){return Math.round(n).toLocaleString("ro-RO");}
+function renderCost(){
+ const T=parseFloat(rTHB.value)||37.4,R=parseFloat(rRON.value)||5.23,k=R/T;
+ oneTHB.textContent=`100 THB ≈ ${(100*k).toFixed(1).replace(".",",")} lei ≈ ${(100/T).toFixed(2).replace(".",",")} €`;
+ priceRows.innerHTML=PRICES.map(p=>{const th=p[1]===p[2]?fmtN(p[1]):fmtN(p[1])+"–"+fmtN(p[2]);const le=p[1]===p[2]?fmtN(p[1]*k):fmtN(p[1]*k)+"–"+fmtN(p[2]*k);return `<tr><td>${p[0]}</td><td class="num">${th}</td><td class="num">${le} lei</td><td class="sub">${p[3]}</td></tr>`}).join("");
+ const tot=[0,0,0];
+ budgetRows.innerHTML=BUD.map(b=>{tot[0]+=b[1];tot[1]+=b[2];tot[2]+=b[3];return `<tr><td>${b[0]}${b[4]?`<div class="sub">${b[4]}</div>`:""}</td>${[1,2,3].map(i=>`<td class="num">${fmtN(b[i])} THB<div class="sub">${fmtN(b[i]*k)} lei</div></td>`).join("")}</tr>`}).join("")+
+  `<tr style="background:#fffaf1"><td><b>Total pe lună</b></td>${tot.map(t=>`<td class="num">${fmtN(t)} THB<div>${fmtN(t*k)} lei</div></td>`).join("")}</tr>`;
+ const names=[["🌱 Econom","Tarabe, gătit acasă, ieșiri rare"],["⚖️ Mediu","Cel mai probabil pentru noi"],["✨ Comod","Restaurante, baruri, Grab peste tot"]];
+ tiers.innerHTML=tot.map((t,i)=>{const noCw=t-BUD[COWORK_IDX][i+1];return `<div class="card ${i===1?'accent':''}" ${i===1?'style="border:2px solid var(--teal)"':''}><div class="tag">${names[i][0]}</div><div class="big">${fmtN(t*k)} lei</div><div class="sub" style="margin:4px 0 8px">${fmtN(t)} THB · ${fmtN(t/T)} € pe lună, pentru 2</div><div class="sub">${names[i][1]}<br>Fără coworking: <b>${fmtN(noCw*k)} lei</b> · pe zi, pentru 2: <b>~${fmtN(noCw*k/30)} lei</b></div></div>`}).join("");
+}
+rTHB.addEventListener("input",renderCost);rRON.addEventListener("input",renderCost);renderCost();
+
+/* ---------- Locuri ---------- */
+const HOME=[13.6893,100.6091];
+const CATS={
+ cowork:{n:"Coworking & networking",c:"#163a5f",e:"💻"},
+ muzeu:{n:"Muzee & artă",c:"#7b2d5b",e:"🖼️"},
+ cultura:{n:"Centre culturale & temple",c:"#d99a2b",e:"🏛️"},
+ muzica:{n:"Concerte & muzică live",c:"#e4572e",e:"🎷"},
+ cinema:{n:"Cinema",c:"#5d6470",e:"🎬"},
+ parc:{n:"Parcuri & plimbări",c:"#2f8a4a",e:"🌳"},
+ activ:{n:"Activități & piețe",c:"#0f8b8d",e:"✨"}
+};
+const P=[
+ {c:"cowork",n:"True Digital Park",ll:[13.6857,100.6105],d:"Hubul de startupuri. Coworking la etajul 6 (clădirea East), Tops, food court ieftin (50–80 THB pe fel), sala Virgin Active. Aici e CO Working Monday.",h:"4 min pe jos, pe pasarela de la BTS Punnawithi",t:"4 min",p:"6.000 THB/lună sau 300 THB/zi",q:"True Digital Park Bangkok"},
+ {c:"cowork",n:"The Hive Prakanong",ll:[13.7146,100.5930],d:"Coworking cu comunitate internațională și multe evenimente. A doua variantă de coworking.",h:"BTS 3 stații până la Phra Khanong, apoi 2 min pe jos",t:"~10 min",p:"de la 4.500 THB/lună",q:"The Hive Prakanong"},
+ {c:"cowork",n:"Bartels Asoke",ll:[13.7383,100.5606],d:"Cafenea cu Wi-Fi bun unde se strâng des meetupurile de AI și automatizare, cu coworking după.",h:"BTS direct până la Asok, apoi 5 min pe jos",t:"~22 min",p:"cât consumi",q:"Bartels Asoke Bangkok"},
+ {c:"cowork",n:"Bangkok Tech Mixer (vineri)",ll:[13.7405,100.5555],d:"Seară de networking tech, AI și date, gratuită, în fiecare vineri de la 19:00, pe Sukhumvit Soi 8.",h:"BTS direct până la Nana, apoi 5 min pe jos",t:"~25 min",p:"gratuit",q:"Sukhumvit Soi 8 Bangkok"},
+ {c:"muzeu",n:"Dib Bangkok",ll:[13.7165,100.5790],d:"Muzeu nou de artă contemporană internațională (deschis în dec. 2025), inclus de TIME pe lista locurilor remarcabile din 2026. Arhitectură spectaculoasă. Intrarea e scumpă pentru străini.",h:"BTS până la Ekkamai, apoi Grab ~10 min (Sukhumvit Soi 40)",t:"~25 min",p:"~700 THB (~19 €)",q:"Dib Bangkok"},
+ {c:"muzeu",n:"BACC – Bangkok Art and Culture Centre",ll:[13.7467,100.5302],d:"Clădire albă în spirală, cu expoziții contemporane, magazine mici de design și cafenele. Închis lunea.",h:"BTS până la Siam, schimbi pe linia Silom, o stație până la National Stadium",t:"~35 min",p:"de obicei gratuit",q:"Bangkok Art and Culture Centre"},
+ {c:"muzeu",n:"Jim Thompson House & Art Center",ll:[13.7493,100.5283],d:"Case tradiționale din lemn de tec, cu grădină, în mijlocul orașului, plus un centru de artă contemporană cu cafenea și bibliotecă. Merge combinat cu BACC.",h:"La fel ca BACC (National Stadium), apoi 5 min pe jos",t:"~40 min",p:"Art Center ~50 THB; bilet combinat ~250 THB",q:"Jim Thompson House Bangkok"},
+ {c:"muzeu",n:"MOCA Bangkok",ll:[13.8172,100.5612],d:"Unul dintre cele mai bune muzee de artă thailandeză modernă, într-o clădire mare de granit.",h:"BTS direct până la Mo Chit, apoi Grab ~10 min",t:"~55 min",p:"~250 THB",q:"MOCA Bangkok"},
+ {c:"cultura",n:"Marele Palat & Wat Pho",ll:[13.7488,100.4920],d:"Palatul regal și templul cu Buddha culcat, plus școala de masaj thailandez. Haine care acoperă umerii și genunchii. Mergem dimineața devreme.",h:"BTS până la Asok → MRT de la Sukhumvit până la Sanam Chai",t:"~50 min",p:"Palat ~500 THB · Wat Pho ~300 THB",q:"Wat Pho Bangkok"},
+ {c:"cultura",n:"Wat Arun",ll:[13.7437,100.4888],d:"Templul Zorilor, pe malul celălalt. Cel mai frumos e la apus, văzut de pe malul opus.",h:"MRT până la Sanam Chai, apoi barca de traversare de la Tha Tien",t:"~55 min",p:"~200 THB",q:"Wat Arun"},
+ {c:"cultura",n:"Chinatown (Yaowarat)",ll:[13.7402,100.5098],d:"Mâncare stradală seara, neoane și aglomerație. Pe 6 feb. 2027 e Anul Nou Chinezesc, cu festivitățile aici.",h:"BTS până la Asok → MRT de la Sukhumvit până la Wat Mangkon",t:"~45 min",p:"gratuit; mâncarea e ieftină",q:"Yaowarat Road Bangkok"},
+ {c:"cultura",n:"Alliance Française Bangkok",ll:[13.7263,100.5452],d:"Filme, expoziții, conferințe și o cafenea franțuzească. Bun pentru evenimente culturale în engleză și franceză.",h:"BTS până la Asok → MRT până la Lumphini, 5 min pe jos",t:"~35 min",p:"depinde de eveniment",q:"Alliance Française Bangkok"},
+ {c:"cultura",n:"Goethe-Institut Thailand",ll:[13.7228,100.5437],d:"Proiecții de filme, concerte și discuții, de multe ori gratuite.",h:"BTS până la Asok → MRT până la Lumphini, 10 min pe jos",t:"~40 min",p:"adesea gratuit",q:"Goethe-Institut Bangkok"},
+ {c:"cultura",n:"Thailand Cultural Centre",ll:[13.7656,100.5700],d:"Sala mare de spectacole: balet, orchestră, teatru, spectacole thailandeze.",h:"BTS până la Asok → MRT până la Thailand Cultural Centre",t:"~35 min",p:"depinde de spectacol",q:"Thailand Cultural Centre"},
+ {c:"muzica",n:"Cloud 11 Hall & Melt Livehouse",ll:[13.6830,100.6082],d:"Sală nouă de concerte pentru ~2.500–3.000 de oameni, plus clubul Melt Livehouse, chiar lângă noi. Verificăm programul pe site-ul Cloud 11.",h:"5–8 min pe jos de la apartament",t:"~7 min",p:"depinde de concert",q:"Cloud 11 Bangkok"},
+ {c:"muzica",n:"Studio Lam",ll:[13.7305,100.5815],d:"Bar mic cu muzică thailandeză din nord-est (molam) și DJ. Foarte local, foarte fain.",h:"BTS 5 stații până la Thong Lo, 5 min pe jos (Sukhumvit 51)",t:"~17 min",p:"cât consumi",q:"Studio Lam Bangkok"},
+ {c:"muzica",n:"Saxophone Pub",ll:[13.7637,100.5380],d:"Jazz și blues live în fiecare seară, din 1987. O instituție a orașului.",h:"BTS direct până la Victory Monument, 3 min pe jos",t:"~40 min",p:"cât consumi",q:"Saxophone Pub Bangkok"},
+ {c:"muzica",n:"Brown Sugar",ll:[13.7393,100.5138],d:"Cel mai vechi club de jazz din Bangkok (din 1985). S-a mutat de câteva ori, așa că verificăm adresa înainte. Ultima e în zona Chinatown.",h:"MRT până la Wat Mangkon, apoi câteva minute pe jos",t:"~45 min",p:"cât consumi",q:"Brown Sugar Jazz Bangkok"},
+ {c:"cinema",n:"Doc Club & Friends (Cloud 11)",ll:[13.6826,100.6077],d:"Cinema de filme independente și documentare din toată lumea. E și una dintre locațiile Bangkok International Film Festival.",h:"5–8 min pe jos",t:"~7 min",p:"~200 THB",q:"Cloud 11 Doc Club"},
+ {c:"cinema",n:"Emprive Cineclub (Emporium)",ll:[13.7305,100.5697],d:"Sală premium cu fotolii mari, filme internaționale în original cu subtitrare.",h:"BTS direct până la Phrom Phong, intri direct în mall",t:"~15 min",p:"~300–500 THB",q:"Emprive Cineclub Emporium"},
+ {c:"cinema",n:"Paragon Cineplex (Siam Paragon)",ll:[13.7462,100.5348],d:"Cel mai mare cinema, cu IMAX și săli de lux. Imnul regal se cântă înainte de film și toată lumea se ridică.",h:"BTS direct până la Siam",t:"~25 min",p:"~250–1.000 THB",q:"Paragon Cineplex"},
+ {c:"cinema",n:"House Samyan",ll:[13.7330,100.5290],d:"Cinematograf independent mic, cu filme de autor.",h:"BTS până la Asok → MRT până la Sam Yan",t:"~35 min",p:"~150–200 THB",q:"House Samyan"},
+ {c:"parc",n:"Benchakitti Park",ll:[13.7291,100.5590],d:"Parc-pădure mare, cu pasarele suspendate peste zone umede. Cel mai frumos pentru alergat dimineața. În zilele cu aer poluat, mai bine nu.",h:"BTS până la Asok, apoi 10–15 min pe jos",t:"~30 min",p:"gratuit",q:"Benchakitti Park"},
+ {c:"parc",n:"Lumpini Park",ll:[13.7314,100.5414],d:"Parcul central, cu lac, bărci cu pedale, tai chi dimineața și varani (șopârle mari) liniștiți.",h:"BTS până la Asok → MRT până la Lumphini",t:"~35 min",p:"gratuit",q:"Lumpini Park"},
+ {c:"parc",n:"Bang Krachao",ll:[13.6950,100.5680],d:"„Plămânul verde”: o peninsulă cu junglă, într-o buclă a râului. Închiriem biciclete și mergem pe poteci înălțate, printre sate.",h:"Grab ~20 min până la debarcaderul Wat Khlong Toei Nok, apoi barca de traversare",t:"~35 min",p:"barca ~10 THB, bicicleta ~100 THB",q:"Bang Krachao"},
+ {c:"parc",n:"Cloud 11 Park",ll:[13.6835,100.6090],d:"Cel mai mare parc pe acoperiș din Bangkok, chiar lângă noi. Bun pentru o plimbare de seară.",h:"5–8 min pe jos",t:"~7 min",p:"gratuit",q:"Cloud 11 Park Bangkok"},
+ {c:"activ",n:"Chatuchak Weekend Market",ll:[13.7999,100.5503],d:"Una dintre cele mai mari piețe din lume, cu peste 10.000 de tarabe. Doar sâmbăta și duminica. Venim dimineața, că după-amiaza e foarte cald.",h:"BTS direct până la Mo Chit",t:"~45 min",p:"gratuit",q:"Chatuchak Weekend Market"},
+ {c:"activ",n:"Muay Thai la Rajadamnern",ll:[13.7582,100.5085],d:"Cel mai vechi stadion de Muay Thai. Meciurile de seară sunt o experiență intensă.",h:"MRT până la Sam Yot, apoi Grab ~5 min, sau Grab direct",t:"~50 min",p:"bilete de la ~1.500 THB (verificăm)",q:"Rajadamnern Stadium"},
+ {c:"activ",n:"Barca pe Chao Phraya, la apus",ll:[13.7190,100.5143],d:"Ne urcăm la debarcaderul Sathorn și mergem spre nord, pe lângă temple. Cea mai ieftină „croazieră” din oraș.",h:"BTS până la Siam → linia Silom până la Saphan Taksin",t:"~40 min",p:"câteva zeci de baht",q:"Sathorn Pier Bangkok"},
+ {c:"activ",n:"W District",ll:[13.7138,100.5918],d:"Food park în aer liber, cu tarabe, baruri și uneori muzică. Aproape de casă.",h:"BTS 3 stații până la Phra Khanong, 2 min pe jos",t:"~10 min",p:"ieftin",q:"W District Phra Khanong"},
+ {c:"activ",n:"Jodd Fairs (Rama 9)",ll:[13.7572,100.5660],d:"Piață de seară foarte populară, cu mâncare, haine și localuri mici. Bună pentru o seară relaxată.",h:"BTS până la Asok → MRT până la Phra Ram 9",t:"~35 min",p:"gratuit; mâncarea e ieftină",q:"Jodd Fairs Rama 9"},
+ {c:"activ",n:"Curs de gătit thailandez",ll:[13.7300,100.5680],d:"Câteva ore: mergi la piață și gătești 4–5 feluri. Sunt multe școli în zona Sukhumvit și în orașul vechi.",h:"Depinde de școală; multe sunt lângă BTS Phrom Phong sau Thong Lo",t:"~15–20 min",p:"~1.000–2.000 THB (estimat)",q:"Thai cooking class Sukhumvit"}
+];
+const gmap=q=>`https://www.google.com/maps/dir/?api=1&origin=BTS+Punnawithi+Bangkok&destination=${encodeURIComponent(q)}&travelmode=transit`;
+const on=new Set(Object.keys(CATS));
+const fEl=document.getElementById("filters");
+Object.entries(CATS).forEach(([k,v])=>{const b=document.createElement("button");b.className="fbtn";b.dataset.k=k;b.innerHTML=`<span class="sw" style="background:${v.c}"></span>${v.e} ${v.n}`;b.onclick=()=>{on.has(k)?on.delete(k):on.add(k);b.classList.toggle("off",!on.has(k));refresh();};fEl.appendChild(b);});
+const list=document.getElementById("places");
+P.forEach((p,i)=>{const c=CATS[p.c];const d=document.createElement("div");d.className="place";d.id="pl"+i;
+ d.innerHTML=`<div class="cat" style="color:${c.c}">${c.e} ${c.n}</div><h4>${p.n}</h4><p>${p.d}</p><div class="how">🚆 <b>Cum ajungem:</b> ${p.h}</div><div class="meta"><span class="pill">⏱ ${p.t}</span><span class="pill">💸 ${p.p}</span><a href="${gmap(p.q)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Traseu în Google Maps ↗</a></div>`;
+ d.onclick=()=>focusP(i);list.appendChild(d);});
+
+let map=null,markers=[];
+try{
+ map=L.map("map",{scrollWheelZoom:false}).setView([13.735,100.555],12);
+ L.tileLayer("https://{s}.basemap.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19}).addTo(map);
+ drawBase(map);
+ L.circleMarker(HOME,{radius:13,color:"#fff",weight:3,fillColor:"#e4572e",fillOpacity:1}).addTo(map).bindPopup("<b>🏠 Apartamentul nostru</b><br>Lângă BTS Punnawithi").openPopup();
+ P.forEach((p,i)=>{const c=CATS[p.c];const m=L.circleMarker(p.ll,{radius:8,color:"#fff",weight:2,fillColor:c.c,fillOpacity:.95}).addTo(map);
+  m.bindPopup(`<b>${p.n}</b><br>${c.e} ${c.n}<br>🚆 ${p.h}<br>⏱ ${p.t}<br><a href="${gmap(p.q)}" target="_blank">Traseu ↗</a>`);
+  m.on("click",()=>sel(i));markers.push(m);});
+}catch(e){document.getElementById("mapfail").style.display="block";}
+function drawBase(map){
+ const RIVER=[[13.835,100.512],[13.81,100.508],[13.79,100.503],[13.772,100.497],[13.758,100.492],[13.746,100.4893],[13.735,100.493],[13.726,100.503],[13.719,100.511],[13.712,100.516],[13.704,100.524],[13.699,100.537],[13.700,100.551],[13.706,100.561],[13.712,100.571],[13.706,100.582],[13.693,100.586],[13.679,100.580],[13.669,100.568],[13.664,100.552],[13.660,100.536],[13.652,100.522],[13.640,100.515]];
+ const SUK=[["Mo Chit",13.8026,100.5538],["Saphan Khwai",13.7937,100.5498],["Ari",13.7797,100.5446],["Sanam Pao",13.7726,100.5420],["Victory Monument",13.7627,100.5371],["Phaya Thai",13.7568,100.5338],["Ratchathewi",13.7518,100.5316],["Siam",13.7456,100.5341],["Chit Lom",13.7441,100.5430],["Phloen Chit",13.7430,100.5490],["Nana",13.7405,100.5553],["Asok",13.7370,100.5603],["Phrom Phong",13.7305,100.5697],["Thong Lo",13.7243,100.5784],["Ekkamai",13.7194,100.5850],["Phra Khanong",13.7152,100.5916],["On Nut",13.7056,100.6011],["Bang Chak",13.6967,100.6053],["Punnawithi",13.6893,100.6091],["Udom Suk",13.6799,100.6094],["Bang Na",13.6683,100.6045]];
+ const SIL=[["National Stadium",13.7465,100.5291],["Siam",13.7456,100.5341],["Ratchadamri",13.7397,100.5393],["Sala Daeng",13.7286,100.5343],["Chong Nonsi",13.7237,100.5293],["Surasak",13.7193,100.5214],["Saphan Taksin",13.7187,100.5143],["Krung Thon Buri",13.7209,100.5030]];
+ const MRT=[["Sanam Chai",13.7440,100.4940],["Sam Yot",13.7468,100.5016],["Wat Mangkon",13.7430,100.5099],["Hua Lamphong",13.7377,100.5170],["Sam Yan",13.7325,100.5294],["Silom",13.7295,100.5368],["Lumphini",13.7255,100.5455],["Khlong Toei",13.7222,100.5537],["Queen Sirikit",13.7234,100.5598],["Sukhumvit",13.7380,100.5612],["Phetchaburi",13.7487,100.5638],["Phra Ram 9",13.7570,100.5653],["Thailand Cultural Centre",13.7660,100.5700],["Huai Khwang",13.7787,100.5737],["Sutthisan",13.7891,100.5741],["Ratchadaphisek",13.7987,100.5739],["Lat Phrao",13.8061,100.5729],["Phahon Yothin",13.8136,100.5609],["Chatuchak Park",13.8027,100.5536]];
+ L.polyline(RIVER,{color:"#7fc4d6",weight:14,opacity:.75,lineCap:"round",interactive:false}).addTo(map);
+ const line=(st,col,name,w)=>{L.polyline(st.map(s=>[s[1],s[2]]),{color:col,weight:w,opacity:.9,interactive:false}).addTo(map);
+  st.forEach(s=>L.circleMarker([s[1],s[2]],{radius:3.5,color:col,weight:2,fillColor:"#fff",fillOpacity:1}).bindTooltip(`${name}: ${s[0]}`,{direction:"top"}).addTo(map));};
+ line(MRT,"#2b5fa8","MRT",5);line(SIL,"#1f7a3a","BTS Silom",5);line(SUK,"#7cc142","BTS Sukhumvit",5);
+ const lab=(ll,t,cls)=>L.marker(ll,{interactive:false,icon:L.divIcon({className:"maplab "+(cls||""),html:t,iconSize:null})}).addTo(map);
+ lab([13.7525,100.4835],"Orașul vechi");lab([13.7395,100.5035],"Chinatown");lab([13.7835,100.5345],"Ari");lab([13.8085,100.5385],"Chatuchak");
+ lab([13.7215,100.5245],"Silom / Sathorn");lab([13.7495,100.5395],"Siam");lab([13.7335,100.5735],"Sukhumvit");lab([13.6845,100.5615],"Bang Krachao (junglă)","green");
+ lab([13.7685,100.4985],"Râul Chao Phraya","water");lab([13.7105,100.6085],"Phra Khanong / On Nut");lab([13.6935,100.6185],"🏠 noi","home");
+ const lg=L.control({position:"bottomleft"});lg.onAdd=()=>{const d=L.DomUtil.create("div","maplegend");d.innerHTML=`<div><span style="background:#7cc142"></span>BTS Sukhumvit (linia noastră)</div><div><span style="background:#1f7a3a"></span>BTS Silom</div><div><span style="background:#2b5fa8"></span>MRT (metrou)</div><div><span style="background:#7fc4d6"></span>Râul Chao Phraya</div>`;return d;};lg.addTo(map);
+}
+function sel(i){document.querySelectorAll(".place").forEach(e=>e.classList.remove("sel"));const el=document.getElementById("pl"+i);el.classList.add("sel");}
+function focusP(i){sel(i);if(map){map.setView(P[i].ll,14);markers[i].openPopup();document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"});}}
+function refresh(){P.forEach((p,i)=>{const vis=on.has(p.c);document.getElementById("pl"+i).style.display=vis?"":"none";if(map){vis?markers[i].addTo(map):markers[i].remove();}});}
+</script>
+</body>
+</html>

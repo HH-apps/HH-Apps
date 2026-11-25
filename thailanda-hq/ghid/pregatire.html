@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ghid Thailanda 2027 – Bangkok & Phuket</title>
+<style>
+:root{
+  --bg:#fbf7f1; --ink:#1f2328; --muted:#5d6470; --card:#ffffff; --line:#ece4d8;
+  --gold:#d99a2b; --teal:#0f8b8d; --coral:#e4572e; --navy:#163a5f; --soft:#fff4e0;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:var(--teal);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(15,139,141,.25)}
+a:hover{border-bottom-color:var(--teal)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;color:#fff;background:linear-gradient(180deg,#f6b26b 0%,#e4572e 45%,#7b2d5b 100%)}
+.hero svg{position:absolute;inset:auto 0 0 0;width:100%;height:auto;display:block}
+.hero .wrap{position:relative;z-index:2;padding-top:56px;padding-bottom:210px}
+.hero .kicker{letter-spacing:.18em;text-transform:uppercase;font-size:13px;opacity:.9}
+.hero h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:10px 0 14px;font-weight:800}
+.hero p{max-width:640px;font-size:18px;opacity:.95;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:6px 12px;border-radius:999px;font-size:14px;backdrop-filter:blur(4px)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:20;background:rgba(251,247,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav a{white-space:nowrap;border:none;color:var(--ink);font-weight:600;font-size:14px;padding:7px 12px;border-radius:999px;background:#fff;box-shadow:0 1px 0 var(--line)}
+nav a:hover{background:var(--soft)}
+
+section{padding:44px 0 8px}
+h2{font-size:28px;margin:0 0 6px;display:flex;align-items:center;gap:12px}
+h2 .ico{font-size:30px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:760px}
+h3{margin:0 0 8px;font-size:18px}
+
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:0 6px 20px rgba(60,40,10,.05)}
+.card.accent{background:linear-gradient(135deg,#fff 0%,var(--soft) 100%)}
+.card .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
+.card ul{margin:6px 0 0;padding-left:18px}
+.card li{margin:4px 0}
+
+/* illustration banners */
+.banner{border-radius:var(--radius);overflow:hidden;margin:0 0 20px;border:1px solid var(--line)}
+.banner svg{display:block;width:100%;height:auto}
+
+/* timeline */
+.timeline{position:relative;margin:10px 0 0;padding-left:28px}
+.timeline:before{content:"";position:absolute;left:10px;top:4px;bottom:4px;width:3px;background:linear-gradient(var(--gold),var(--coral),var(--teal));border-radius:3px}
+.tl{position:relative;margin:0 0 18px}
+.tl:before{content:"";position:absolute;left:-24px;top:6px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--coral)}
+.tl .when{font-weight:800;color:var(--navy)}
+.tl .what{color:var(--muted)}
+
+/* checklist */
+.check{list-style:none;padding:0;margin:0}
+.check li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px dashed var(--line)}
+.check li:last-child{border-bottom:none}
+.check input{width:20px;height:20px;margin-top:3px;accent-color:var(--teal);flex:none}
+.check .when{font-size:12px;font-weight:700;color:#fff;background:var(--navy);border-radius:6px;padding:2px 7px;margin-left:6px;white-space:nowrap}
+.check li.done span.t{text-decoration:line-through;color:var(--muted)}
+.progress{height:10px;background:#efe6d8;border-radius:999px;overflow:hidden;margin:6px 0 16px}
+.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .3s}
+
+/* price */
+.price{font-weight:800;color:var(--navy);white-space:nowrap}
+.price small{font-weight:600;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+td.num,th.num{text-align:right;white-space:nowrap}
+tr.total td{font-weight:800;background:#fffaf1}
+.tablewrap{overflow-x:auto;border-radius:var(--radius)}
+
+.rates{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:0 0 16px}
+.rates label{font-size:14px;color:var(--muted)}
+.rates input{width:84px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:inherit;font-weight:700}
+
+.note{background:#eef8f8;border-left:4px solid var(--teal);padding:12px 16px;border-radius:10px;margin:14px 0;color:#174a4b}
+.warn{background:#fff1ec;border-left:4px solid var(--coral);padding:12px 16px;border-radius:10px;margin:14px 0;color:#6b2a16}
+.pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:#eef2f7;color:var(--navy);font-weight:700;margin-left:6px}
+.linkrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.linkrow a{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:14px}
+.big{font-size:34px;font-weight:800;color:var(--navy);line-height:1}
+.sub{color:var(--muted);font-size:14px}
+
+footer{padding:40px 0 60px;color:var(--muted);font-size:13px}
+@media print{nav{display:none}.hero .wrap{padding-bottom:120px}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Horațiu & Cristina · ianuarie – martie 2027</div>
+    <h1>Thailanda 2027<br>Bangkok, apoi Phuket</h1>
+    <p>Ghidul nostru pentru cele două luni: ce facem înainte de plecare, primele zile, viața de zi cu zi și toate linkurile de care avem nevoie, cu prețurile în baht, euro și lei.</p>
+    <div class="chips">
+      <span class="chip">✈️ Belgrad → Bangkok, 20 ian.</span>
+      <span class="chip">🏙️ Bangkok: 21 ian. – 18 feb.</span>
+      <span class="chip">🏝️ Phuket: 18 feb. – 18 mar.</span>
+      <span class="chip">🏡 Acasă: ~19 mar.</span>
+    </div>
+  </div>
+  <!-- skyline + waves illustration -->
+  <svg viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true">
+    <circle cx="1130" cy="120" r="60" fill="#ffd27a" opacity=".85"/>
+    <g fill="#5a1f45" opacity=".55">
+      <rect x="40" y="120" width="40" height="140"/><rect x="90" y="90" width="30" height="170"/><rect x="128" y="140" width="50" height="120"/>
+      <rect x="190" y="70" width="34" height="190"/><rect x="232" y="110" width="44" height="150"/><rect x="290" y="150" width="60" height="110"/>
+      <rect x="360" y="95" width="28" height="165"/><rect x="396" y="130" width="52" height="130"/><rect x="460" y="60" width="36" height="200"/>
+      <rect x="505" y="140" width="48" height="120"/><rect x="565" y="105" width="40" height="155"/>
+    </g>
+    <!-- temple -->
+    <g fill="#3d1431" opacity=".8">
+      <polygon points="700,90 680,150 720,150"/><polygon points="700,60 690,95 710,95"/><rect x="670" y="150" width="60" height="30"/>
+      <polygon points="640,140 625,180 655,180"/><polygon points="760,140 745,180 775,180"/><rect x="610" y="180" width="180" height="80"/>
+    </g>
+    <!-- skytrain -->
+    <rect x="0" y="196" width="900" height="8" fill="#3d1431" opacity=".7"/>
+    <g fill="#3d1431" opacity=".7"><rect x="120" y="204" width="10" height="56"/><rect x="420" y="204" width="10" height="56"/><rect x="820" y="204" width="10" height="56"/></g>
+    <g><rect x="230" y="176" width="190" height="20" rx="8" fill="#fff" opacity=".9"/><rect x="236" y="181" width="178" height="5" fill="#0f8b8d"/></g>
+    <!-- palm -->
+    <g stroke="#2b0f24" stroke-width="6" fill="none" opacity=".85"><path d="M1250 260 C1245 210 1250 170 1262 130"/></g>
+    <g fill="#2b0f24" opacity=".85">
+      <path d="M1262 130 C1230 110 1200 118 1185 135 C1215 125 1240 128 1262 134Z"/>
+      <path d="M1262 130 C1295 108 1330 116 1345 134 C1312 124 1286 127 1262 134Z"/>
+      <path d="M1262 130 C1255 98 1236 86 1214 86 C1236 98 1250 112 1260 134Z"/>
+      <path d="M1262 130 C1275 98 1296 88 1318 90 C1296 100 1280 114 1264 134Z"/>
+    </g>
+    <path d="M0 225 C180 205 360 245 540 225 C720 205 900 245 1080 225 C1260 205 1350 240 1440 228 L1440 260 L0 260Z" fill="#0f8b8d" opacity=".55"/>
+    <path d="M0 240 C200 225 380 258 600 242 C820 226 1000 258 1220 242 C1330 234 1400 246 1440 244 L1440 260 L0 260Z" fill="#fbf7f1"/>
+  </svg>
+</header>
+
+<nav><div class="wrap">
+  <a href="#rezumat">📍 Rezumat</a>
+  <a href="#inainte">🧳 Înainte de plecare</a>
+  <a href="#sosire">🛬 Sosirea</a>
+  <a href="#bangkok">🏙️ Bangkok</a>
+  <a href="#viza">🛂 Prelungirea vizei</a>
+  <a href="#phuket">🏝️ Phuket</a>
+  <a href="#intoarcere">🏡 Întoarcerea</a>
+  <a href="#bani">💸 Bani & buget</a>
+  <a href="#siguranta">🛡️ Siguranță</a>
+  <a href="#contacte">📞 Contacte</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- REZUMAT -->
+<section id="rezumat">
+  <h2><span class="ico">📍</span>Planul pe scurt</h2>
+  <p class="lead">Două luni: prima pentru muncă, coworking și oameni noi în Bangkok, a doua pentru liniște și plajă în Phuket. Nimic nu e încă rezervat.</p>
+  <div class="grid g2">
+    <div class="card">
+      <div class="timeline">
+        <div class="tl"><div class="when">Mi 20 ian. · 13:15</div><div class="what">Belgrad (BEG) → Dubai → Bangkok Don Mueang (DMK), flydubai. Ajungem joi 21 ian. la 10:05.</div></div>
+        <div class="tl"><div class="when">21 ian. – 18 feb.</div><div class="what">Bangkok, Phra Khanong: apartament lângă BTS Punnawithi, coworking, comunitate.</div></div>
+        <div class="tl"><div class="when">~19 feb.</div><div class="what">Se termină cele 30 de zile fără viză, deci până atunci cerem prelungirea.</div></div>
+        <div class="tl"><div class="when">18 feb.</div><div class="what">Zbor intern Bangkok → Phuket (~1h30).</div></div>
+        <div class="tl"><div class="when">18 feb. – 18 mar.</div><div class="what">Phuket, Bang Tao: casă cu bucătărie, plajă la ~20 min pe jos.</div></div>
+        <div class="tl"><div class="when">~18 mar. · 23:00</div><div class="what">Phuket → Bangkok (DMK) peste zi, apoi DMK → Dubai → Belgrad, cu sosirea pe 19 mar. la prânz.</div></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card accent">
+        <div class="tag">Bugetul estimat pentru 2 persoane</div>
+        <div class="big"><span class="p" data-eur="3680"></span> – <span class="p" data-eur="3760"></span></div>
+        <div class="sub" id="budget-alt"></div>
+        <p class="sub" style="margin-top:10px">Include zborurile, cazarea, coworkingul și viza. Nu include mâncarea, Grab și ieșirile. Detalii la <a href="#bani">Bani & buget</a>.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Ce ne-am propus</div>
+        <ul>
+          <li>Un cartier liniștit, nu turistic, lângă BTS</li>
+          <li>Coworking cu comunitate reală: oameni din tech, AI, antreprenori, thailandezi și străini</li>
+          <li>Activități care se repetă, ca să vedem aceiași oameni de mai multe ori</li>
+          <li>Fără scuter: mergem pe jos, cu BTS și Grab</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÎNAINTE -->
+<section id="inainte">
+  <h2><span class="ico">🧳</span>Înainte de plecare</h2>
+  <p class="lead">Bifează pe măsură ce le rezolvi. Bifele rămân doar cât e pagina deschisă.</p>
+  <div class="progress"><div id="prog"></div></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>📄 Acte și rezervări</h3>
+      <ul class="check">
+        <li><input type="checkbox"><span class="t">Pașapoarte valabile cel puțin 6 luni de la sosire, cu pagini libere. <span class="when">acum</span></span></li>
+        <li><input type="checkbox"><span class="t">Zborul flydubai: <b>Value</b> la dus (cu bagaj de 20 kg), <b>Flex</b> la întors (data se schimbă gratuit). <a href="https://www.flydubai.com/en/" target="_blank" rel="noopener">flydubai.com</a> · Milele merg în contul <a href="https://www.emirates.com/ro/english/skywards/" target="_blank" rel="noopener">Emirates Skywards</a> <span class="when">dec.</span></span></li>
+        <li><input type="checkbox"><span class="t">Apartamentul din Bangkok: <a href="https://www.airbnb.com/rooms/7963242" target="_blank" rel="noopener">Near BTS, Wifi, Modern Style</a> <span class="when">dec.</span></span></li>
+        <li><input type="checkbox"><span class="t">Casa din Phuket: <a href="https://www.airbnb.com/rooms/36436309" target="_blank" rel="noopener">Bangtao one-room house</a> <span class="when">dec.</span></span></li>
+        <li><input type="checkbox"><span class="t">Asigurare medicală de călătorie pentru două luni, cu repatriere inclusă. <span class="when">dec.</span></span></li>
+        <li><input type="checkbox"><span class="t">Cerem gazdelor Airbnb să ne înregistreze la imigrare (formularul <b>TM.30</b>). E nevoie de el la prelungirea vizei. <span class="when">la rezervare</span></span></li>
+        <li><input type="checkbox"><span class="t"><b>TDAC</b>, cardul digital de sosire: îl completăm în ultimele 3 zile dinainte de sosire, deci pe 18–21 ian. E gratuit, numai pe <a href="https://tdac.immigration.go.th" target="_blank" rel="noopener">tdac.immigration.go.th</a>. <span class="when">18–21 ian.</span></span></li>
+        <li><input type="checkbox"><span class="t">Copii după pașapoarte, rezervări și asigurare: pe telefon, în cloud și una pe hârtie. <span class="when">ian.</span></span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📱 Telefon, bani, sănătate</h3>
+      <ul class="check">
+        <li><input type="checkbox"><span class="t">Carduri cu schimb valutar bun (Revolut, Wise). Bancomatele thailandeze iau un comision fix de ~220 THB (<span class="p" data-thb="220"></span>) la fiecare retragere, așa că scoatem sume mai mari, mai rar.</span></li>
+        <li><input type="checkbox"><span class="t">eSIM sau cartelă locală: AIS, True sau dtac de la aeroport, ori un eSIM din timp (de ex. <a href="https://www.airalo.com" target="_blank" rel="noopener">Airalo</a>).</span></li>
+        <li><input type="checkbox"><span class="t">Aplicații: <a href="https://www.grab.com/th/en/" target="_blank" rel="noopener">Grab</a>, <a href="https://bolt.eu" target="_blank" rel="noopener">Bolt</a>, Google Maps (hărți offline), Google Translate (thailandeza offline), LINE, <a href="https://www.iqair.com/thailand/bangkok" target="_blank" rel="noopener">IQAir</a> pentru calitatea aerului, <a href="https://www.meetup.com/bangkok-digital-nomads/" target="_blank" rel="noopener">Meetup</a>.</span></li>
+        <li><input type="checkbox"><span class="t">Vizită la medic sau la un cabinet de medicina călătorului, pentru vaccinuri și o trusă de medicamente.</span></li>
+        <li><input type="checkbox"><span class="t">Adaptor de priză și un prelungitor. Prizele sunt mixte (A, B, C), iar ștecherele mari cu împământare nu intră peste tot.</span></li>
+        <li><input type="checkbox"><span class="t">Haine subțiri, o haină lungă pentru temple (umerii și genunchii acoperiți), încălțăminte comodă de mers.</span></li>
+        <li><input type="checkbox"><span class="t">Câteva măști FFP2 pentru zilele cu aer poluat din Bangkok.</span></li>
+        <li><input type="checkbox"><span class="t">Cu prietenii din Novi Sad: data și ora la care ne duc la aeroportul din Belgrad (zborul e la 13:15).</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">💡 <b>Viza:</b> românii intră fără viză pentru maximum <b>30 de zile</b>, iar ziua sosirii se numără. Pentru a doua lună cerem o prelungire de 30 de zile la imigrare, la <span class="p" data-thb="1900"></span> de persoană. Pașii sunt <a href="#viza">mai jos</a>.</div>
+</section>
+
+<!-- SOSIRE -->
+<section id="sosire">
+  <h2><span class="ico">🛬</span>Ziua sosirii, joi 21 ianuarie</h2>
+  <p class="lead">Aterizăm la Don Mueang (DMK) la 10:05, după ~15 ore de drum. Ziua asta o ținem simplă.</p>
+  <div class="grid g3">
+    <div class="card"><div class="tag">1 · Imigrare</div><p>Arătăm pașaportul și codul QR de la TDAC (în e-mail sau pe telefon). Verificăm ce dată scrie pe ștampila din pașaport: e ultima zi în care putem sta fără prelungire.</p></div>
+    <div class="card"><div class="tag">2 · SIM și bani</div><p>Luăm cartelă de la standurile AIS, True sau dtac din zona de sosiri. Scoatem o singură dată numerar pentru primele zile.</p></div>
+    <div class="card"><div class="tag">3 · Spre apartament</div><p>Mergem cu Grab, de la zona oficială de preluare, până în Phra Khanong (Sukhumvit 101, lângă BTS Punnawithi). Costă ~400–600 THB (<span class="p" data-thb="500"></span>), cu taxele de autostradă. E un estimat.</p>
+      <div class="linkrow"><a href="https://www.google.com/maps/dir/?api=1&origin=Don+Mueang+International+Airport&destination=BTS+Punnawithi+Bangkok" target="_blank" rel="noopener">🗺️ Traseul pe hartă</a></div></div>
+  </div>
+  <div class="note">😴 În prima zi doar ne cazăm, mâncăm ceva lângă casă, cumpărăm apă de la 7-Eleven și ne odihnim. Ne apucăm de lucru de a doua zi.</div>
+</section>
+
+<!-- BANGKOK -->
+<section id="bangkok">
+  <h2><span class="ico">🏙️</span>O lună în Bangkok</h2>
+  <p class="lead">Phra Khanong și Bang Chak sunt cartiere de locuit, cu străduțe liniștite, mâncare stradală și BTS la câțiva pași. Nu e zonă turistică.</p>
+
+  <div class="banner">
+    <svg viewBox="0 0 1000 220" aria-hidden="true">
+      <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe3b3"/><stop offset="1" stop-color="#ffb38a"/></linearGradient></defs>
+      <rect width="1000" height="220" fill="url(#sky)"/>
+      <g fill="#c96a54" opacity=".45"><rect x="40" y="70" width="60" height="150"/><rect x="110" y="40" width="44" height="180"/><rect x="165" y="95" width="70" height="125"/><rect x="250" y="55" width="50" height="165"/><rect x="760" y="60" width="54" height="160"/><rect x="825" y="30" width="40" height="190"/><rect x="878" y="90" width="80" height="130"/></g>
+      <g fill="#7b2d5b"><rect x="0" y="140" width="1000" height="10"/><rect x="200" y="150" width="14" height="70"/><rect x="520" y="150" width="14" height="70"/><rect x="840" y="150" width="14" height="70"/></g>
+      <g><rect x="320" y="110" width="330" height="30" rx="12" fill="#fff"/><rect x="330" y="117" width="310" height="8" fill="#0f8b8d"/><g fill="#163a5f"><rect x="345" y="128" width="30" height="8" rx="2"/><rect x="390" y="128" width="30" height="8" rx="2"/><rect x="435" y="128" width="30" height="8" rx="2"/><rect x="480" y="128" width="30" height="8" rx="2"/><rect x="525" y="128" width="30" height="8" rx="2"/><rect x="570" y="128" width="30" height="8" rx="2"/></g></g>
+      <text x="40" y="34" font-family="system-ui,Arial" font-size="20" font-weight="800" fill="#7b2d5b">BTS · Sukhumvit Line · Punnawithi ↔ Phra Khanong ↔ On Nut</text>
+    </svg>
+  </div>
+
+  <div class="grid g2">
+    <div class="card accent">
+      <div class="tag">🏠 Unde stăm</div>
+      <h3><a href="https://www.airbnb.com/rooms/7963242" target="_blank" rel="noopener">Near BTS, Wifi, Modern Style</a></h3>
+      <p><span class="price"><span class="p" data-eur="561"></span></span> <small class="sub">· 28 de nopți, prețul Airbnb din 25 nov.</small></p>
+      <ul>
+        <li>4 min pe jos de BTS Punnawithi</li>
+        <li>Bucătărie, birou, piscină, balcon</li>
+        <li>Nota 4.82 din 137 de recenzii; oaspeții îl descriu „cozy, clean and quiet”</li>
+        <li>Aproape de True Digital Park, hubul de tehnologie</li>
+      </ul>
+      <div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=BTS+Punnawithi" target="_blank" rel="noopener">🗺️ Zona pe hartă</a></div>
+    </div>
+    <div class="card">
+      <div class="tag">💻 Coworking</div>
+      <h3>True Digital Park <span class="pill">la 4 min</span></h3>
+      <p>Hubul de startupuri al Bangkokului. Coworkingul e la etajul 6, clădirea East, cu ieșire directă din BTS Punnawithi (ieșirea 6). Abonament lunar hot desk: <span class="price"><span class="p" data-thb="6000"></span></span> de persoană, preț promoțional (normal 7.500 THB). O zi costă 300 THB. Prețul trebuie reconfirmat.</p>
+      <div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=True+Digital+Park+Bangkok" target="_blank" rel="noopener">🗺️ Hartă</a></div>
+      <h3 style="margin-top:16px">The Hive Prakanong <span class="pill">3 stații de BTS</span></h3>
+      <p>La 2 min de BTS Phra Khanong, cu comunitate internațională și multe evenimente. Hot desk de la <span class="price"><span class="p" data-thb="4500"></span></span> de persoană pe lună.</p>
+      <div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=The+Hive+Prakanong+Bangkok" target="_blank" rel="noopener">🗺️ Hartă</a></div>
+      <p class="sub" style="margin-top:10px">Ideea: în prima săptămână mergem cu abonament pe zi la amândouă și apoi alegem.</p>
+    </div>
+  </div>
+
+  <h3 style="margin:26px 0 10px">👥 Unde cunoaștem oameni, săptămânal</h3>
+  <div class="grid g3">
+    <div class="card"><div class="tag">Luni</div><h3>CO Working Monday</h3><p>Zi de coworking cu nomazi, expați și localnici la True Digital Park. Vii și pleci când vrei. Comunitatea are grupuri separate de AI, antreprenori, sport și vize.</p><div class="linkrow"><a href="https://www.meetup.com/bangkok-digital-nomads/" target="_blank" rel="noopener">Meetup · Bangkok Digital Nomads</a></div></div>
+    <div class="card"><div class="tag">Tech & AI</div><h3>Meetupuri și evenimente</h3><p>Căutăm pe Meetup și Luma după „Bangkok AI” și „startup”. Multe evenimente se țin chiar la True Digital Park.</p><div class="linkrow"><a href="https://www.meetup.com/find/?keywords=AI&location=th--Bangkok" target="_blank" rel="noopener">Meetup: AI Bangkok</a><a href="https://lu.ma/bangkok" target="_blank" rel="noopener">Luma Bangkok</a></div></div>
+    <div class="card"><div class="tag">Sport</div><h3>Alergat, badminton, Muay Thai</h3><p>Grupuri de alergare duminica în parcuri (de ex. Benchakitti), badminton în grup, cursuri de Muay Thai pentru începători.</p><div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=Benchakitti+Park" target="_blank" rel="noopener">🗺️ Benchakitti Park</a><a href="https://www.meetup.com/find/?keywords=running&location=th--Bangkok" target="_blank" rel="noopener">Grupuri de alergare</a></div></div>
+    <div class="card"><div class="tag">Limbă & cultură</div><h3>Schimb de limbă</h3><p>Seri de schimb thailandeză–engleză: cel mai simplu mod de a cunoaște thailandezi de vârsta noastră.</p><div class="linkrow"><a href="https://www.meetup.com/find/?keywords=language%20exchange&location=th--Bangkok" target="_blank" rel="noopener">Language exchange pe Meetup</a></div></div>
+    <div class="card"><div class="tag">Mâncare</div><h3>Piețe de seară</h3><p>Mâncare stradală, gustări și seri relaxate, aproape de casă.</p><div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=night+market+On+Nut+Bangkok" target="_blank" rel="noopener">🗺️ Piețe On Nut</a><a href="https://www.google.com/maps/search/?api=1&query=W+District+Phra+Khanong" target="_blank" rel="noopener">🗺️ W District</a></div></div>
+    <div class="card"><div class="tag">Zi de zi</div><h3>Cumpărături</h3><p>7-Eleven la fiecare colț. Supermarketuri mari (Tops, Big C, Lotus's) în mall-urile de lângă BTS.</p><div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=supermarket+near+BTS+Punnawithi" target="_blank" rel="noopener">🗺️ Supermarketuri</a></div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><div class="tag">🚆 Transport</div><p><b>BTS (Skytrain):</b> cel mai simplu mod de a merge prin oraș. Biletele se iau de la automat, sau facem un card reîncărcabil <a href="https://www.rabbit.co.th" target="_blank" rel="noopener">Rabbit</a>. Unele stații acceptă și plata contactless cu cardul bancar. Prețuri și linii: <a href="https://www.bts.co.th" target="_blank" rel="noopener">bts.co.th</a>.<br><b>Grab / Bolt:</b> seara, cu bagaje sau unde nu ajunge BTS.</p></div>
+    <div class="card"><div class="tag">🌫️ Aerul</div><p>Ianuarie și februarie sunt lunile cele mai răcoroase, dar și cele cu cel mai mult praf fin (PM2.5) în aer. În fiecare dimineață ne uităm pe <a href="https://www.iqair.com/thailand/bangkok" target="_blank" rel="noopener">IQAir Bangkok</a>. În zilele proaste sportul îl facem înăuntru și purtăm mască afară.</p></div>
+  </div>
+</section>
+
+<!-- VIZA -->
+<section id="viza">
+  <h2><span class="ico">🛂</span>Prelungirea vizei cu 30 de zile</h2>
+  <p class="lead">Fără viză avem 30 de zile, deci aproximativ până pe 19 feb. Data exactă e pe ștampila din pașaport. Prelungirea se cere personal, la un birou de imigrare, cu câteva zile înainte.</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>📋 Ce ducem (fiecare)</h3>
+      <ul>
+        <li>Formularul <b>TM.7</b> completat (îl găsim la birou sau online)</li>
+        <li>Pașaportul și copii după: pagina cu poza, ștampila de intrare și TDAC</li>
+        <li>O fotografie 4×6 cm</li>
+        <li>Taxa: <span class="price"><span class="p" data-thb="1900"></span></span> de persoană, în numerar</li>
+        <li>Dovada adresei: <b>TM.30</b> de la gazdă și rezervarea Airbnb</li>
+        <li>Biletul de întoarcere și, la nevoie, un extras de cont (unele ambasade cer 20.000 THB de persoană)</li>
+      </ul>
+      <div class="linkrow"><a href="https://www.immigration.go.th" target="_blank" rel="noopener">Biroul de Imigrare</a><a href="https://www.tatnews.org" target="_blank" rel="noopener">Noutăți TAT despre vize</a></div>
+    </div>
+    <div class="card">
+      <h3>📍 Unde</h3>
+      <p><b>Bangkok:</b> Government Complex Chaeng Watthana. E mare și aglomerat, așa că mergem dimineața devreme și ne luăm o jumătate de zi.</p>
+      <div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=Bangkok+Immigration+Chaeng+Watthana" target="_blank" rel="noopener">🗺️ Imigrare Bangkok</a></div>
+      <p style="margin-top:14px"><b>Phuket:</b> biroul de imigrare din Phuket Town. E mai mic și mai liber, dar tot trebuie să mergem acolo înainte de 19 feb.</p>
+      <div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=Phuket+Immigration+Office" target="_blank" rel="noopener">🗺️ Imigrare Phuket</a></div>
+      <div class="warn" style="margin-top:14px">⚠️ După ce primim prelungirea, mutăm data de întoarcere pe biletul flydubai Flex. Până atunci îl ținem cu întoarcerea la o lună.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHUKET -->
+<section id="phuket">
+  <h2><span class="ico">🏝️</span>O lună în Phuket</h2>
+  <p class="lead">Stăm în Bang Tao / Cherngtalay, pe coasta de vest: plajă lungă, magazine bune, mulți oameni care lucrează remote și deloc agitația din Patong.</p>
+
+  <div class="banner">
+    <svg viewBox="0 0 1000 220" aria-hidden="true">
+      <defs><linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe8f0"/><stop offset=".55" stop-color="#7fd0d8"/><stop offset="1" stop-color="#0f8b8d"/></linearGradient></defs>
+      <rect width="1000" height="220" fill="url(#sea)"/>
+      <circle cx="820" cy="60" r="34" fill="#ffd27a"/>
+      <path d="M0 150 C150 130 300 165 450 148 C600 132 760 168 1000 150 L1000 220 L0 220Z" fill="#f4dfb4"/>
+      <path d="M0 120 C120 112 240 128 360 120 C480 112 600 128 720 120 C840 112 920 124 1000 120" stroke="#fff" stroke-width="3" fill="none" opacity=".7"/>
+      <g stroke="#2b5d3a" stroke-width="6" fill="none"><path d="M140 220 C136 180 140 150 150 120"/></g>
+      <g fill="#2f7a4a"><path d="M150 120 C125 105 100 110 88 124 C112 117 132 119 150 125Z"/><path d="M150 120 C176 104 204 110 216 124 C190 116 168 119 150 125Z"/><path d="M150 120 C145 96 130 86 112 86 C130 96 142 108 148 124Z"/><path d="M150 120 C160 96 176 88 194 90 C176 98 164 110 152 124Z"/></g>
+      <g><path d="M560 112 L640 112 L630 124 L570 124Z" fill="#e4572e"/><path d="M598 112 L598 76 L626 108Z" fill="#fff"/></g>
+      <text x="40" y="34" font-family="system-ui,Arial" font-size="20" font-weight="800" fill="#163a5f">Bang Tao · Cherngtalay · coasta de vest</text>
+    </svg>
+  </div>
+
+  <div class="grid g2">
+    <div class="card accent">
+      <div class="tag">🏠 Unde stăm</div>
+      <h3><a href="https://www.airbnb.com/rooms/36436309" target="_blank" rel="noopener">Bangtao one-room house</a></h3>
+      <p><span class="price"><span class="p" data-eur="999"></span></span> <small class="sub">· 18 feb. – 18 mar., 28 de nopți</small></p>
+      <ul>
+        <li>Bucătărie completă</li>
+        <li>Restaurante și piață de seară în apropiere</li>
+        <li>~20 min pe jos de plaja Bang Tao</li>
+        <li>Nota 4.81 din 16 recenzii</li>
+      </ul>
+      <p class="sub">Varianta B: <a href="https://www.airbnb.com/rooms/1399074882975676698" target="_blank" rel="noopener">One-room house</a> (<span class="p" data-eur="1147"></span>), sat liniștit, mașină de spălat, Wi-Fi ~470 Mbps.</p>
+    </div>
+    <div class="card">
+      <div class="tag">✈️ Cum ajungem, 18 feb.</div>
+      <p>Zbor intern Bangkok → Phuket (HKT) cu Thai AirAsia, Thai Vietjet sau Thai Lion, ~1h30. Costă ~33–35 € de persoană fără bagaj. Bagajul de cală se plătește separat.</p>
+      <div class="linkrow"><a href="https://www.momondo.ro/flight-search/DMK-HKT/2027-02-18/2adults?sort=price_a" target="_blank" rel="noopener">Momondo DMK → HKT</a><a href="https://www.airasia.com" target="_blank" rel="noopener">AirAsia</a></div>
+      <p style="margin-top:12px">De la aeroportul din Phuket până în Bang Tao: ~20–30 min cu Grab.</p>
+      <div class="linkrow"><a href="https://www.google.com/maps/dir/?api=1&origin=Phuket+International+Airport&destination=Bang+Tao+Beach" target="_blank" rel="noopener">🗺️ Traseul</a></div>
+    </div>
+  </div>
+
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="tag">Cumpărături</div><h3>Boat Avenue & Villa Market</h3><p>Supermarket mare cu produse europene, cafenele și restaurante.</p><div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=Boat+Avenue+Phuket" target="_blank" rel="noopener">🗺️ Boat Avenue</a><a href="https://www.google.com/maps/search/?api=1&query=Villa+Market+Laguna+Phuket" target="_blank" rel="noopener">🗺️ Villa Market</a></div></div>
+    <div class="card"><div class="tag">Vineri</div><h3>Porto de Phuket</h3><p>Centru comercial deschis, cu piață de stradă vinerea.</p><div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=Porto+de+Phuket" target="_blank" rel="noopener">🗺️ Porto de Phuket</a></div></div>
+    <div class="card"><div class="tag">Plajă</div><h3>Bang Tao Beach</h3><p>Plajă lungă, liniștită, bună pentru plimbări la apus.</p><div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=Bang+Tao+Beach" target="_blank" rel="noopener">🗺️ Bang Tao Beach</a></div></div>
+    <div class="card"><div class="tag">Coworking</div><h3>Lucru în Phuket</h3><p>Coworkingurile sunt concentrate în Cherngtalay și Rawai. Le comparăm la fața locului.</p><div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=coworking+Cherngtalay+Phuket" target="_blank" rel="noopener">🗺️ Coworking Cherngtalay</a></div></div>
+    <div class="card"><div class="tag">Comunitate</div><h3>Nomazi în Phuket</h3><p>Grupuri de Facebook și Meetup, întâlniri de nomazi și sport pe plajă.</p><div class="linkrow"><a href="https://www.meetup.com/find/?keywords=digital%20nomads&location=th--Phuket" target="_blank" rel="noopener">Meetup Phuket</a></div></div>
+    <div class="card"><div class="tag">Excursii</div><h3>Weekenduri</h3><p>Phang Nga Bay, Koh Yao Noi, Old Phuket Town: pentru o zi sau un weekend.</p><div class="linkrow"><a href="https://www.google.com/maps/search/?api=1&query=Old+Phuket+Town" target="_blank" rel="noopener">🗺️ Old Phuket Town</a><a href="https://www.google.com/maps/search/?api=1&query=Koh+Yao+Noi" target="_blank" rel="noopener">🗺️ Koh Yao Noi</a></div></div>
+  </div>
+</section>
+
+<!-- ÎNTOARCERE -->
+<section id="intoarcere">
+  <h2><span class="ico">🏡</span>Întoarcerea, ~18 martie</h2>
+  <div class="grid g3">
+    <div class="card"><div class="tag">Dimineața</div><p>Predăm cheile, ne luăm înapoi garanția dacă am lăsat una și mergem cu Grab la aeroportul din Phuket.</p></div>
+    <div class="card"><div class="tag">După-amiaza</div><p>Zbor intern Phuket → Bangkok <b>Don Mueang (DMK)</b>. Trebuie să fie DMK, nu BKK: flydubai pleacă din DMK.</p></div>
+    <div class="card"><div class="tag">23:00</div><p>DMK → Dubai → Belgrad. Ajungem pe 19 mar. la ~12:15, iar prietenii din Novi Sad ne iau de la aeroport.</p></div>
+  </div>
+</section>
+
+<!-- BANI -->
+<section id="bani">
+  <h2><span class="ico">💸</span>Bani & buget</h2>
+  <p class="lead">Toate prețurile apar în baht (THB), euro și lei. Cursul l-am pus orientativ, la sfârșitul lui noiembrie 2026. Dacă îl schimbi mai jos, se recalculează toată pagina.</p>
+  <div class="rates">
+    <label>1 € = <input id="r-thb" type="number" step="0.01" value="37"> THB</label>
+    <label>1 € = <input id="r-ron" type="number" step="0.01" value="5.23"> RON</label>
+    <span class="sub">Cursuri: Wise (EUR/THB) și BNR (EUR/RON)</span>
+  </div>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Ce</th><th>Perioadă</th><th class="num">THB</th><th class="num">EUR</th><th class="num">RON</th></tr></thead>
+    <tbody id="budget"></tbody>
+  </table>
+  </div>
+  <p class="sub">* Estimat: prețul nu e verificat până la capăt. Prețurile Airbnb sunt cele din 25 noiembrie și se pot schimba.</p>
+
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="tag">Bancomat</div><p>~220 THB comision la fiecare retragere (<span class="p" data-thb="220"></span>). Refuzăm mereu conversia propusă de bancomat și alegem plata în baht.</p></div>
+    <div class="card"><div class="tag">Schimb valutar</div><p>Casele de schimb ca SuperRich au de obicei curs mai bun decât aeroportul. Plătim cu cardul unde se poate.</p></div>
+    <div class="card"><div class="tag">Mâncare</div><p>O masă la tarabă sau în restaurante locale e foarte ieftină. Restaurantele pentru turiști și expați costă de câteva ori mai mult.</p></div>
+  </div>
+</section>
+
+<!-- SIGURANȚĂ -->
+<section id="siguranta">
+  <h2><span class="ico">🛡️</span>Siguranță & bune maniere</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>🚦 Riscurile reale</h3>
+      <ul>
+        <li><b>Traficul</b> e pericolul principal. Trecem strada atent, pe pasarele, și ne ferim de scuterele de pe trotuar.</li>
+        <li><b>Țepele</b> din zonele turistice: „templul e închis azi”, magazine de bijuterii, taxiuri fără aparat. Le evităm folosind Grab.</li>
+        <li><b>Căldura:</b> bem multă apă îmbuteliată, ne protejăm de soare și nu bem apă de la robinet.</li>
+        <li><b>Aerul</b> din Bangkok în ianuarie–februarie: ne uităm pe IQAir.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🙏 Bune maniere</h3>
+      <ul>
+        <li>Respect față de familia regală: e și o chestiune de lege.</li>
+        <li>La temple: umeri și genunchi acoperiți, ne descălțăm.</li>
+        <li>Nu atingem pe nimeni pe cap și nu arătăm cu piciorul.</li>
+        <li>Salutul <i>wai</i> (palmele împreunate) și un zâmbet ajută mult. „Sawasdee kha/khrap” = bună, „khop khun” = mulțumesc.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTE -->
+<section id="contacte">
+  <h2><span class="ico">📞</span>Contacte utile</h2>
+  <div class="grid g3">
+    <div class="card"><div class="tag">Urgențe în Thailanda</div><p><b>191</b> poliție · <b>1669</b> ambulanță · <b>1155</b> poliția turistică (vorbește engleză)</p></div>
+    <div class="card"><div class="tag">Ambasada României la Bangkok</div><p>Sirinrat Office Building, et. 12, Rama IV Road, Khlong Toei<br>📞 <a href="tel:+6622402522">+66 2 240 2522</a><br>✉️ <a href="mailto:bangkok@mae.ro">bangkok@mae.ro</a><br>🌐 <a href="http://bangkok.mae.ro" target="_blank" rel="noopener">bangkok.mae.ro</a></p></div>
+    <div class="card"><div class="tag">Linkuri oficiale</div><div class="linkrow"><a href="https://tdac.immigration.go.th" target="_blank" rel="noopener">TDAC</a><a href="https://www.immigration.go.th" target="_blank" rel="noopener">Imigrare</a><a href="https://www.tatnews.org" target="_blank" rel="noopener">TAT News</a><a href="https://www.mae.ro/travel-alerts" target="_blank" rel="noopener">MAE · Alerte de călătorie</a></div></div>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">Ghid făcut pe 25 noiembrie 2026. Prețurile, cursurile și regulile de viză se pot schimba, așa că le verificăm din nou înainte de plecare. Nimic din ghid nu e rezervat.</div></footer>
+
+<script>
+const budget = [
+  {ce:"✈️ Zbor flydubai Belgrad ↔ Bangkok (Value la dus, Flex la întors), 2 pers.", per:"20 ian. – ~18 mar.", eur:1580, est:true},
+  {ce:"🛫 Zboruri interne Bangkok ↔ Phuket, cu bagaj, 2 pers.", per:"18 feb. / ~18 mar.", eur:200, est:true},
+  {ce:"🏙️ Apartament Bangkok (Airbnb)", per:"21 ian. – 18 feb.", eur:561},
+  {ce:"💻 Coworking Bangkok, 2 pers. (The Hive → True Digital Park)", per:"o lună", thbMin:9000, thbMax:12000, est:true},
+  {ce:"🏝️ Casă Phuket (Airbnb)", per:"18 feb. – 18 mar.", eur:999},
+  {ce:"🛂 Prelungirea vizei, 2 × 1.900 THB", per:"~feb.", thb:3800}
+];
+const fmt = (n, cur) => {
+  const v = Math.round(n).toLocaleString('ro-RO');
+  return cur==='EUR' ? v+' €' : cur==='RON' ? v+' lei' : v+' THB';
+};
+function render(){
+  const T = parseFloat(document.getElementById('r-thb').value)||37;
+  const R = parseFloat(document.getElementById('r-ron').value)||5.23;
+  // inline prices
+  document.querySelectorAll('.p').forEach(el=>{
+    if(el.dataset.eur){const e=+el.dataset.eur; el.textContent=fmt(e,'EUR'); el.title=fmt(e*T,'THB')+' · '+fmt(e*R,'RON');}
+    if(el.dataset.thb){const t=+el.dataset.thb; const e=t/T; el.textContent=fmt(t,'THB')+' (≈ '+fmt(e,'EUR')+' / '+fmt(e*R,'RON')+')';}
+  });
+  // budget table
+  let minE=0,maxE=0; const rows=[];
+  budget.forEach(b=>{
+    let lo,hi;
+    if(b.eur!=null){lo=hi=b.eur;}
+    else if(b.thb!=null){lo=hi=b.thb/T;}
+    else {lo=b.thbMin/T; hi=b.thbMax/T;}
+    minE+=lo; maxE+=hi;
+    const cell=(f)=> lo===hi ? f(lo) : f(lo)+' – '+f(hi);
+    rows.push(`<tr><td>${b.ce}${b.est?' <span class="pill">estimat*</span>':''}</td><td>${b.per}</td><td class="num">${cell(e=>fmt(e*T,'THB'))}</td><td class="num">${cell(e=>fmt(e,'EUR'))}</td><td class="num">${cell(e=>fmt(e*R,'RON'))}</td></tr>`);
+  });
+  rows.push(`<tr class="total"><td>Total pentru 2 persoane</td><td>~2 luni</td><td class="num">${fmt(minE*T,'THB')} – ${fmt(maxE*T,'THB')}</td><td class="num">${fmt(minE,'EUR')} – ${fmt(maxE,'EUR')}</td><td class="num">${fmt(minE*R,'RON')} – ${fmt(maxE*R,'RON')}</td></tr>`);
+  document.getElementById('budget').innerHTML=rows.join('');
+  document.getElementById('budget-alt').textContent = '≈ '+fmt(minE*R,'RON')+' – '+fmt(maxE*R,'RON')+' · '+fmt(minE*T,'THB')+' – '+fmt(maxE*T,'THB');
+  // hero big numbers use computed totals
+  const bigs=document.querySelectorAll('.big .p'); if(bigs.length===2){bigs[0].textContent=fmt(minE,'EUR'); bigs[1].textContent=fmt(maxE,'EUR');}
+}
+document.getElementById('r-thb').addEventListener('input',render);
+document.getElementById('r-ron').addEventListener('input',render);
+// checklist progress (in memory only)
+const boxes=[...document.querySelectorAll('.check input')];
+function prog(){const d=boxes.filter(b=>b.checked).length;document.getElementById('prog').style.width=(d/boxes.length*100)+'%';boxes.forEach(b=>b.closest('li').classList.toggle('done',b.checked));}
+boxes.forEach(b=>b.addEventListener('change',prog));
+render();prog();
+</script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phuket pentru noi – zone, transport, costuri, ce facem</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{
+  --bg:#fbf7f1; --ink:#1f2328; --muted:#5d6470; --card:#fff; --line:#ece4d8;
+  --gold:#d99a2b; --teal:#0f8b8d; --coral:#e4572e; --navy:#163a5f; --soft:#fff4e0; --gray:#8a8780;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:var(--teal);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(15,139,141,.25)}
+a:hover{border-bottom-color:var(--teal)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+.hero{color:#fff;background:linear-gradient(180deg,#f6b26b 0%,#e4572e 50%,#7b2d5b 100%)}
+.hero .wrap{padding-top:48px;padding-bottom:48px}
+.kicker{letter-spacing:.18em;text-transform:uppercase;font-size:13px;opacity:.9}
+.hero h1{font-size:clamp(32px,5.5vw,54px);line-height:1.05;margin:10px 0 14px;font-weight:800}
+.hero p{max-width:700px;font-size:18px;margin:0;opacity:.95}
+.feedback{margin-top:18px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:14px;padding:12px 16px;max-width:700px;font-size:15px}
+
+nav{position:sticky;top:0;z-index:1000;background:rgba(251,247,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav a{white-space:nowrap;border:none;color:var(--ink);font-weight:600;font-size:14px;padding:7px 12px;border-radius:999px;background:#fff;box-shadow:0 1px 0 var(--line)}
+nav a:hover{background:var(--soft)}
+
+section{padding:44px 0 8px}
+h2{font-size:28px;margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:780px}
+h3{margin:0 0 8px;font-size:18px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:0 6px 20px rgba(60,40,10,.05)}
+.card.accent{background:linear-gradient(135deg,#fff 0%,var(--soft) 100%)}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
+.card ul{margin:6px 0 0;padding-left:18px}.card li{margin:4px 0}
+.note{background:#eef8f8;border-left:4px solid var(--teal);padding:12px 16px;border-radius:0;margin:14px 0;color:#174a4b}
+.warn{background:#fff1ec;border-left:4px solid var(--coral);padding:12px 16px;border-radius:0;margin:14px 0;color:#6b2a16}
+.sub{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;background:#eef2f7;color:var(--navy);font-weight:700}
+
+/* Sukhumvit line */
+.line-card{padding:22px 22px 18px}
+#lineSvg{width:100%;height:auto;display:block}
+.st{cursor:pointer}.st:hover .dot{stroke-width:4}
+.zones{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 16px;align-items:center}
+.zbtn{font:inherit;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.zbtn.on{border-color:var(--teal);color:var(--teal)}
+.detail{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;border-top:1px dashed var(--line);padding-top:16px}
+@media(max-width:700px){.detail{grid-template-columns:1fr}}
+.meter{margin:8px 0 12px}
+.meter .lbl{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:4px}
+.meter .bar{height:9px;border-radius:999px;background:#efe6d8;overflow:hidden}
+.meter .bar div{height:100%;border-radius:999px;transition:width .3s}
+.big{font-size:30px;font-weight:800;color:var(--navy);line-height:1}
+
+/* map */
+#map{height:560px;border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;background:#f3efe6}
+.maplab{font:700 12px system-ui,Arial,sans-serif;color:#5d6470;white-space:nowrap;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff;pointer-events:none;transform:translate(-50%,-50%)}
+.maplab.water{color:#2a7f99;font-style:italic}
+.maplab.green{color:#2f8a4a}
+.maplab.home{color:#e4572e;font-size:14px}
+.maplegend{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:12px system-ui,Arial,sans-serif;color:#1f2328}
+.maplegend div{display:flex;align-items:center;gap:6px;margin:2px 0}
+.maplegend span{width:18px;height:5px;border-radius:3px;display:inline-block}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.fbtn{font:inherit;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;gap:6px}
+.fbtn .sw{width:10px;height:10px;border-radius:50%}
+.fbtn.off{opacity:.45}
+.places{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;margin-top:18px}
+.place{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;transition:border-color .2s}
+.place:hover,.place.sel{border-color:var(--teal)}
+.place .cat{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.place h4{margin:4px 0 6px;font-size:17px}
+.place p{margin:0 0 8px;font-size:14.5px}
+.how{background:var(--soft);border-radius:10px;padding:8px 10px;font-size:14px;margin:8px 0}
+.how b{color:var(--navy)}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.mapfail{display:none;padding:40px;text-align:center;color:var(--muted)}
+
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+th{background:var(--soft);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+td.num{white-space:nowrap;font-weight:700;color:var(--navy)}
+.tablewrap{overflow-x:auto;border-radius:var(--radius)}
+
+.avoid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.avoid .card{border-left:5px solid var(--coral)}
+.avoid .lvl{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;display:inline-block;margin-bottom:6px}
+.lvl.trap{background:#fff4e0;color:#8a5a00}
+.lvl.night{background:#fde8e1;color:#9a2d10}
+.lvl.no{background:#f7d9d9;color:#7b1414}
+
+footer{padding:40px 0 60px;color:var(--muted);font-size:13px}
+.leaflet-popup-content{font-family:system-ui,Arial,sans-serif;font-size:14px}
+.leaflet-popup-content b{color:var(--navy)}
+</style>
+</head>
+<body>
+<header class="hero" style="background:linear-gradient(180deg,#7fd0d8 0%,#0f8b8d 55%,#163a5f 100%)"><div class="wrap">
+  <div class="kicker">Horațiu & Cristina · Phuket · 18 feb. – 18 mar. 2027</div>
+  <h1>Phuket pentru noi</h1>
+  <p>A doua lună: liniște, plajă și lucru în Bang Tao. Cum e împărțită insula, cum ne mișcăm fără scuter, ce facem, cât costă și unde să fim atenți. Totul pornește de la casa din Bang Tao pe care a găsit-o Horațiu.</p>
+  <div class="feedback">✍️ <b>Ciornă pentru feedback.</b> Scrie-mi în chat ce să schimb, să adaug sau să scot, și refac pagina.</div>
+</div></header>
+
+<nav><div class="wrap">
+  <a href="#zone">🧭 Zonele insulei</a>
+  <a href="#verdict">🏡 E zona bună?</a>
+  <a href="#harta">🗺️ Harta</a>
+  <a href="#transport">🚕 Transport</a>
+  <a href="#costuri">💸 Cât costă viața</a>
+  <a href="#idei">📅 O săptămână tipică</a>
+  <a href="#evitat">⚠️ Atenție la</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="zone">
+  <h2>🧭 Cum e împărțită insula</h2>
+  <p class="lead">Phuket nu are metrou și nici un centru unic. Viața se întâmplă de-a lungul <b>coastei de vest</b>, care e un șir de plaje, fiecare cu alt „caracter”: de la nord (liniștit, lângă aeroport) la sud (expați pe termen lung). Orașul propriu-zis, <b>Phuket Town</b>, e pe coasta de est. Noi suntem în <b>Bang Tao / Cherngtalay</b>, în nord-vest. <b>Apasă pe o plajă</b> ca să vezi cum e și cât faci până acolo.</p>
+
+  <div class="card line-card">
+    <svg id="lineSvg" viewBox="0 0 1000 190" aria-label="Plajele de pe coasta de vest a Phuketului, de la nord la sud">
+      <line x1="60" y1="90" x2="940" y2="90" stroke="#bfe8f0" stroke-width="16" stroke-linecap="round"/>
+      <line x1="60" y1="90" x2="940" y2="90" stroke="#0f8b8d" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>
+      <g id="stations"></g>
+      <g font-size="13" fill="#5d6470" font-weight="600">
+        <text x="60" y="175">⬅ Nord (aeroport)</text>
+        <text x="940" y="175" text-anchor="end">Sud ➡</text>
+        <circle cx="330" cy="170" r="6" fill="#0f8b8d"/><text x="342" y="175">Liniștit</text>
+        <circle cx="430" cy="170" r="6" fill="#d99a2b"/><text x="442" y="175">Echilibrat</text>
+        <circle cx="545" cy="170" r="6" fill="#e4572e"/><text x="557" y="175">Agitat, de petrecere</text>
+      </g>
+    </svg>
+    <div class="zones">
+      <span class="sub">În afara coastei de vest:</span>
+      <button class="zbtn" data-k="town">Phuket Town (est)</button>
+      <button class="zbtn" data-k="chalong">Chalong (sud-est)</button>
+      <button class="zbtn" data-k="laguna">Laguna (lângă noi)</button>
+    </div>
+    <div class="detail">
+      <div>
+        <div class="tag" id="zTag"></div>
+        <h3 id="zName" style="font-size:22px"></h3>
+        <p id="zDesc" style="margin:0 0 10px"></p>
+        <p style="margin:0"><b>Bun pentru noi la:</b> <span id="zFor"></span></p>
+        <div id="zExtra" style="margin-top:12px"></div>
+      </div>
+      <div>
+        <div class="sub">De la casă</div>
+        <div class="big" id="zTime"></div>
+        <div class="sub" id="zHow" style="margin-bottom:10px"></div>
+        <div class="meter"><div class="lbl"><span>🌿 Liniște</span><span id="zQ"></span></div><div class="bar"><div id="bQ" style="background:#0f8b8d"></div></div></div>
+        <div class="meter"><div class="lbl"><span>👥 Viață socială</span><span id="zS"></span></div><div class="bar"><div id="bS" style="background:#e4572e"></div></div></div>
+      </div>
+    </div>
+    <p class="sub" style="margin:14px 0 0">Timpii sunt cu mașina (Grab), fără trafic de seară. Notele de la 1 la 5 sunt impresia mea din ce am citit, nu o măsurătoare.</p>
+  </div>
+</section>
+
+<section id="verdict" style="padding-top:24px">
+  <div class="card accent">
+    <div class="tag">Pentru amândoi · e zona bună pentru noi?</div>
+    <h3 style="font-size:22px">Bang Tao: cea mai bună alegere de pe insulă pentru o lună de lucru și liniște</h3>
+    <p style="margin:0 0 14px">Planul pentru a doua lună e diferit de Bangkok: mai puțin networking, mai multă liniște, plajă și o viață normală. Cum se potrivește Bang Tao cu asta:</p>
+    <div class="grid g2">
+      <div>
+        <h3 style="color:#0f8b8d">✅ Ce e bun</h3>
+        <ul>
+          <li><b>E centrul nomazilor digitali din Phuket.</b> Cele mai multe coworkinguri și cafenele pentru lucru sunt aici, plus comunitatea de expați.</li>
+          <li><b>Plajă lungă și liniștită</b>, fără agitația din Patong. Bună pentru plimbări la apus.</li>
+          <li><b>Totul la îndemână:</b> Boat Avenue, Porto de Phuket și Villa Market, cu produse europene, cafenele și restaurante bune.</li>
+          <li><b>Aproape de aeroport</b> (~25–35 min), deci sosirea și plecarea sunt ușoare.</li>
+          <li><b>Casa are bucătărie completă</b>, așa că putem găti des și economisim. Lângă casă sunt restaurante și o piață de seară.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:#e4572e">⚠️ La ce să ne așteptăm</h3>
+        <ul>
+          <li><b>E zona cea mai scumpă de pe insulă</b>, alături de Surin și Laguna. Restaurantele occidentale și beach clubs costă aproape ca în Europa.</li>
+          <li><b>Fără scuter ne bazăm pe Grab și Bolt</b>, iar pe insulă transportul e scump în comparație cu Bangkok. O cursă până în Phuket Town costă cât 10–15 mese la tarabă.</li>
+          <li><b>Casa e la ~20 min pe jos de plajă.</b> E plăcut dimineața și seara, mai greu la prânz, pe căldură.</li>
+          <li><b>Comunitatea e mai mică decât în Bangkok.</b> Oamenii vin aici mai ales pentru stilul de viață, nu pentru networking. Evenimente sunt, dar mai rare.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note" style="margin-bottom:0">🎯 <b>Concluzia:</b> e alegerea potrivită. Bangkok e pentru oameni și evenimente, Phuket pentru liniște și ritm. Ce ne-ar ajuta: <b>un coworking aproape de casă</b> (sunt câteva la Boat Avenue și în Cherngtalay), ca să avem rutină și oameni în jur, plus <b>1–2 excursii pe săptămână</b> organizate dinainte, ca să nu stăm doar în zonă. Varianta B a lui Horațiu (casa cu mașină de spălat și Wi-Fi de ~470 Mbps) e la fel de bună ca zonă și diferă doar ca preț.</div>
+  </div>
+</section>
+
+<section id="harta">
+  <h2>🗺️ Harta: ce facem în Phuket</h2>
+  <p class="lead">Cercul mare portocaliu e casa (poziție aproximativă, în Cherngtalay). Filtrează după tip și apasă pe un punct sau pe un card. Fiecare card spune cum ajungem de la casă și are link spre traseul din Google Maps.</p>
+  <div class="filters" id="filters"></div>
+  <div id="map"><div class="mapfail" id="mapfail">Harta nu s-a putut încărca aici. Lista de mai jos are toate locurile, cu linkuri spre Google Maps.</div></div>
+  <div class="places" id="places"></div>
+  <p class="sub" style="margin-top:14px">Conturul insulei e desenat aproximativ, ca să funcționeze și fără internet. Prețurile sunt orientative. Cursul folosit e 1 € ≈ 37,4 THB.</p>
+</section>
+
+<section id="transport">
+  <h2>🚕 Transport: cum ne mișcăm fără scuter</h2>
+  <p class="lead">Aici e cea mai mare diferență față de Bangkok: <b>nu există BTS sau metrou</b>. Majoritatea străinilor merg cu scuterul, dar noi ne-am propus să nu facem asta. Deci mergem pe jos în zonă și cu Grab sau Bolt când ieșim din ea. Merită să grupăm drumurile lungi, câte o excursie pe zi.</p>
+  <div class="grid g2">
+    <div class="card accent">
+      <div class="tag">Grab & Bolt</div>
+      <h3>Principalul nostru mijloc de transport</h3>
+      <ul>
+        <li><b>Bolt e de obicei mai ieftin.</b> Comparăm mereu ambele aplicații înainte de a comanda.</li>
+        <li>Pe distanțe scurte în nord (Bang Tao, Surin), diferența dintre aplicații și taxi aproape dispare. La orele aglomerate, prețul dinamic din Grab poate trece de tariful oficial.</li>
+        <li>Pe insulă taxiurile sunt mai scumpe decât în Bangkok, iar unele zone au „taximafia” locală. Pentru noi, aplicațiile sunt varianta simplă.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="tag">Phuket Smart Bus</div>
+      <h3>Autobuzul de pe coasta de vest</h3>
+      <ul>
+        <li><b>100 THB de persoană</b>, la orice stație.</li>
+        <li>Merge de la aeroport spre sud, pe coasta de vest, prin plaje: Nai Yang, Surin, Kamala, Patong, Karon, Kata, Rawai. Verificăm care e cea mai apropiată stație de casă.</li>
+        <li>E lent (peste 90 de minute până la Patong), dar ieftin și fără negociere. Bun pentru o zi la plajă în sud.</li>
+        <li>Mai e o rută între Phuket Town și Patong, cu 50 THB. În Old Town circulă gratuit autobuzul electric Dragon Line.</li>
+      </ul>
+    </div>
+  </div>
+  <h3 style="margin:26px 0 10px">💸 Cât costă drumurile de la casă (estimări)</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Drum</th><th>Grab / Bolt / taxi</th><th>Durată</th><th>Observații</th></tr></thead>
+    <tbody>
+      <tr><td>Aeroport → casă (18 feb.)</td><td class="num">300–500 THB</td><td>25–35 min</td><td>Grab ~300–450, ghișeul oficial ~400–500. Evităm șoferii care vin la noi în sala de sosiri.</td></tr>
+      <tr><td>Casă → Surin / Laguna</td><td class="num">~150–250 THB</td><td>10 min</td><td>Estimare. Uneori se poate și pe jos.</td></tr>
+      <tr><td>Casă → Patong</td><td class="num">400–600 THB</td><td>30–40 min</td><td>Seara e mai scump</td></tr>
+      <tr><td>Casă → Phuket Town (Old Town)</td><td class="num">600–900 THB</td><td>35–45 min</td><td>Cel mai scump drum obișnuit</td></tr>
+      <tr><td>Casă → Kata / Karon / Rawai</td><td class="num">~700–1.000 THB</td><td>50–60 min</td><td>Estimare. Merită o zi întreagă acolo.</td></tr>
+      <tr><td>Smart Bus, orice stație</td><td class="num">100 THB/pers.</td><td>lent</td><td>Doar pe coasta de vest</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="tag">Idee</div><p style="margin:0"><b>O mașină închiriată pentru 1–2 weekenduri.</b> Pentru excursii (nordul insulei, Phang Nga) poate ieși mai ieftin decât Grab dus-întors. E nevoie de permis internațional, iar în Thailanda se conduce pe stânga.</p></div>
+    <div class="card"><div class="tag">Idee</div><p style="margin:0"><b>Excursiile cu transfer inclus.</b> La Phang Nga, Koh Yao sau insule, majoritatea tururilor vin să te ia de acasă. Asta rezolvă transportul pe ziua respectivă.</p></div>
+    <div class="card"><div class="tag">Întoarcerea</div><p style="margin:0"><b>18 martie:</b> zbor intern Phuket → Bangkok <b>DMK</b> după-amiaza, apoi la 23:00 flydubai spre Dubai și Belgrad. Trebuie să fie DMK, nu BKK.</p></div>
+  </div>
+</section>
+
+<section id="costuri">
+  <h2>💸 Cât costă viața noastră în Phuket</h2>
+  <p class="lead">Phuket e cu ~20–30% mai scump decât Bangkok, iar Bang Tao e printre cele mai scumpe zone de pe insulă. Avem însă bucătărie, deci gătitul acasă ne poate ține bugetul jos. Schimbă cursul și se recalculează tot.</p>
+  <div class="card" style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:14px 18px;margin-bottom:16px">
+    <label class="sub">1 € = <input id="rTHB" type="number" step="0.1" value="37.4" style="width:80px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:inherit;font-weight:700"> THB</label>
+    <label class="sub">1 € = <input id="rRON" type="number" step="0.01" value="5.23" style="width:80px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:inherit;font-weight:700"> lei</label>
+    <span class="sub">→ <b id="oneTHB"></b></span>
+  </div>
+  <h3 style="margin:10px 0 10px">🧾 Prețuri de zi cu zi în Phuket</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Ce</th><th>Baht (THB)</th><th>Lei</th><th>Observații</th></tr></thead>
+    <tbody id="priceRows"></tbody>
+  </table></div>
+  <h3 style="margin:26px 0 6px">📊 Bugetul lunar pentru 2 persoane în Phuket</h3>
+  <p class="sub" style="margin:0 0 12px">Fără zboruri și fără casă (plătită separat, 999 €). Viza o rezolvăm deja în Bangkok.</p>
+  <div class="grid g3" id="tiers"></div>
+  <div class="tablewrap" style="margin-top:16px"><table>
+    <thead><tr><th>Categorie (2 persoane, o lună)</th><th>🌱 Econom</th><th>⚖️ Mediu</th><th>✨ Comod</th></tr></thead>
+    <tbody id="budgetRows"></tbody>
+  </table></div>
+  <div class="note">💡 <b>Ce înseamnă fiecare variantă.</b> <b>Econom:</b> gătim acasă des, mâncăm la tarabe și la piața de seară, lucrăm din cafenele, facem o excursie pe lună. <b>Mediu</b> (cel mai probabil): gătim jumătate din timp, ieșim la cină de 2–3 ori pe săptămână, avem coworking și facem 2–3 excursii. <b>Comod:</b> restaurante occidentale des, beach clubs, Grab peste tot, excursii săptămânale.</div>
+  <div class="warn">⚠️ Sunt estimări făcute din prețurile medii din 2026. Februarie–martie e sezon de vârf, iar restaurantele turistice și excursiile pot fi mai scumpe.</div>
+</section>
+
+<section id="idei">
+  <h2>📅 O săptămână tipică (idee)</h2>
+  <p class="lead">Ritm mai lent decât în Bangkok: lucru dimineața, plajă și apus, o excursie la final de săptămână.</p>
+  <div class="grid g3">
+    <div class="card"><div class="tag">Luni – joi</div><h3>Lucru + apus</h3><p style="margin:0">Dimineața lucrăm la coworking sau într-o cafenea din Cherngtalay. După 17:00 mergem pe plaja Bang Tao, la apus.</p></div>
+    <div class="card"><div class="tag">Miercuri sau joi</div><h3>Comunitate</h3><p style="margin:0">Un eveniment de nomazi sau o seară de networking (coworkingurile din Bang Tao țin întâlniri lunare). Căutăm pe Meetup și în grupurile de Facebook „Phuket Digital Nomads”.</p></div>
+    <div class="card"><div class="tag">Vineri</div><h3>Piața de seară</h3><p style="margin:0">Fun Friday Avenue sau piața de vineri de la Porto de Phuket. Mâncare, muzică, plimbare pe jos de acasă.</p></div>
+    <div class="card"><div class="tag">Sâmbătă</div><h3>Excursie</h3><p style="margin:0">Phang Nga Bay, Koh Yao Noi, o zi în sud (Kata, Nai Harn, Promthep la apus) sau parcul Khao Phra Thaeo.</p></div>
+    <div class="card"><div class="tag">Duminică</div><h3>Old Town</h3><p style="margin:0">Phuket Old Town: case colorate sino-portugheze, cafenele, iar seara piața de duminică de pe Thalang Road.</p></div>
+    <div class="card"><div class="tag">Oricând</div><h3>Corp și minte</h3><p style="margin:0">Masaj thailandez, yoga, o clasă de Muay Thai pentru începători sau înot dimineața, când marea e calmă.</p></div>
+  </div>
+  <div class="note">🧧 <b>Evenimente în perioada noastră:</b> Anul Nou Chinezesc e pe 6 feb., dar festivalul de stradă din Phuket Old Town are loc de obicei câteva zile mai târziu (în 2026 a fost pe 22–24 feb.). Se poate să-l prindem. În <b>martie</b> e festivalul tradițional Thao Thepkasattri – Thao Sri Suntorn. Verificăm datele exacte pe Time Out Phuket și Phuket101 cu o săptămână înainte.</div>
+</section>
+
+<section id="evitat">
+  <h2>⚠️ La ce să fim atenți în Phuket</h2>
+  <p class="lead">Phuket e sigur pentru turiști. Problemele reale sunt pe mare și pe drum, nu infracțiunile. Le-am ordonat după cât de mult contează pentru noi.</p>
+  <div class="avoid">
+    <div class="card"><span class="lvl no">Important</span><h3>Marea: steagurile roșii</h3><p style="margin:0">Curenții puternici care te trag în larg (rip currents) sunt principala cauză de accidente pe insulă. Februarie–martie e sezonul cu mare calmă, deci riscul e mic, dar <b>respectăm mereu steagurile</b>: roșu înseamnă că nu intrăm în apă. Înotăm doar unde sunt salvamari.</p></div>
+    <div class="card"><span class="lvl night">Atenție</span><h3>Drumurile și scuterele</h3><p style="margin:0">Phuket are mult trafic, drumuri înguste fără trotuar și mulți turiști pe scutere închiriate. Seara mergem pe jos doar pe străzile luminate, iar pe drumuri lungi luăm Grab.</p></div>
+    <div class="card"><span class="lvl night">Atenție seara</span><h3>Patong și Bangla Road</h3><p style="margin:0">Zona de petrecere a insulei: baruri cu note umflate, băuturi „aranjate”, buzunare golite. Merită o seară din curiozitate, cu băutura mereu în mână.</p></div>
+    <div class="card"><span class="lvl trap">Țepe turistice</span><h3>Jet ski-urile închiriate</h3><p style="margin:0">Țeapă clasică în Patong: după tură, proprietarul „găsește” zgârieturi și cere mii de baht. Dacă vrem jet ski, îl luăm doar printr-o firmă cu recenzii, fotografiem tot înainte, sau renunțăm.</p></div>
+    <div class="card"><span class="lvl trap">Țepe turistice</span><h3>Taxiurile și „agenții” de pe stradă</h3><p style="margin:0">Taxiuri fără aparat, cu prețuri inventate, și tururi „super ieftine” vândute pe plajă. Folosim aplicațiile, iar tururile le rezervăm online, cu recenzii.</p></div>
+    <div class="card"><span class="lvl trap">Peste tot</span><h3>Soarele și căldura</h3><p style="margin:0">Februarie–martie înseamnă 32–34°C și soare puternic. Cremă cu SPF mare, apă multă, umbră la prânz. Drumul de 20 de minute până la plajă îl facem dimineața sau spre seară.</p></div>
+    <div class="card"><span class="lvl trap">Animale</span><h3>Câinii de pe plajă și meduzele</h3><p style="margin:0">Seara, pe plaje, pot fi câini în grupuri mici. Ne ținem la distanță. Dacă vedem anunțuri despre meduze, nu intrăm în apă. Pe zonele cu stânci purtăm încălțăminte de apă, din cauza aricilor de mare.</p></div>
+    <div class="card"><span class="lvl no">De evitat complet</span><h3>Provinciile din extremul sud și granița cu Cambodgia</h3><p style="margin:0">Yala, Pattani, Narathiwat, o parte din Songkhla și zona de lângă granița cu Cambodgia. Sunt departe de Phuket și nu ne afectează. Le menționăm doar dacă ne gândim la excursii pe uscat.</p></div>
+  </div>
+  <div class="note">🛡️ <b>Numere utile:</b> poliția turistică <b>1155</b> (vorbește engleză), ambulanța <b>1669</b>. Cele mai apropiate spitale bune sunt Bangkok Hospital Phuket și Siriroj, în zona Phuket Town.</div>
+</section>
+
+</main>
+
+<footer><div class="wrap">Ciornă făcută pe 25 noiembrie 2026, pe baza ghidului lui Horațiu. Prețurile, programele și datele festivalurilor se schimbă, așa că le verificăm înainte. Poziția casei și coordonatele de pe hartă sunt aproximative. Folosim linkurile Google Maps pentru trasee exacte.</div></footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ---------- Plajele ---------- */
+const Z={
+naiyang:{n:"Nai Yang & Mai Khao",z:"Nord, lângă aeroport",x:60,c:"#0f8b8d",t:"~25 min",h:"Grab",q:5,s:1,d:"Plaje lungi, sălbatice, în parcul național Sirinat. Avioanele aterizează aproape de plaja Mai Khao, un spectacol în sine. Foarte puțină lume.",f:"o zi liniștită, apus cu avioane, restaurante cu fructe de mare pe plajă."},
+bangtao:{n:"Bang Tao · casa noastră",z:"Nord-vest, Cherngtalay",x:186,c:"#0f8b8d",t:"0 min",h:"pe jos",q:4,s:3,d:"Plaja cea mai lungă de pe coasta de vest (~6 km), liniștită, cu resorturile Laguna în spate. În Cherngtalay, zona de lângă casă, sunt Boat Avenue, Porto de Phuket, Villa Market, cafenele, coworkinguri și piețe de seară. E centrul nomazilor digitali din Phuket.",f:"lucru zilnic, plimbări la apus, cumpărături, cafenele, comunitate."},
+surin:{n:"Surin",z:"Vest",x:311,c:"#d99a2b",t:"~10 min",h:"Grab sau pe jos (lung)",q:3,s:3,d:"Plajă mică și frumoasă, cu apă limpede. Elegant, cu restaurante bune și beach clubs. Scump.",f:"o după-amiază la plajă, o cină frumoasă."},
+kamala:{n:"Kamala",z:"Vest",x:437,c:"#d99a2b",t:"~20 min",h:"Grab sau Smart Bus",q:3,s:3,d:"Golf liniștit, cu atmosferă de sat. Aici sunt Café del Mar și câteva beach clubs.",f:"apus la un beach club, o zi relaxată."},
+patong:{n:"Patong",z:"Vest, centrul petrecerilor",x:563,c:"#e4572e",t:"~35 min",h:"Grab sau Smart Bus",q:1,s:5,d:"Zona cea mai aglomerată și mai turistică: Bangla Road, cluburi, mall-uri, aglomerație. Opusul a ceea ce ne dorim pentru o lună, dar merită o seară din curiozitate.",f:"o seară de văzut, Muay Thai la Bangla Boxing Stadium, mall-ul Jungceylon."},
+karon:{n:"Karon",z:"Sud-vest",x:689,c:"#d99a2b",t:"~45 min",h:"Grab sau Smart Bus",q:3,s:3,d:"Plajă mare, cu nisip care scârțâie sub picioare. Mai liniștită decât Patong, cu mult turism de familie.",f:"o zi la plajă, punctul de belvedere Karon View Point."},
+kata:{n:"Kata & Kata Noi",z:"Sud-vest",x:814,c:"#d99a2b",t:"~50 min",h:"Grab sau Smart Bus",q:3,s:3,d:"Două dintre cele mai frumoase plaje de pe insulă, cu atmosferă relaxată, cafenele și surfing pe valuri mici.",f:"o zi la plajă, înot, cafenele."},
+rawai:{n:"Nai Harn & Rawai",z:"Sud",x:940,c:"#0f8b8d",t:"~60 min",h:"Grab",q:4,s:3,d:"Sudul insulei, preferat de expații pe termen lung. Plaja Nai Harn, lacul, capul Promthep cu cel mai cunoscut apus din Phuket. Sunt multe coworkinguri și săli de Muay Thai.",f:"apus la Promthep, o zi la Nai Harn, comunitatea de expați."},
+town:{n:"Phuket Town (Old Town)",z:"Est, orașul propriu-zis",c:"#7b2d5b",t:"~40 min",h:"Grab",q:3,s:4,d:"Orașul adevărat: case colorate sino-portugheze, cafenele, galerii, mâncare locală foarte bună și mai ieftină decât pe plaje. Duminică seara e piața de pe Thalang Road. Aici e și biroul de imigrare.",f:"o duminică întreagă, mâncare locală, piața de seară, festivaluri."},
+chalong:{n:"Chalong",z:"Sud-est",c:"#7b2d5b",t:"~45 min",h:"Grab",q:3,s:2,d:"Zonă locală, cu templul Wat Chalong, Big Buddha pe deal și debarcaderul pentru insule. Sunt și multe săli de Muay Thai pe Soi Ta-iad.",f:"Big Buddha, Wat Chalong, tururi spre insule."},
+laguna:{n:"Laguna Phuket",z:"Lângă noi",c:"#0f8b8d",t:"~5–10 min",h:"Grab sau pe jos",q:5,s:2,d:"Un complex de resorturi de lux în jurul unor lagune, cu alei pentru alergat și bicicletă, terenuri de golf și restaurante. Foarte liniștit și verde.",f:"alergat dimineața, plimbări, un brunch de weekend."}
+};
+const order=["naiyang","bangtao","surin","kamala","patong","karon","kata","rawai"];
+const sg=document.getElementById("stations");
+order.forEach((k,i)=>{const s=Z[k],up=i%2===0,lab=k==="bangtao"?"Bang Tao":s.n.split(" &")[0];
+ sg.insertAdjacentHTML("beforeend",`<g class="st" data-k="${k}"><circle cx="${s.x}" cy="90" r="22" fill="transparent"/><circle class="dot" cx="${s.x}" cy="90" r="${k==='bangtao'?13:10}" fill="#fff" stroke="${s.c}" stroke-width="3"/><text x="${s.x}" y="${up?60:128}" text-anchor="middle" font-size="${k==='bangtao'?16:14}" font-weight="${k==='bangtao'?800:600}" fill="#1f2328">${lab}</text>${k==='bangtao'?`<text x="${s.x}" y="${up?38:146}" text-anchor="middle" font-size="13" font-weight="800" fill="#e4572e">🏠 noi</text>`:''}</g>`)});
+function showZ(k){const s=Z[k];
+ zTag.textContent=s.z;zName.textContent=s.n;zDesc.textContent=s.d;zFor.textContent=s.f;zTime.textContent=s.t;zHow.textContent=s.h;
+ zExtra.innerHTML=k==="bangtao"?`<ul style="margin:0;padding-left:18px"><li>🏖️ <b>Plaja:</b> ~20 min pe jos de casă. Mergem dimineața sau spre apus.</li><li>🛒 <b>Cumpărături:</b> Villa Market (produse europene), Boat Avenue, Porto de Phuket, piața de seară.</li><li>💻 <b>Lucru:</b> coworkingurile și cafenelele din Cherngtalay, la câteva minute.</li><li>➡️ <a href="#verdict">Analiza completă: e zona bună pentru noi?</a></li></ul>`:"";
+ zQ.textContent=s.q+"/5";zS.textContent=s.s+"/5";bQ.style.width=s.q*20+"%";bS.style.width=s.s*20+"%";
+ document.querySelectorAll(".st").forEach(e=>{const kk=e.dataset.k;e.querySelector(".dot").setAttribute("fill",kk===k?Z[kk].c:"#fff")});
+ document.querySelectorAll(".zbtn").forEach(b=>b.classList.toggle("on",b.dataset.k===k));}
+document.querySelectorAll(".st").forEach(e=>e.addEventListener("click",()=>showZ(e.dataset.k)));
+document.querySelectorAll(".zbtn").forEach(b=>b.addEventListener("click",()=>showZ(b.dataset.k)));
+showZ("bangtao");
+
+/* ---------- Costuri ---------- */
+const PRICES=[
+ ["🍜 Fel de mâncare la tarabă / piață",60,120,"Pad thai la piață: 60–80"],
+ ["🍛 Masă la un restaurant thailandez local",120,250,"De persoană"],
+ ["🍝 Fel principal la restaurant occidental",350,900,"Bang Tao și Surin sunt spre capătul de sus"],
+ ["☕ Cafea la cafenea",90,160,"Mai scumpă decât în Bangkok"],
+ ["🍺 Bere la 7-Eleven",45,55,""],
+ ["🍻 Bere la bar",95,140,""],
+ ["🏖️ Beach club, consum minim în weekend",1000,3000,"Unele cer un consum minim"],
+ ["💆 Masaj thailandez, 1 oră",300,600,""],
+ ["🚌 Smart Bus, orice stație",100,100,"De persoană"],
+ ["🚕 Grab / taxi: casă → Phuket Town",600,900,"Dus"],
+ ["💻 Coworking, o zi",350,400,""],
+ ["💻 Coworking, o lună (hot desk)",5000,7000,"De persoană, în Bang Tao"],
+ ["📱 SIM turistic, 30 de zile (reînnoire)",1199,1199,"De persoană"],
+ ["🚤 Excursie de o zi (Phang Nga, insule)",1500,3500,"De persoană, cu transfer. Estimare."],
+ ["🏦 Comision la bancomat",220,220,"La fiecare retragere"]
+];
+const BUD=[
+ ["🍜 Mâncare în oraș",14000,26000,45000,"Avem bucătărie, deci gătim des"],
+ ["🛒 Cumpărături (Villa Market, piețe, 7-Eleven)",6000,8000,11000,"Produsele europene sunt scumpe"],
+ ["☕ Cafele și băuturi",3000,7000,15000,"Cafenele, bere, apus la beach club"],
+ ["🚕 Transport (Grab / Bolt / Smart Bus)",4000,8000,15000,"Fără scuter, ăsta e un cost mare"],
+ ["📱 2 SIM-uri (încă 30 de zile)",2400,2400,2400,"2 × 1.199"],
+ ["💻 Coworking pentru 2",0,10000,14000,"La econom lucrăm din cafenele"],
+ ["🚤 Excursii (insule, Phang Nga, Old Town)",4000,10000,20000,"Pentru 2"],
+ ["🧘 Sport (yoga, Muay Thai, alergat)",0,3000,7000,""],
+ ["💆 Masaj, spălătorie, diverse",2000,4000,7000,""],
+ ["🏦 Comisioane la bancomat",900,1100,1300,"4–6 retrageri"]
+];
+const COWORK_IDX=5;
+function fmtN(n){return Math.round(n).toLocaleString("ro-RO");}
+function renderCost(){
+ const T=parseFloat(rTHB.value)||37.4,R=parseFloat(rRON.value)||5.23,k=R/T;
+ oneTHB.textContent=`100 THB ≈ ${(100*k).toFixed(1).replace(".",",")} lei ≈ ${(100/T).toFixed(2).replace(".",",")} €`;
+ priceRows.innerHTML=PRICES.map(p=>{const th=p[1]===p[2]?fmtN(p[1]):fmtN(p[1])+"–"+fmtN(p[2]);const le=p[1]===p[2]?fmtN(p[1]*k):fmtN(p[1]*k)+"–"+fmtN(p[2]*k);return `<tr><td>${p[0]}</td><td class="num">${th}</td><td class="num">${le} lei</td><td class="sub">${p[3]}</td></tr>`}).join("");
+ const tot=[0,0,0];
+ budgetRows.innerHTML=BUD.map(b=>{tot[0]+=b[1];tot[1]+=b[2];tot[2]+=b[3];return `<tr><td>${b[0]}${b[4]?`<div class="sub">${b[4]}</div>`:""}</td>${[1,2,3].map(i=>`<td class="num">${fmtN(b[i])} THB<div class="sub">${fmtN(b[i]*k)} lei</div></td>`).join("")}</tr>`}).join("")+
+  `<tr style="background:#fffaf1"><td><b>Total pe lună</b></td>${tot.map(t=>`<td class="num">${fmtN(t)} THB<div>${fmtN(t*k)} lei</div></td>`).join("")}</tr>`;
+ const names=[["🌱 Econom","Gătim acasă, cafenele, o excursie"],["⚖️ Mediu","Cel mai probabil pentru noi"],["✨ Comod","Restaurante, beach clubs, excursii săptămânale"]];
+ tiers.innerHTML=tot.map((t,i)=>{const noCw=t-BUD[COWORK_IDX][i+1];return `<div class="card ${i===1?'accent':''}" ${i===1?'style="border:2px solid var(--teal)"':''}><div class="tag">${names[i][0]}</div><div class="big">${fmtN(t*k)} lei</div><div class="sub" style="margin:4px 0 8px">${fmtN(t)} THB · ${fmtN(t/T)} € pe lună, pentru 2</div><div class="sub">${names[i][1]}<br>Fără coworking: <b>${fmtN(noCw*k)} lei</b> · pe zi, pentru 2: <b>~${fmtN(noCw*k/30)} lei</b></div></div>`}).join("");
+}
+rTHB.addEventListener("input",renderCost);rRON.addEventListener("input",renderCost);renderCost();
+
+/* ---------- Locuri ---------- */
+const HOME=[7.9990,98.3030];
+const CATS={
+ cowork:{n:"Coworking & comunitate",c:"#163a5f",e:"💻"},
+ plaja:{n:"Plaje & apusuri",c:"#0f8b8d",e:"🏖️"},
+ cultura:{n:"Cultură & temple",c:"#d99a2b",e:"🏛️"},
+ piata:{n:"Piețe & cumpărături",c:"#e4572e",e:"🛒"},
+ natura:{n:"Natură & excursii",c:"#2f8a4a",e:"🌴"},
+ activ:{n:"Activități & seri",c:"#7b2d5b",e:"✨"},
+ util:{n:"Utile",c:"#5d6470",e:"📌"}
+};
+const P=[
+ {c:"cowork",n:"Coworkingurile din Cherngtalay (lângă Boat Avenue)",ll:[7.9985,98.3010],d:"Lângă Boat Avenue și Porto de Phuket sunt mai multe coworkinguri (Hubba Phuket, HOMA, CAMP și altele), cu abonamente lunare de ~5.000–7.000 THB de persoană. În prima săptămână încercăm 2–3 cu abonament pe zi, apoi alegem.",h:"Pe jos, câteva minute",t:"~5–10 min",p:"350–400 THB/zi",q:"Boat Avenue Phuket coworking"},
+ {c:"cowork",n:"Cafenele pentru lucru (Porto de Phuket)",ll:[8.0005,98.3045],d:"Mall în aer liber, cu cafenele bune și Wi-Fi. Mulți lucrează de aici în loc de coworking.",h:"Pe jos",t:"~5–10 min",p:"cât consumi",q:"Porto de Phuket"},
+ {c:"plaja",n:"Bang Tao Beach",ll:[7.9985,98.2905],d:"Plaja noastră: ~6 km de nisip, liniștită, perfectă pentru plimbări la apus.",h:"~20 min pe jos de casă",t:"~20 min",p:"gratuit",q:"Bang Tao Beach"},
+ {c:"plaja",n:"Surin Beach",ll:[7.9775,98.2780],d:"Plajă mică, cu apă limpede și beach clubs elegante.",h:"Grab ~10 min",t:"~10 min",p:"gratuit (beach clubs scumpe)",q:"Surin Beach Phuket"},
+ {c:"plaja",n:"Banana Beach",ll:[8.0390,98.2785],d:"Golfuleț ascuns, cu apă turcoaz, între Bang Tao și Nai Thon. Mai puțină lume.",h:"Grab ~15 min",t:"~15 min",p:"gratuit",q:"Banana Beach Phuket"},
+ {c:"plaja",n:"Mai Khao (plaja cu avioane)",ll:[8.1130,98.3020],d:"Avioanele trec la câțiva zeci de metri deasupra plajei când aterizează. Spectaculos la apus.",h:"Grab ~25 min",t:"~25 min",p:"gratuit",q:"Mai Khao Beach airplane"},
+ {c:"plaja",n:"Kata & Kata Noi",ll:[7.8200,98.2980],d:"Printre cele mai frumoase plaje de pe insulă. Bune pentru o zi întreagă în sud.",h:"Grab ~50 min sau Smart Bus",t:"~50 min",p:"gratuit",q:"Kata Noi Beach"},
+ {c:"plaja",n:"Promthep Cape (apus)",ll:[7.7620,98.3060],d:"Cel mai cunoscut punct de apus din Phuket, în capătul de sud al insulei. Vine multă lume, deci ajungem devreme.",h:"Grab ~60 min",t:"~60 min",p:"gratuit",q:"Promthep Cape"},
+ {c:"cultura",n:"Phuket Old Town",ll:[7.8850,98.3880],d:"Case sino-portugheze colorate, cafenele, galerii și mâncare locală. Duminica seara e piața de stradă de pe Thalang Road.",h:"Grab ~40 min",t:"~40 min",p:"gratuit",q:"Thalang Road Phuket Old Town"},
+ {c:"cultura",n:"Big Buddha",ll:[7.8275,98.3125],d:"Statuie uriașă de marmură albă pe un deal, cu priveliște peste sudul insulei. Haine care acoperă umerii și genunchii.",h:"Grab ~50 min",t:"~50 min",p:"donație",q:"Big Buddha Phuket"},
+ {c:"cultura",n:"Wat Chalong",ll:[7.8465,98.3365],d:"Cel mai important templu din Phuket.",h:"Grab ~45 min (merge combinat cu Big Buddha)",t:"~45 min",p:"gratuit",q:"Wat Chalong"},
+ {c:"piata",n:"Boat Avenue & Villa Market",ll:[7.9975,98.3000],d:"Supermarket cu produse europene, cafenele, restaurante. Cumpărăturile de zi cu zi, aproape de casă.",h:"Pe jos",t:"~5–10 min",p:"–",q:"Villa Market Laguna Phuket"},
+ {c:"piata",n:"Porto de Phuket – piața de vineri",ll:[8.0010,98.3055],d:"Centru comercial deschis, cu piață de stradă vinerea seara.",h:"Pe jos",t:"~10 min",p:"gratuit",q:"Porto de Phuket"},
+ {c:"piata",n:"Bang Tao Night Market",ll:[8.0080,98.3015],d:"Piața de seară locală: mâncare ieftină, fructe, haine. Ieftin și autentic.",h:"Pe jos sau Grab scurt (verificăm zilele)",t:"~10–20 min",p:"ieftin",q:"Bang Tao Night Market"},
+ {c:"piata",n:"Central Phuket Festival",ll:[7.8915,98.3680],d:"Cel mai mare mall de pe insulă, cu cinema, magazine și supermarket.",h:"Grab ~35 min",t:"~35 min",p:"–",q:"Central Phuket Festival"},
+ {c:"natura",n:"Phang Nga Bay",ll:[8.2750,98.5010],d:"Golful cu stânci de calcar care ies din mare, inclusiv „James Bond Island”. Excursie de o zi cu barca sau caiacul. Majoritatea tururilor vin să te ia de acasă.",h:"Tur cu transfer inclus",t:"o zi",p:"~1.500–3.500 THB/pers. (estimare)",q:"Phang Nga Bay"},
+ {c:"natura",n:"Koh Yao Noi",ll:[8.1300,98.6100],d:"Insulă liniștită, rurală, între Phuket și Krabi. Bună pentru o zi sau un weekend.",h:"Grab până la Bang Rong Pier (~25 min), apoi barca",t:"~1h30",p:"barca ~150–200 THB (estimare)",q:"Bang Rong Pier"},
+ {c:"natura",n:"Khao Phra Thaeo (cascade)",ll:[8.0320,98.3400],d:"Ultima pădure tropicală mare de pe insulă, cu trasee scurte, cascade și un centru de recuperare pentru gibboni.",h:"Grab ~25 min",t:"~25 min",p:"taxă de parc (verificăm)",q:"Bang Pae Waterfall"},
+ {c:"natura",n:"Laguna Phuket (alergat)",ll:[8.0000,98.2970],d:"Alei liniștite în jurul lagunelor, bune pentru alergat sau o plimbare dimineața.",h:"Pe jos sau Grab scurt",t:"~10 min",p:"gratuit",q:"Laguna Phuket"},
+ {c:"activ",n:"Muay Thai pe Soi Ta-iad",ll:[7.8460,98.3420],d:"Strada cu săli de Muay Thai din Chalong. Clasele pentru începători sunt deschise oricui.",h:"Grab ~45 min (sau o sală din Cherngtalay)",t:"~45 min",p:"~400–600 THB/clasă (estimare)",q:"Soi Ta-iad Chalong"},
+ {c:"activ",n:"Bangla Road, Patong",ll:[7.8930,98.2975],d:"Strada cu baruri și cluburi. O seară din curiozitate, nu mai mult.",h:"Grab ~35 min",t:"~35 min",p:"–",q:"Bangla Road Patong"},
+ {c:"activ",n:"Café del Mar, Kamala",ll:[7.9440,98.2770],d:"Beach club cunoscut pentru apus și muzică. Are consum minim.",h:"Grab ~20 min",t:"~20 min",p:"consum minim",q:"Cafe del Mar Phuket"},
+ {c:"util",n:"Aeroportul Phuket (HKT)",ll:[8.1132,98.3169],d:"Sosim pe 18 feb. și plecăm pe 18 mar. spre Bangkok DMK.",h:"Grab ~25–35 min",t:"~30 min",p:"300–500 THB",q:"Phuket International Airport"},
+ {c:"util",n:"Biroul de imigrare Phuket",ll:[7.8610,98.3930],d:"Doar dacă e nevoie de ceva legat de viză. Prelungirea o facem din Bangkok.",h:"Grab ~40 min",t:"~40 min",p:"–",q:"Phuket Immigration Office"},
+ {c:"util",n:"Bangkok Hospital Phuket",ll:[7.9070,98.3800],d:"Spital privat bun, cu personal care vorbește engleză.",h:"Grab ~35 min",t:"~35 min",p:"–",q:"Bangkok Hospital Phuket"}
+];
+const gmap=q=>`https://www.google.com/maps/dir/?api=1&origin=Cherngtalay+Phuket&destination=${encodeURIComponent(q)}`;
+const on=new Set(Object.keys(CATS));
+Object.entries(CATS).forEach(([k,v])=>{const b=document.createElement("button");b.className="fbtn";b.innerHTML=`<span class="sw" style="background:${v.c}"></span>${v.e} ${v.n}`;b.onclick=()=>{on.has(k)?on.delete(k):on.add(k);b.classList.toggle("off",!on.has(k));refresh();};filters.appendChild(b);});
+P.forEach((p,i)=>{const c=CATS[p.c];const d=document.createElement("div");d.className="place";d.id="pl"+i;
+ d.innerHTML=`<div class="cat" style="color:${c.c}">${c.e} ${c.n}</div><h4>${p.n}</h4><p>${p.d}</p><div class="how">🚕 <b>Cum ajungem:</b> ${p.h}</div><div class="meta"><span class="pill">⏱ ${p.t}</span><span class="pill">💸 ${p.p}</span><a href="${gmap(p.q)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Traseu în Google Maps ↗</a></div>`;
+ d.onclick=()=>focusP(i);places.appendChild(d);});
+
+function drawBase(map){
+ const ISLAND=[[8.205,98.300],[8.180,98.283],[8.140,98.292],[8.100,98.293],[8.080,98.282],[8.055,98.273],[8.030,98.277],[8.010,98.288],[7.990,98.289],[7.975,98.276],[7.955,98.278],[7.935,98.272],[7.915,98.278],[7.900,98.290],[7.885,98.276],[7.870,98.272],[7.850,98.290],[7.830,98.292],[7.810,98.296],[7.785,98.297],[7.765,98.303],[7.770,98.318],[7.778,98.335],[7.795,98.352],[7.808,98.365],[7.798,98.392],[7.808,98.412],[7.830,98.407],[7.850,98.402],[7.870,98.408],[7.890,98.410],[7.915,98.420],[7.950,98.410],[7.985,98.395],[8.020,98.388],[8.060,98.375],[8.100,98.362],[8.140,98.345],[8.180,98.322],[8.205,98.300]];
+ L.polygon(ISLAND,{color:"#c9bfa8",weight:1.5,fillColor:"#f6efdc",fillOpacity:1,interactive:false}).addTo(map);
+ const ROAD=[[8.113,98.316],[8.070,98.330],[8.030,98.335],[7.990,98.345],[7.950,98.355],[7.910,98.365],[7.885,98.385]];
+ L.polyline(ROAD,{color:"#d9cfb8",weight:4,interactive:false}).addTo(map);
+ L.polyline([[8.030,98.335],[8.005,98.315],[7.999,98.303],[7.995,98.292]],{color:"#d9cfb8",weight:3,interactive:false}).addTo(map);
+ const lab=(ll,t,cls)=>L.marker(ll,{interactive:false,icon:L.divIcon({className:"maplab "+(cls||""),html:t,iconSize:null})}).addTo(map);
+ lab([8.000,98.255],"Bang Tao","water");lab([7.976,98.255],"Surin","water");lab([7.952,98.255],"Kamala","water");lab([7.896,98.262],"Patong","water");lab([7.848,98.268],"Karon","water");lab([7.820,98.272],"Kata","water");lab([7.775,98.283],"Nai Harn","water");
+ lab([7.888,98.398],"Phuket Town");lab([7.835,98.345],"Chalong");lab([8.090,98.305],"Nai Yang");lab([8.040,98.350],"Khao Phra Thaeo","green");lab([7.880,98.200],"Marea Andaman","water");
+ lab([8.010,98.318],"🏠 noi","home");
+ const lg=L.control({position:"bottomleft"});lg.onAdd=()=>{const d=L.DomUtil.create("div","maplegend");d.innerHTML=`<div><span style="background:#f6efdc;border:1px solid #c9bfa8"></span>Insula (contur aproximativ)</div><div><span style="background:#d9cfb8"></span>Drumul principal (402)</div>`;return d;};lg.addTo(map);
+}
+let map=null,markers=[];
+try{
+ map=L.map("map",{scrollWheelZoom:false}).setView([7.96,98.34],11);
+ document.getElementById("map").style.background="#bfe3ec";
+ L.tileLayer("https://{s}.basemap.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19}).addTo(map);
+ drawBase(map);
+ L.circleMarker(HOME,{radius:13,color:"#fff",weight:3,fillColor:"#e4572e",fillOpacity:1}).addTo(map).bindPopup("<b>🏠 Casa noastră</b><br>Bangtao one-room house (poziție aproximativă)").openPopup();
+ P.forEach((p,i)=>{const c=CATS[p.c];const m=L.circleMarker(p.ll,{radius:8,color:"#fff",weight:2,fillColor:c.c,fillOpacity:.95}).addTo(map);
+  m.bindPopup(`<b>${p.n}</b><br>${c.e} ${c.n}<br>🚕 ${p.h}<br>⏱ ${p.t}<br><a href="${gmap(p.q)}" target="_blank">Traseu ↗</a>`);
+  m.on("click",()=>sel(i));markers.push(m);});
+}catch(e){document.getElementById("mapfail").style.display="block";}
+function sel(i){document.querySelectorAll(".place").forEach(e=>e.classList.remove("sel"));document.getElementById("pl"+i).classList.add("sel");}
+function focusP(i){sel(i);if(map){map.setView(P[i].ll,13);markers[i].openPopup();document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"});}}
+function refresh(){P.forEach((p,i)=>{const vis=on.has(p.c);document.getElementById("pl"+i).style.display=vis?"":"none";if(map){vis?markers[i].addTo(map):markers[i].remove();}});}
+
+</script>
+</body>
+</html>
