@@ -1,10 +1,10 @@
 // Thailanda HQ – funcționează și offline.
 // Paginile aplicației: întâi rețeaua, iar dacă nu e net, copia salvată.
 // /api/state nu se salvează aici: datele comune le ține aplicația în telefon.
-const CACHE = "thq-v1";
+const CACHE = "thq-v2";
 const SHELL = [
   "./", "index.html", "manifest.webmanifest",
-  "icons/icon-192.png", "icons/icon-512.png",
+  "icons/icon-192.png", "icons/icon-512.png", "img/horatiu.jpg", "img/cristina.jpg",
   "ghid/bangkok.html", "ghid/phuket.html", "ghid/pregatire.html",
 ];
 

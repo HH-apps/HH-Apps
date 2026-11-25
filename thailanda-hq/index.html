@@ -7,7 +7,11 @@
 <meta name="theme-color" content="#e4572e">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Thailanda HQ">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
 :root{
   --bg:#fbf7f1; --ink:#1f2328; --muted:#5d6470; --card:#fff; --line:#ece4d8;
@@ -30,6 +34,9 @@ header{background:linear-gradient(160deg,#f6b26b 0%,#e4572e 55%,#7b2d5b 100%);co
 .me{display:flex;gap:4px;background:rgba(255,255,255,.16);border-radius:999px;padding:3px}
 .me button{border:0;background:transparent;color:#fff;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700;opacity:.75}
 .me button.on{background:#fff;color:var(--coral);opacity:1}
+.me button{display:flex;align-items:center;gap:6px;padding:3px 10px 3px 3px}
+.av{width:22px;height:22px;border-radius:50%;object-fit:cover;flex:none;vertical-align:middle}
+.av.sm{width:16px;height:16px;margin-right:4px;vertical-align:-3px}
 
 /* tabs */
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
@@ -124,7 +131,7 @@ footer.author a{color:var(--muted)}
   </div>
   <div class="top" style="margin-top:10px">
     <span class="sub" style="color:#fff;opacity:.9" id="hello">Horațiu & Cristina · ian.–mar. 2027</span>
-    <div class="me" id="me"><button data-n="Horațiu">Horațiu</button><button data-n="Cristina">Cristina</button></div>
+    <div class="me" id="me"><button data-n="Horațiu"><img class="av" src="img/horatiu.jpg" alt="">Horațiu</button><button data-n="Cristina"><img class="av" src="img/cristina.jpg" alt="">Cristina</button></div>
   </div>
 </div></header>
 
@@ -215,7 +222,7 @@ const TRIP = {
   depart: T("2027-01-20T13:15:00+01:00"),
   arrive: T("2027-01-21T10:05:00+07:00"),
   phuket: T("2027-02-18T12:00:00+07:00"),
-  end:    T("2027-03-19T12:15:00+01:00"),
+  end:    T("2027-03-19T21:25:00+01:00"),
   visaDay1: T("2027-01-21T00:00:00+07:00"),
 };
 
@@ -230,7 +237,7 @@ const DEADLINES = [
   {at:"2027-02-17T11:10:00+07:00", t:"⚠️ Ultimul moment pentru mutarea zborului de întoarcere", s:"Value nu se mai poate schimba cu mai puțin de 24h înainte (06:10 ora RO)."},
   {at:"2027-02-18T11:10:00+07:00", t:"Mutare în Phuket (sau zborul spre casă, dacă nu prelungim)", s:"Check-out Bangkok la 12:00. Zbor intern spre Phuket, de cumpărat."},
   {at:"2027-02-19T23:59:00+07:00", t:"Se termină cele 30 de zile fără viză", s:"Până atunci trebuie să avem prelungirea în pașaport."},
-  {at:"2027-03-18T12:00:00+07:00", t:"🏡 Check-out Phuket, drumul spre casă", s:"Zbor intern spre Bangkok DMK, apoi flydubai (după mutare)."},
+  {at:"2027-03-18T12:00:00+07:00", t:"🏡 Check-out Phuket, drumul spre casă", s:"Zbor intern spre Bangkok DMK și o noapte lângă aeroport. A doua zi flydubai la 11:10 (după mutare)."},
 ];
 
 const RES = [
@@ -257,7 +264,7 @@ const RES = [
    lines:["De cumpărat după decizia din 19 ian.","~33–35 €/pers. fără bagaj (Thai AirAsia, Vietjet, Lion)"],
    links:[["Caută pe Momondo","https://www.momondo.ro/flight-search/DMK-HKT/2027-02-18/2adults?sort=price_a"]]},
   {id:"dom2", icon:"🛬", title:"Zbor intern Phuket → Bangkok DMK, ~18 mar.", def:"todo",
-   lines:["În aceeași zi cu zborul spre casă, după ce mutăm întoarcerea flydubai","Trebuie să ajungă la DMK, nu la BKK"],
+   lines:["Cu o zi înainte de flydubai (pleacă din DMK la 11:10), plus o noapte la hotel lângă DMK","Propunere: intern pe 18 mar. după-amiaza, flydubai mutat pe 19 mar.","Trebuie să ajungă la DMK, nu la BKK"],
    links:[["Caută pe Momondo","https://www.momondo.ro/flight-search/HKT-DMK/2027-03-18/2adults?sort=price_a"]]},
   {id:"ins", icon:"🩺", title:"Asigurare medicală de călătorie", def:"todo",
    lines:["Pentru amândoi, ~2 luni (20 ian. – 19 mar.)","Cu repatriere și acoperire pentru anularea călătoriei, dacă se poate"], links:[]},
@@ -329,7 +336,7 @@ async function pull(){
     accessEmail = st.me || "";
     if (st.v !== state.v) { state = {v:st.v, data:st.data}; LS.set("thq-state", state); renderAll(); }
     setOnline(true);
-    if (!me && accessEmail) { me = /horat/i.test(accessEmail) ? "Horațiu" : "Cristina"; LS.set("thq-me", me); renderMe(); }
+    if (!me && accessEmail) { me = /^cristina\.hot10@/i.test(accessEmail) ? "Cristina" : /horat/i.test(accessEmail) ? "Horațiu" : "Cristina"; LS.set("thq-me", me); renderMe(); }
   } catch(e){ setOnline(false); }
 }
 function setOnline(v){ online = v; const s = $("#sync"); s.textContent = v ? (queue.length ? "⏳ se salvează" : "● sincronizat") : "○ offline" + (queue.length ? ` · ${queue.length} în așteptare` : ""); s.classList.toggle("off", !v); }
@@ -345,6 +352,8 @@ const fmtD = (ms, tz) => new Date(ms).toLocaleDateString("ro-RO",{day:"numeric",
 const ago = iso => { if(!iso) return ""; const d=new Date(iso); return d.toLocaleDateString("ro-RO",{day:"numeric",month:"short"}) + ", " + d.toLocaleTimeString("ro-RO",{hour:"2-digit",minute:"2-digit"}); };
 const stamp = () => ({by: me || "?", at: new Date().toISOString()});
 
+const AV = {"Horațiu":"img/horatiu.jpg","Cristina":"img/cristina.jpg"};
+const av = n => AV[n] ? `<img class="av sm" src="${AV[n]}" alt="">` : "";
 function renderMe(){ document.querySelectorAll("#me button").forEach(b => b.classList.toggle("on", b.dataset.n === me)); }
 document.querySelectorAll("#me button").forEach(b => b.onclick = () => { me = b.dataset.n; LS.set("thq-me", me); renderMe(); toast("Salut, " + me + "!"); });
 
@@ -407,7 +416,7 @@ function renderRes(){
       ${r.warn ? `<div class="warn">⚠️ ${r.warn}</div>` : ""}
       ${r.links.length ? `<div class="links">${r.links.map(([t,u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("")}</div>` : ""}
       <textarea class="note" data-id="${r.id}" placeholder="Notițe (ex. „Wipada a confirmat TM.30”)…">${esc(note ? note.v : "")}</textarea>
-      ${s || note ? `<div class="by">Ultima modificare: ${esc((note && (!s || note.at > s.at) ? note : s).by)}, ${ago((note && (!s || note.at > s.at) ? note : s).at)}</div>` : ""}</div>`;
+      ${s || note ? `<div class="by">${av((note && (!s || note.at > s.at) ? note : s).by)}Ultima modificare: ${esc((note && (!s || note.at > s.at) ? note : s).by)}, ${ago((note && (!s || note.at > s.at) ? note : s).at)}</div>` : ""}</div>`;
   }).join("");
   document.querySelectorAll(".st[data-id]").forEach(b => b.onclick = () => { const n = NEXT[b.dataset.st]; set(["res", b.dataset.id, "status"], {v:n, ...stamp()}); toast(STATUS[n]); });
   document.querySelectorAll("textarea.note").forEach(t => t.onchange = () => { set(["res", t.dataset.id, "note"], t.value.trim() ? {v:t.value.trim().slice(0,1000), ...stamp()} : null); toast("Notiță salvată"); });
@@ -430,7 +439,7 @@ function renderLists(){
   $("#lprog").textContent = `${done} din ${it.length} gata`; $("#lhint").textContent = done === it.length && it.length ? "🎉 Tot!" : "";
   $("#lbar").style.width = (it.length ? done / it.length * 100 : 0) + "%";
   $("#litems").innerHTML = it.map(x => { const c = get(["checks", L.id, x.id], null);
-    return `<div class="item ${c ? "done" : ""}"><input type="checkbox" data-id="${x.id}" ${c ? "checked" : ""}><div class="tx"><span>${esc(x.text)}</span>${c ? `<span class="who">✓ ${esc(c.by)}, ${ago(c.at)}</span>` : x.by ? `<span class="who" style="color:var(--muted)">adăugat de ${esc(x.by)}</span>` : ""}</div><button class="del" data-id="${x.id}" data-fixed="${x.fixed ? 1 : ""}" title="Scoate de pe listă">×</button></div>`; }).join("");
+    return `<div class="item ${c ? "done" : ""}"><input type="checkbox" data-id="${x.id}" ${c ? "checked" : ""}><div class="tx"><span>${esc(x.text)}</span>${c ? `<span class="who">${av(c.by)}✓ ${esc(c.by)}, ${ago(c.at)}</span>` : x.by ? `<span class="who" style="color:var(--muted)">adăugat de ${esc(x.by)}</span>` : ""}</div><button class="del" data-id="${x.id}" data-fixed="${x.fixed ? 1 : ""}" title="Scoate de pe listă">×</button></div>`; }).join("");
   document.querySelectorAll("#litems input").forEach(cb => cb.onchange = () => set(["checks", curList, cb.dataset.id], cb.checked ? stamp() : null));
   document.querySelectorAll("#litems .del").forEach(b => b.onclick = () => {
     if (!confirm("Scot de pe listă?")) return;
